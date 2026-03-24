@@ -1,0 +1,383 @@
+
+[ERROR] COMPILATION ERROR : 
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[24,52] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[28,25] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[29,34] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[30,57] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[37,70] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[37,90] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[40,44] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[46,32] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[47,32] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[51,58] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[55,70] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[55,90] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[58,44] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/security/CustomUserDetailsService.j
+ava:[25,21] cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/security/CustomUserDetailsService.j
+ava:[26,21] cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[33,25] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[34,31] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[35,37] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[36,32] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[37,34] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[38,33] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[48,30] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[49,36] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[51,20] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[51,64] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[52,20] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[52,65] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[53,20] 
+cannot find symbol
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[53,66] 
+cannot find symbol
+[ERROR] Failed to execute goal org.apa
+che.maven.plugins:maven-compiler-plugi
+n:3.11.0:compile (default-compile) on 
+project api: Compilation failure: 
+Compilation failure: 
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[24,52] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getUsername()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.AuthRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[28,25] 
+cannot find symbol
+[ERROR]   symbol:   method builder()
+[ERROR]   location: class 
+com.taskmanager.api.model.User
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[29,34] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getUsername()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.AuthRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[30,57] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getPassword()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.AuthRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[37,70] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getUsername()
+[ERROR]   location: variable user of 
+type com.taskmanager.api.model.User
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[37,90] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getPassword()
+[ERROR]   location: variable user of 
+type com.taskmanager.api.model.User
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[40,44] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getUsername()
+[ERROR]   location: variable user of 
+type com.taskmanager.api.model.User
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[46,32] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getUsername()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.AuthRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[47,32] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getPassword()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.AuthRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[51,58] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getUsername()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.AuthRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[55,70] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getUsername()
+[ERROR]   location: variable user of 
+type com.taskmanager.api.model.User
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[55,90] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getPassword()
+[ERROR]   location: variable user of 
+type com.taskmanager.api.model.User
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/UserService.java:[58,44] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getUsername()
+[ERROR]   location: variable user of 
+type com.taskmanager.api.model.User
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/security/CustomUserDetailsService.j
+ava:[25,21] cannot find symbol
+[ERROR]   symbol:   method 
+getUsername()
+[ERROR]   location: variable user of 
+type com.taskmanager.api.model.User
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/security/CustomUserDetailsService.j
+ava:[26,21] cannot find symbol
+[ERROR]   symbol:   method 
+getPassword()
+[ERROR]   location: variable user of 
+type com.taskmanager.api.model.User
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[33,25] 
+cannot find symbol
+[ERROR]   symbol:   method builder()
+[ERROR]   location: class 
+com.taskmanager.api.model.Task
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[34,31] 
+cannot find symbol
+[ERROR]   symbol:   method getTitle()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[35,37] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getDescription()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[36,32] 
+cannot find symbol
+[ERROR]   symbol:   method getStatus()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[37,34] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getPriority()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[38,33] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getDueDate()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[48,30] 
+cannot find symbol
+[ERROR]   symbol:   method getTitle()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[49,36] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getDescription()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[51,20] 
+cannot find symbol
+[ERROR]   symbol:   method getStatus()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[51,64] 
+cannot find symbol
+[ERROR]   symbol:   method getStatus()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[52,20] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getPriority()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[52,65] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getPriority()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[53,20] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getDueDate()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] /D:/TaskManager(JAVA)_Project/
+server/src/main/java/com/taskmanager/a
+pi/service/TaskService.java:[53,66] 
+cannot find symbol
+[ERROR]   symbol:   method 
+getDueDate()
+[ERROR]   location: variable request 
+of type 
+com.taskmanager.api.dto.TaskRequest
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace 
+of the errors, re-run Maven with the 
+-e switch.
+[ERROR] Re-run Maven using the -X 
+switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about 
+the errors and possible solutions, 
+please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.o
+rg/confluence/display/MAVEN/MojoFailur
+eException
+
+
