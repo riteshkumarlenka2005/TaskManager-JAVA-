@@ -49,7 +49,7 @@ public class TaskService {
         task.setDescription(request.getDescription());
         
         if (request.getStatus() != null) task.setStatus(request.getStatus());
-        if (request.getPriority() != null) task.priority(request.getPriority());
+        if (request.getPriority() != null) task.setPriority(request.getPriority());
         if (request.getDueDate() != null) task.setDueDate(request.getDueDate());
 
         return taskRepository.save(task);
