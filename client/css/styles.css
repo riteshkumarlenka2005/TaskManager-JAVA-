@@ -95,6 +95,7 @@ body {
     font-weight: 700;
     background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
 }
@@ -403,8 +404,80 @@ body {
     color: var(--text-primary);
 }
 
-/* Responsive */
+/* Responsive & Mobile Optimizations */
 @media (max-width: 768px) {
     .dashboard-container { padding: 1rem; }
-    .tasks-header { flex-direction: column; gap: 1rem; align-items: stretch; }
+    
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .brand {
+        font-size: 1.3rem;
+    }
+    
+    .tasks-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    .tasks-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .tasks-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .task-card {
+        padding: 1.25rem;
+    }
+    
+    .task-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-small {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .modal {
+        margin: 1rem;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .input-group label {
+        font-size: 0.8rem;
+    }
+    
+    /* Make side-by-side inputs stack on mobile */
+    #taskForm > div:nth-child(4) {
+        flex-direction: column !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .glass-panel {
+        padding: 1.5rem;
+    }
+    
+    .auth-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .toast {
+        width: 90%;
+        left: 5%;
+        right: 5%;
+        bottom: 16px;
+        justify-content: center;
+    }
 }
