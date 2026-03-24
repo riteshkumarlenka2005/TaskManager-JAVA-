@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080/api';
+const API_URL = 'https://taskmanager-java.onrender.com/api';
 
 // Check Authentication immediately
 const token = localStorage.getItem('token');

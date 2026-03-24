@@ -1,5 +1,5 @@
 // API Configuration
-const API_URL = 'http://localhost:8080/api';
+const API_URL = 'https://taskmanager-java.onrender.com/api';
 
 // UI Elements
 const loginSection = document.getElementById('loginSection');
