@@ -15,13 +15,14 @@
     --warning-color: #eab308;
     
     /* Glassmorphism Tokens */
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-bg: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-border-highlight: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.5);
     
     /* Constants */
-    --border-radius: 16px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-radius: 24px;
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -41,7 +42,7 @@ body {
     position: relative;
 }
 
-/* Background Animated Gradient Mesh */
+/* Background Animated Gradient Mesh & Noise */
 .ambient-bg {
     position: fixed;
     top: -50%;
@@ -49,10 +50,13 @@ body {
     width: 200%;
     height: 200%;
     z-index: -1;
-    background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.1) 0%, rgba(0, 0, 0, 0) 40%);
-    animation: rotateAmbient 30s linear infinite;
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.12) 0%, rgba(0, 0, 0, 0) 45%),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.12) 0%, rgba(0, 0, 0, 0) 40%),
+        radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.1) 0%, rgba(0, 0, 0, 0) 40%);
+    animation: rotateAmbient 40s linear infinite;
     pointer-events: none;
+    opacity: 0.8;
 }
 
 @keyframes rotateAmbient {
@@ -62,13 +66,25 @@ body {
 
 /* Form Container Forms (Glassmorphism) */
 .glass-panel {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--glass-border);
+    border-top-color: var(--glass-border-highlight);
+    border-left-color: var(--glass-border-highlight);
     border-radius: var(--border-radius);
     box-shadow: var(--glass-shadow);
-    padding: 2.5rem;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
 }
 
 /* Auth Specific Setup */
@@ -120,19 +136,21 @@ body {
 
 .input-group input, .input-group select {
     width: 100%;
-    padding: 0.875rem 1rem;
-    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem 1.25rem;
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid var(--glass-border);
-    border-radius: 8px;
+    border-radius: 12px;
     color: var(--text-primary);
     font-size: 1rem;
     transition: var(--transition);
     outline: none;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .input-group input:focus, .input-group select:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    border-color: var(--accent-hover);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 4px rgba(99, 102, 241, 0.15);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .input-group input::placeholder {
@@ -156,14 +174,16 @@ body {
 }
 
 .btn-primary {
-    background: var(--accent-color);
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
     color: white;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
 .btn-primary:hover {
-    background: var(--accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+    border-color: rgba(255,255,255,0.2);
 }
 
 .btn-primary:active {
@@ -278,19 +298,23 @@ body {
 
 /* Task Card */
 .task-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
-    border-radius: var(--border-radius);
-    padding: 1.5rem;
+    border-radius: 20px;
+    padding: 1.75rem;
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 24px -4px rgba(0,0,0,0.3);
 }
 
 .task-card:hover {
-    transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-6px) scale(1.02);
+    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 32px -8px rgba(0,0,0,0.5);
 }
 
 .task-card::before {
@@ -402,6 +426,25 @@ body {
 
 .btn-close:hover {
     color: var(--text-primary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Responsive & Mobile Optimizations */
