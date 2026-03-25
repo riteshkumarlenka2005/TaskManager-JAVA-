@@ -47,8 +47,8 @@ const DashboardPage: React.FC = () => {
 
   const fetchTasks = useCallback(async () => {
     try {
-      const res = await api.get<Task[]>('/tasks');
-      setTasks(res.data);
+      const res = await api.get<any>('/tasks');
+      setTasks(Array.isArray(res.data) ? res.data : (res.data?.content || res.data?.data || []));
     } catch {
       // handled by interceptor
     } finally {

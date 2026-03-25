@@ -30,8 +30,8 @@ const DocumentsPage: React.FC = () => {
 
   const fetchDocuments = useCallback(async () => {
     try {
-      const res = await api.get<Document[]>('/documents');
-      setDocuments(res.data);
+      const res = await api.get<any>('/documents');
+      setDocuments(Array.isArray(res.data) ? res.data : (res.data?.content || res.data?.data || []));
     } catch {
       // handled by interceptor
     } finally {
