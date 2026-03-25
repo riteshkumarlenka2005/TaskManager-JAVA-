@@ -9,7 +9,6 @@ import {
   RotateCcw,
   Trash2,
   Download,
-  Minus,
 } from 'lucide-react';
 
 const PRESET_COLORS = [

@@ -5,8 +5,6 @@ import {
   Pencil,
   Eraser,
   Minus,
-  Square,
-  Circle,
   Palette,
   Save,
   RotateCcw,
