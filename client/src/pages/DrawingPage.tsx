@@ -156,10 +156,10 @@ const DrawingPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between mb-6"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6"
       >
         <div>
-          <h1 className="text-3xl font-bold mb-1">Drawing Canvas</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-1">Drawing Canvas</h1>
           <p className="text-text-secondary">Create illustrations with pen, pencil & eraser tools.</p>
         </div>
         <motion.button
@@ -216,7 +216,7 @@ const DrawingPage: React.FC = () => {
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               className="absolute top-full mt-2 left-0 z-50 glass-panel p-3 w-52"
-              style={{ background: 'rgba(18,18,18,0.97)' }}
+              style={{ background: 'rgba(26,26,31,0.97)' }}
             >
               <div className="grid grid-cols-5 gap-2 mb-3">
                 {PRESET_COLORS.map((c) => (

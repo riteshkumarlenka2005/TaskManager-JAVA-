@@ -226,7 +226,7 @@ const DocumentEditorPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between mb-6"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6"
       >
         <div className="flex items-center gap-4">
           <button
@@ -241,11 +241,11 @@ const DocumentEditorPage: React.FC = () => {
               setTitle(e.target.value);
               triggerAutoSave();
             }}
-            className="text-2xl font-bold bg-transparent border-none outline-none placeholder:text-text-secondary w-full max-w-md"
+            className="text-xl sm:text-2xl font-bold bg-transparent border-none outline-none placeholder:text-text-secondary w-full max-w-xs sm:max-w-md"
             placeholder="Untitled Document"
           />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {saved && (
             <motion.span
               initial={{ opacity: 0, x: 10 }}

@@ -123,10 +123,10 @@ const DashboardPage: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between mb-8"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8"
       >
         <div>
-          <h1 className="text-3xl font-bold mb-1">Dashboard</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-1">Dashboard</h1>
           <p className="text-text-secondary">Manage and track your tasks effectively.</p>
         </div>
         <motion.button
@@ -248,7 +248,7 @@ const DashboardPage: React.FC = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               className="glass-panel p-6 w-full max-w-lg"
-              style={{ background: 'rgba(18, 18, 18, 0.97)' }}
+              style={{ background: 'rgba(26, 26, 31, 0.97)' }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">
