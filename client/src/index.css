@@ -10,7 +10,7 @@
   --color-accent-green: #CDEAC0;
   --color-accent-purple: #E0D4FF;
   
-  --color-glass-border: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.12);
   
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #A1A1AA;
@@ -23,6 +23,25 @@
   --color-danger: #ef4444;
   --color-warning: #F5E6A7;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Explicit CSS Variables mapping for custom CSS & TSX var() usage */
+:root {
+  --color-primary: #0D0D0F;
+  --color-surface: #151518;
+  --color-card: #1A1A1F;
+  --color-accent-yellow: #F5E6A7;
+  --color-accent-green: #CDEAC0;
+  --color-accent-purple: #E0D4FF;
+  --color-glass-border: rgba(255, 255, 255, 0.12);
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A1A1AA;
+  --color-text-muted: #6B7280;
+  --color-btn-default: rgba(42, 42, 47, 0.6);
+  --color-btn-hover: rgba(50, 50, 56, 0.8);
+  --color-icon-default: #D4D4D8;
+  --color-danger: #ef4444;
+  --color-warning: #F5E6A7;
 }
 
 /* ===== Base styles ===== */
@@ -60,25 +79,30 @@ body {
 }
 
 /* ===== Glass Panel (Cards) ===== */
-/* Background: #1A1A1F + border + shadow + blur */
+/* Background with transparency + border + shadow + blur for exact glass effect */
 .glass-panel {
-  background: var(--color-card);
+  background: rgba(26, 26, 31, 0.6);
   border: 1px solid var(--color-glass-border);
   border-radius: 20px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.3s ease;
 }
 
 .glass-panel-hover:hover {
-  background: rgba(32, 32, 38, 0.95);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(32, 32, 38, 0.85);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.7);
+  transform: translateY(-2px);
 }
 
 .surface-panel {
-  background: var(--color-surface);
+  background: rgba(21, 21, 24, 0.6);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* ===== Ambient Background ===== */
@@ -153,65 +177,69 @@ body {
   border: none;
   padding: 0.7rem 1.5rem;
   border-radius: 12px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  opacity: 0.85;
+  opacity: 1;
+  box-shadow: 0 4px 15px rgba(205, 234, 192, 0.15);
 }
 
 .btn-primary:hover {
-  opacity: 1;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(205, 234, 192, 0.15);
+  box-shadow: 0 8px 25px rgba(205, 234, 192, 0.35);
+  filter: brightness(1.05);
 }
 
 .btn-outline {
   background: var(--color-btn-default);
-  color: var(--color-icon-default);
-  border: 1px solid var(--color-glass-border);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 0.7rem 1.5rem;
   border-radius: 12px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  backdrop-filter: blur(8px);
 }
 
 .btn-outline:hover {
   background: var(--color-btn-hover);
-  color: #FFFFFF;
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .btn-icon {
   background: var(--color-btn-default);
-  color: var(--color-icon-default);
-  border: 1px solid var(--color-glass-border);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.5rem;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(8px);
 }
 
 .btn-icon:hover {
   background: var(--color-btn-hover);
-  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
 }
 
 .btn-icon-active {
   background: linear-gradient(135deg, rgba(245, 230, 167, 0.2), rgba(205, 234, 192, 0.2));
   color: var(--color-accent-green);
-  border-color: rgba(205, 234, 192, 0.3);
+  border-color: rgba(205, 234, 192, 0.4);
 }
 
 .btn-danger {
