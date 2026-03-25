@@ -57,7 +57,7 @@ async function fetchTasks() {
             }
         });
 
-        if (response.status === 401) {
+        if (response.status === 401 || response.status === 403) {
             localStorage.clear();
             window.location.href = 'index.html';
             return;
@@ -132,6 +132,12 @@ taskForm.addEventListener('submit', async (e) => {
             body: JSON.stringify({ title, description, status, priority })
         });
 
+        if (response.status === 401 || response.status === 403) {
+            localStorage.clear();
+            window.location.href = 'index.html';
+            return;
+        }
+
         if (response.ok) {
             showToast(`Task ${id ? 'updated' : 'created'} successfully!`);
             closeModal();
@@ -160,6 +166,12 @@ window.deleteTask = async (id) => {
                 'Authorization': `Bearer ${token}`
             }
         });
+
+        if (response.status === 401 || response.status === 403) {
+            localStorage.clear();
+            window.location.href = 'index.html';
+            return;
+        }
 
         if (response.ok) {
             showToast('Task deleted successfully.');
