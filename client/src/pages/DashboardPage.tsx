@@ -118,15 +118,15 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="min-w-0">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8"
+        className="mb-6 flex min-w-0 flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center"
       >
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold mb-1">Dashboard</h1>
+        <div className="min-w-0">
+          <h1 className="mb-1 break-words text-2xl font-bold sm:text-3xl">Dashboard</h1>
           <p className="text-text-secondary">Manage and track your tasks effectively.</p>
         </div>
         <motion.button
@@ -158,10 +158,10 @@ const DashboardPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 + i * 0.05 }}
-            className="glass-panel p-5 glass-panel-hover cursor-default"
+            className="glass-panel glass-panel-hover min-w-0 cursor-default p-5"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-text-secondary text-sm">{stat.label}</span>
+              <span className="min-w-0 break-words text-sm text-text-secondary">{stat.label}</span>
               <stat.icon className={`w-5 h-5 ${stat.color}`} />
             </div>
             <span className={`text-3xl font-bold ${stat.color}`}>{stat.value}</span>
@@ -178,7 +178,7 @@ const DashboardPage: React.FC = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="glass-panel p-12 text-center"
+          className="glass-panel flex flex-col items-center p-12 text-center"
         >
           <ClipboardList className="w-16 h-16 text-text-secondary mx-auto mb-4" />
           <h3 className="text-xl font-semibold mb-2">No tasks yet</h3>
@@ -197,15 +197,17 @@ const DashboardPage: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ delay: i * 0.03 }}
-                className={`glass-panel glass-panel-hover p-5 border-l-4 ${priorityColors[task.priority]}`}
+                className={`glass-panel glass-panel-hover min-w-0 border-l-4 p-5 ${priorityColors[task.priority]}`}
               >
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-semibold text-lg leading-tight flex-1 mr-2">{task.title}</h3>
+                <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
+                  <h3 className="min-w-0 flex-1 break-words text-lg font-semibold leading-tight">
+                    {task.title}
+                  </h3>
                   <span className={`text-xs px-2.5 py-1 rounded-full border shrink-0 ${statusColors[task.status]}`}>
                     {task.status.replace('_', ' ')}
                   </span>
                 </div>
-                <p className="text-text-secondary text-sm mb-4 line-clamp-2">
+                <p className="mb-4 break-words text-sm text-text-secondary line-clamp-2">
                   {task.description || 'No description provided.'}
                 </p>
                 <div className="flex items-center justify-between">
@@ -281,7 +283,7 @@ const DashboardPage: React.FC = () => {
                   />
                 </div>
 
-                <div className="flex gap-4">
+                <div className="flex flex-col gap-4 sm:flex-row">
                   <div className="flex-1">
                     <label className="block text-sm font-medium text-text-secondary mb-2">Status</label>
                     <select

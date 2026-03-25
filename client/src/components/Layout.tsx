@@ -49,7 +49,7 @@ const Layout: React.FC = () => {
   const sidebarWidth = isMobile ? 280 : collapsed ? 72 : 260;
 
   return (
-    <div className="flex min-h-screen">
+    <div className="min-h-screen">
       <div className="ambient-bg" />
 
       {/* Mobile Header */}
@@ -156,7 +156,7 @@ const Layout: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="px-3 py-2 text-sm text-[#A1A1AA] truncate"
+                  className="w-full px-3 py-2 text-sm text-[#A1A1AA] truncate"
                 >
                   {username}
                 </motion.div>
@@ -185,15 +185,17 @@ const Layout: React.FC = () => {
       </AnimatePresence>
 
       {/* Main Content */}
-      <motion.main
-        animate={{ marginLeft: isMobile ? 0 : sidebarWidth }}
+      <motion.div
+        animate={{ paddingLeft: isMobile ? 0 : sidebarWidth }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        className="flex-1 min-h-screen w-full"
+        className="min-h-screen"
       >
-        <div className={`p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto ${isMobile ? 'pt-[68px]' : ''}`}>
-          <Outlet />
-        </div>
-      </motion.main>
+        <main className="min-h-screen min-w-0 overflow-x-hidden">
+          <div className={`mx-auto w-full min-w-0 max-w-7xl p-4 sm:p-6 lg:p-8 ${isMobile ? 'pt-[68px]' : ''}`}>
+            <Outlet />
+          </div>
+        </main>
+      </motion.div>
     </div>
   );
 };

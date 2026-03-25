@@ -89,15 +89,15 @@ const DocumentsPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="min-w-0">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8"
+        className="mb-6 flex min-w-0 flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center"
       >
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold mb-1">Documents</h1>
+        <div className="min-w-0">
+          <h1 className="mb-1 break-words text-2xl font-bold sm:text-3xl">Documents</h1>
           <p className="text-text-secondary">Create rich notes with text, images, tables & more.</p>
         </div>
         <motion.button
@@ -137,7 +137,7 @@ const DocumentsPage: React.FC = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="glass-panel p-12 text-center"
+          className="glass-panel flex flex-col items-center p-12 text-center"
         >
           <FileText className="w-16 h-16 text-text-secondary mx-auto mb-4" />
           <h3 className="text-xl font-semibold mb-2">
@@ -163,18 +163,20 @@ const DocumentsPage: React.FC = () => {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ delay: i * 0.03 }}
                 onClick={() => navigate(`/documents/${doc.id}`)}
-                className="glass-panel glass-panel-hover p-5 cursor-pointer group"
+                className="glass-panel glass-panel-hover group min-w-0 cursor-pointer p-5"
               >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-3">
+                <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
+                  <div className="flex min-w-0 flex-1 items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-[#E0D4FF]/10 flex items-center justify-center border border-[#E0D4FF]/20">
                       <FileText className="w-5 h-5 text-[#E0D4FF]" />
                     </div>
-                    <h3 className="font-semibold text-lg leading-tight">{doc.title}</h3>
+                    <h3 className="min-w-0 flex-1 break-words text-lg font-semibold leading-tight">
+                      {doc.title}
+                    </h3>
                   </div>
                   <button
                     onClick={(e) => deleteDocument(doc.id, e)}
-                    className="p-2 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-danger/10 text-text-secondary hover:text-danger transition-all"
+                    className="shrink-0 rounded-lg p-2 text-text-secondary opacity-0 transition-all group-hover:opacity-100 hover:bg-danger/10 hover:text-danger"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

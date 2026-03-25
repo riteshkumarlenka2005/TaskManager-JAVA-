@@ -9,6 +9,7 @@
   --color-accent-yellow: #F5E6A7;
   --color-accent-green: #CDEAC0;
   --color-accent-purple: #E0D4FF;
+  --color-info: #E0D4FF;
   
   --color-glass-border: rgba(255, 255, 255, 0.12);
   
@@ -33,6 +34,7 @@
   --color-accent-yellow: #F5E6A7;
   --color-accent-green: #CDEAC0;
   --color-accent-purple: #E0D4FF;
+  --color-info: #E0D4FF;
   --color-glass-border: rgba(255, 255, 255, 0.12);
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #A1A1AA;
@@ -63,6 +65,10 @@ body {
   overflow-x: hidden;
 }
 
+#root {
+  min-height: 100vh;
+}
+
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
   width: 5px;
@@ -87,6 +93,7 @@ body {
   box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  min-width: 0;
   transition: all 0.3s ease;
 }
 
@@ -103,6 +110,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  min-width: 0;
 }
 
 /* ===== Ambient Background ===== */

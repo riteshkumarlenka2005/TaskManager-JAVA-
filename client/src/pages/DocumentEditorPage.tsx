@@ -221,14 +221,14 @@ const DocumentEditorPage: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="min-w-0">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6"
+        className="mb-6 flex min-w-0 flex-col justify-between gap-3 sm:flex-row sm:items-center"
       >
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-4">
           <button
             onClick={() => navigate('/documents')}
             className="p-2 rounded-xl hover:bg-white/[0.08] text-text-secondary hover:text-text-primary transition-all"
@@ -241,11 +241,11 @@ const DocumentEditorPage: React.FC = () => {
               setTitle(e.target.value);
               triggerAutoSave();
             }}
-            className="text-xl sm:text-2xl font-bold bg-transparent border-none outline-none placeholder:text-text-secondary w-full max-w-xs sm:max-w-md"
+            className="w-full min-w-0 flex-1 bg-transparent text-xl font-bold outline-none placeholder:text-text-secondary sm:max-w-md sm:text-2xl"
             placeholder="Untitled Document"
           />
         </div>
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="flex shrink-0 flex-wrap items-center gap-2 sm:gap-3">
           {saved && (
             <motion.span
               initial={{ opacity: 0, x: 10 }}
@@ -285,7 +285,7 @@ const DocumentEditorPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="glass-panel p-6 lg:p-10 min-h-[600px]"
+        className="glass-panel min-w-0 min-h-[600px] p-6 lg:p-10"
       >
         <AnimatePresence mode="popLayout">
           {blocks.map((block, index) => (
