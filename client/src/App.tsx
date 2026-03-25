@@ -1,0 +1,52 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import Layout from './components/Layout';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPage';
+import DocumentsPage from './pages/DocumentsPage';
+import DocumentEditorPage from './pages/DocumentEditorPage';
+import DrawingPage from './pages/DrawingPage';
+
+const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
+};
+
+const PublicRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated } = useAuth();
+  return !isAuthenticated ? <>{children}</> : <Navigate to="/dashboard" replace />;
+};
+
+function AppRoutes() {
+  return (
+    <Routes>
+      {/* Public */}
+      <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+      <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+
+      {/* Private with Layout */}
+      <Route element={<PrivateRoute><Layout /></PrivateRoute>}>
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/documents" element={<DocumentsPage />} />
+        <Route path="/documents/:id" element={<DocumentEditorPage />} />
+        <Route path="/drawing" element={<DrawingPage />} />
+      </Route>
+
+      {/* Default redirect */}
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
+
+export default App;

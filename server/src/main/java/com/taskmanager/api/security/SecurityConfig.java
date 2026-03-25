@@ -52,6 +52,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         // Allow all origins for development, can restrict to Vercel domains later
         configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowCredentials(false);
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setExposedHeaders(List.of("Authorization"));

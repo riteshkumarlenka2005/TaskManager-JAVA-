@@ -1,0 +1,11 @@
+java.nio.file.NoSuchFileException: D:\TaskManager(JAVA)_Project\server\apache-maven-3.9.6\bin\m2.conf
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:85)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:231)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:357)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:399)
+	at java.base/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:371)
+	at java.base/java.nio.file.Files.newInputStream(Files.java:154)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:382)
+	at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:348)

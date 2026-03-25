@@ -1,0 +1,329 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import api from '../services/api';
+import type { Task, TaskRequest, Status, Priority } from '../types';
+import {
+  Plus,
+  ClipboardList,
+  Clock,
+  CheckCircle2,
+  AlertTriangle,
+  Trash2,
+  Edit3,
+  X,
+  Loader2,
+} from 'lucide-react';
+
+const statusColors: Record<Status, string> = {
+  PENDING: 'bg-warning/20 text-warning border-warning/30',
+  IN_PROGRESS: 'bg-info/20 text-info border-info/30',
+  COMPLETED: 'bg-[#CDEAC0]/10 text-[#CDEAC0] border-[#CDEAC0]/20',
+};
+
+const priorityColors: Record<Priority, string> = {
+  LOW: 'border-l-[#A1A1AA]',
+  MEDIUM: 'border-l-warning',
+  HIGH: 'border-l-danger',
+};
+
+function formatDate(dateArray: number[] | null): string {
+  if (!dateArray || !Array.isArray(dateArray)) return 'Unknown';
+  const date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2], dateArray[3] || 0, dateArray[4] || 0);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+const DashboardPage: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [form, setForm] = useState<TaskRequest>({
+    title: '',
+    description: '',
+    status: 'PENDING',
+    priority: 'MEDIUM',
+  });
+  const [saving, setSaving] = useState(false);
+
+  const fetchTasks = useCallback(async () => {
+    try {
+      const res = await api.get<Task[]>('/tasks');
+      setTasks(res.data);
+    } catch {
+      // handled by interceptor
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
+  const openCreate = () => {
+    setEditingTask(null);
+    setForm({ title: '', description: '', status: 'PENDING', priority: 'MEDIUM' });
+    setModalOpen(true);
+  };
+
+  const openEdit = (task: Task) => {
+    setEditingTask(task);
+    setForm({
+      title: task.title,
+      description: task.description || '',
+      status: task.status,
+      priority: task.priority,
+    });
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setEditingTask(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      if (editingTask) {
+        await api.put(`/tasks/${editingTask.id}`, form);
+      } else {
+        await api.post('/tasks', form);
+      }
+      closeModal();
+      fetchTasks();
+    } catch {
+      // error
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!confirm('Delete this task?')) return;
+    try {
+      await api.delete(`/tasks/${id}`);
+      fetchTasks();
+    } catch {
+      // error
+    }
+  };
+
+  const stats = {
+    total: tasks.length,
+    pending: tasks.filter((t) => t.status === 'PENDING').length,
+    inProgress: tasks.filter((t) => t.status === 'IN_PROGRESS').length,
+    completed: tasks.filter((t) => t.status === 'COMPLETED').length,
+  };
+
+  return (
+    <div>
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex items-center justify-between mb-8"
+      >
+        <div>
+          <h1 className="text-3xl font-bold mb-1">Dashboard</h1>
+          <p className="text-text-secondary">Manage and track your tasks effectively.</p>
+        </div>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={openCreate}
+          className="btn-primary"
+        >
+          <Plus className="w-4 h-4" />
+          New Task
+        </motion.button>
+      </motion.div>
+
+      {/* Stats Cards */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+      >
+        {[
+          { label: 'Total Tasks', value: stats.total, icon: ClipboardList, color: 'text-text-primary' },
+          { label: 'Pending', value: stats.pending, icon: Clock, color: 'text-warning' },
+          { label: 'In Progress', value: stats.inProgress, icon: AlertTriangle, color: 'text-info' },
+          { label: 'Completed', value: stats.completed, icon: CheckCircle2, color: 'text-[#CDEAC0]' },
+        ].map((stat, i) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 + i * 0.05 }}
+            className="glass-panel p-5 glass-panel-hover cursor-default"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-text-secondary text-sm">{stat.label}</span>
+              <stat.icon className={`w-5 h-5 ${stat.color}`} />
+            </div>
+            <span className={`text-3xl font-bold ${stat.color}`}>{stat.value}</span>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Task Grid */}
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 text-[#F5E6A7] animate-spin" />
+        </div>
+      ) : tasks.length === 0 ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="glass-panel p-12 text-center"
+        >
+          <ClipboardList className="w-16 h-16 text-text-secondary mx-auto mb-4" />
+          <h3 className="text-xl font-semibold mb-2">No tasks yet</h3>
+          <p className="text-text-secondary mb-6">Create your first task to get started.</p>
+          <button onClick={openCreate} className="btn-primary">
+            <Plus className="w-4 h-4" /> Create Task
+          </button>
+        </motion.div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <AnimatePresence>
+            {tasks.map((task, i) => (
+              <motion.div
+                key={task.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ delay: i * 0.03 }}
+                className={`glass-panel glass-panel-hover p-5 border-l-4 ${priorityColors[task.priority]}`}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="font-semibold text-lg leading-tight flex-1 mr-2">{task.title}</h3>
+                  <span className={`text-xs px-2.5 py-1 rounded-full border shrink-0 ${statusColors[task.status]}`}>
+                    {task.status.replace('_', ' ')}
+                  </span>
+                </div>
+                <p className="text-text-secondary text-sm mb-4 line-clamp-2">
+                  {task.description || 'No description provided.'}
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-text-secondary text-xs flex items-center gap-1">
+                    <Clock className="w-3 h-3" /> {formatDate(task.createdAt)}
+                  </span>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => openEdit(task)}
+                      className="p-2 rounded-lg hover:bg-white/[0.05] text-text-secondary hover:text-[#FFFFFF] transition-all"
+                    >
+                      <Edit3 className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(task.id)}
+                      className="p-2 rounded-lg hover:bg-danger/10 text-text-secondary hover:text-danger transition-all"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      )}
+
+      {/* Create/Edit Modal */}
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+            onClick={closeModal}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="glass-panel p-6 w-full max-w-lg"
+              style={{ background: 'rgba(18, 18, 18, 0.97)' }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold">{editingTask ? 'Edit Task' : 'Create New Task'}</h2>
+                <button onClick={closeModal} className="p-1 hover:text-[#FFFFFF] transition-colors">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label className="block text-sm font-medium text-text-secondary mb-2">Title</label>
+                  <input
+                    value={form.title}
+                    onChange={(e) => setForm({ ...form, title: e.target.value })}
+                    className="input-field"
+                    placeholder="What needs to be done?"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-text-secondary mb-2">Description</label>
+                  <textarea
+                    value={form.description}
+                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                    className="input-field resize-y min-h-[80px]"
+                    placeholder="Add some details..."
+                    rows={3}
+                  />
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-2">Status</label>
+                    <select
+                      value={form.status}
+                      onChange={(e) => setForm({ ...form, status: e.target.value as Status })}
+                      className="input-field"
+                    >
+                      <option value="PENDING">Pending</option>
+                      <option value="IN_PROGRESS">In Progress</option>
+                      <option value="COMPLETED">Completed</option>
+                    </select>
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-2">Priority</label>
+                    <select
+                      value={form.priority}
+                      onChange={(e) => setForm({ ...form, priority: e.target.value as Priority })}
+                      className="input-field"
+                    >
+                      <option value="LOW">Low</option>
+                      <option value="MEDIUM">Medium</option>
+                      <option value="HIGH">High</option>
+                    </select>
+                  </div>
+                </div>
+
+                <motion.button
+                  type="submit"
+                  disabled={saving}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="btn-primary w-full justify-center py-3 disabled:opacity-50"
+                >
+                  {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : editingTask ? 'Update Task' : 'Create Task'}
+                </motion.button>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default DashboardPage;
