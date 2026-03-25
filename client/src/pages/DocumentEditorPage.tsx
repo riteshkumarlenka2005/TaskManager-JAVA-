@@ -24,11 +24,11 @@ import {
   Loader2,
   Check,
 } from 'lucide-react';
-import TextBlock from '../components/editor/TextBlock';
-import ImageBlock from '../components/editor/ImageBlock';
-import TableBlock from '../components/editor/TableBlock';
-import MediaBlock from '../components/editor/MediaBlock';
-import DrawingBlock from '../components/editor/DrawingBlock';
+import TextBlock from '../components/editor/TextBlock.tsx';
+import ImageBlock from '../components/editor/ImageBlock.tsx';
+import TableBlock from '../components/editor/TableBlock.tsx';
+import MediaBlock from '../components/editor/MediaBlock.tsx';
+import DrawingBlock from '../components/editor/DrawingBlock.tsx';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
