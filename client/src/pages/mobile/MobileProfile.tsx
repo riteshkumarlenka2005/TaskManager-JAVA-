@@ -4,7 +4,6 @@ import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
 import type { Task } from '../../types';
 import {
-  User,
   LogOut,
   ChevronRight,
   Loader2,
@@ -72,7 +71,7 @@ const MobileProfile: React.FC = () => {
             style={{ width: '100%', height: '100%', borderRadius: '28px' }}
           />
         </div>
-        <h3 style={{ fontSize: '1.5rem', fontBlack: 900, marginBottom: '0.25rem' }}>{username || 'User'}</h3>
+        <h3 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '0.25rem' }}>{username || 'User'}</h3>
         <p style={{ fontSize: '0.85rem', color: '#7C8B93', fontWeight: 600 }}>Platinum Member</p>
       </div>
 
@@ -129,7 +128,7 @@ const ProfileMenuItem = ({ icon, label }: { icon: React.ReactNode; label: string
     className="hover:bg-white/5"
   >
     <div style={{ color: '#7C8B93' }}>
-      {React.cloneElement(icon as React.ReactElement, { size: 20 })}
+      {React.cloneElement(icon as React.ReactElement<any>, { size: 20 })}
     </div>
     <span style={{ flex: 1, textAlign: 'left', fontWeight: 700, fontSize: '0.9rem' }}>{label}</span>
     <ChevronRight size={16} style={{ color: '#4F5B62' }} />

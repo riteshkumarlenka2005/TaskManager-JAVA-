@@ -52,11 +52,6 @@ const MobileTasks: React.FC = () => {
   const filtered =
     filter === 'ALL' ? tasks : tasks.filter((t) => t.status === filter);
 
-  const openCreate = () => {
-    setEditingTask(null);
-    setForm({ title: '', description: '', status: 'PENDING', priority: 'MEDIUM' });
-    setModalOpen(true);
-  };
 
   const openEdit = (task: Task) => {
     setEditingTask(task);

@@ -6,13 +6,10 @@ import {
   Plus,
   ClipboardList,
   Clock,
-  CheckCircle2,
-  AlertTriangle,
   Trash2,
   Edit3,
   X,
   Loader2,
-  Calendar,
 } from 'lucide-react';
 
 const statusColors: Record<Status, string> = {

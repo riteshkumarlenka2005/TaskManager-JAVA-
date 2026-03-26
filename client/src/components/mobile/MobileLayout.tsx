@@ -1,6 +1,6 @@
 import React from 'react';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
-import { Home, CheckSquare, FileText, User, LayoutGrid } from 'lucide-react';
+import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Home, CheckSquare, FileText, User } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import '../../mobile.css';
 
@@ -55,7 +55,7 @@ const MobileLayout: React.FC = () => {
 
       {/* Bottom Navigation */}
       <nav className="mobile-nav">
-        {navItems.map((item, idx) => {
+        {navItems.map((item) => {
           if (item.path === 'plus') {
             return (
               <button 
