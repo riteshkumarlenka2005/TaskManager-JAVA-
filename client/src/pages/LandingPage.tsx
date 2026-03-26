@@ -6,21 +6,6 @@ import { Smartphone, Layers, ArrowRight } from 'lucide-react';
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
-  // Generate grid dots
-  const dots = useMemo(() => {
-    const arr = [];
-    for (let i = 0; i < 400; i++) {
-      arr.push({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        delay: Math.random() * 5,
-        duration: 2 + Math.random() * 3
-      });
-    }
-    return arr;
-  }, []);
-
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-[#BEC4FF]/20 relative overflow-hidden font-['Outfit'] flex flex-col">
       
