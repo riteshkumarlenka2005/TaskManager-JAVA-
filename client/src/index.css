@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@source "./";
+@source "../index.html";
 
 /* ===== Custom Design Tokens ===== */
 @theme {
