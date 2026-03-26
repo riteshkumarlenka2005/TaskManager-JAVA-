@@ -1,73 +1,358 @@
-import React from 'react';
-import { Plus, CheckCircle2, Circle, Clock, Tag } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import api from '../../services/api';
+import type { Task, TaskRequest, Status, Priority } from '../../types';
+import {
+  Plus,
+  CheckCircle2,
+  Circle,
+  Clock,
+  Tag,
+  Trash2,
+  Edit3,
+  X,
+  Loader2,
+  ClipboardList,
+} from 'lucide-react';
+
+const STATUS_FILTERS: { label: string; value: string }[] = [
+  { label: 'All', value: 'ALL' },
+  { label: 'Pending', value: 'PENDING' },
+  { label: 'In Progress', value: 'IN_PROGRESS' },
+  { label: 'Completed', value: 'COMPLETED' },
+];
 
 const MobileTasks: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('ALL');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState<TaskRequest>({
+    title: '',
+    description: '',
+    status: 'PENDING',
+    priority: 'MEDIUM',
+  });
+
+  const fetchTasks = useCallback(async () => {
+    try {
+      const res = await api.get<any>('/tasks');
+      const data = Array.isArray(res.data)
+        ? res.data
+        : res.data?.content || res.data?.data || [];
+      setTasks(data);
+    } catch {
+      // handled by interceptor
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
+  const filtered =
+    filter === 'ALL' ? tasks : tasks.filter((t) => t.status === filter);
+
+  const openCreate = () => {
+    setEditingTask(null);
+    setForm({ title: '', description: '', status: 'PENDING', priority: 'MEDIUM' });
+    setModalOpen(true);
+  };
+
+  const openEdit = (task: Task) => {
+    setEditingTask(task);
+    setForm({
+      title: task.title,
+      description: task.description || '',
+      status: task.status,
+      priority: task.priority,
+    });
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setEditingTask(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      if (editingTask) {
+        await api.put(`/tasks/${editingTask.id}`, form);
+      } else {
+        await api.post('/tasks', form);
+      }
+      closeModal();
+      fetchTasks();
+    } catch {
+      // error
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!confirm('Delete this task?')) return;
+    try {
+      await api.delete(`/tasks/${id}`);
+      fetchTasks();
+    } catch {
+      // error
+    }
+  };
+
+  const handleToggleComplete = async (task: Task) => {
+    const newStatus: Status = task.status === 'COMPLETED' ? 'PENDING' : 'COMPLETED';
+    try {
+      await api.put(`/tasks/${task.id}`, {
+        title: task.title,
+        description: task.description || '',
+        status: newStatus,
+        priority: task.priority,
+      });
+      fetchTasks();
+    } catch {
+      // error
+    }
+  };
+
+  const formatDate = (dateArray: number[] | null): string => {
+    if (!dateArray || !Array.isArray(dateArray)) return '';
+    const date = new Date(
+      dateArray[0],
+      dateArray[1] - 1,
+      dateArray[2],
+      dateArray[3] || 0,
+      dateArray[4] || 0
+    );
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">My Tasks</h2>
-        <button className="w-12 h-12 rounded-2xl bg-mobile-primary flex items-center justify-center text-[#131321] shadow-[0_8px_20px_rgba(70,240,210,0.3)]">
-          <Plus className="w-6 h-6" />
-        </button>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      {/* Filter Tabs */}
+      <div className="mobile-tabs">
+        {STATUS_FILTERS.map((f) => (
+          <button
+            key={f.value}
+            className={`mobile-tab ${filter === f.value ? 'active' : ''}`}
+            onClick={() => setFilter(f.value)}
+          >
+            {f.label}
+          </button>
+        ))}
       </div>
+
+      {/* Task Count */}
+      <p style={{ fontSize: '0.75rem', color: '#7C8B93', margin: 0, fontWeight: 600 }}>
+        {filtered.length} task{filtered.length !== 1 ? 's' : ''} found
+      </p>
 
       {/* Task List */}
-      <div className="space-y-4">
-        <TaskCard 
-          title="Review Backend API" 
-          priority="high" 
-          time="09:00 AM" 
-          done 
-        />
-        <TaskCard 
-          title="UI/UX Implementation" 
-          priority="medium" 
-          time="11:30 AM" 
-        />
-        <TaskCard 
-          title="Security Patch Deploy" 
-          priority="high" 
-          time="02:00 PM" 
-        />
-        <TaskCard 
-          title="Team Sync" 
-          priority="low" 
-          time="04:30 PM" 
-        />
-      </div>
+      {loading ? (
+        <div className="mobile-spinner">
+          <Loader2 style={{ width: 32, height: 32 }} />
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="mobile-empty-state">
+          <div className="mobile-empty-state-icon">
+            <ClipboardList style={{ width: 24, height: 24 }} />
+          </div>
+          <p style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.25rem' }}>
+            {filter === 'ALL' ? 'No tasks yet' : `No ${filter.replace('_', ' ').toLowerCase()} tasks`}
+          </p>
+          <p style={{ fontSize: '0.75rem' }}>
+            {filter === 'ALL' ? 'Tap the + button to create one' : 'Try a different filter'}
+          </p>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+          {filtered.map((task) => (
+            <div
+              key={task.id}
+              className={`mobile-task-card ${task.status === 'COMPLETED' ? 'done' : ''}`}
+            >
+              {/* Checkbox */}
+              <button
+                className={`mobile-task-checkbox ${task.status === 'COMPLETED' ? 'checked' : ''}`}
+                onClick={() => handleToggleComplete(task)}
+              >
+                {task.status === 'COMPLETED' ? (
+                  <CheckCircle2 style={{ width: 14, height: 14 }} />
+                ) : (
+                  <Circle style={{ width: 14, height: 14 }} />
+                )}
+              </button>
 
-      {/* Placeholder for more */}
-      <div className="mobile-panel bg-white/[0.02] border-dashed border-white/10 text-center py-10">
-        <p className="text-mobile-text-muted text-xs">You've reached the end of today's missions.</p>
-      </div>
+              {/* Content */}
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div
+                  className={`mobile-task-title ${task.status === 'COMPLETED' ? 'completed' : ''}`}
+                  style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                >
+                  {task.title}
+                </div>
+                <div className="mobile-task-meta">
+                  {task.createdAt && (
+                    <div className="mobile-task-meta-item">
+                      <Clock style={{ width: 10, height: 10 }} />
+                      {formatDate(task.createdAt)}
+                    </div>
+                  )}
+                  <div
+                    className={`mobile-task-meta-item mobile-priority-${task.priority.toLowerCase()}`}
+                    style={{ fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}
+                  >
+                    <Tag style={{ width: 10, height: 10 }} />
+                    {task.priority}
+                  </div>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div style={{ display: 'flex', gap: '0.25rem', flexShrink: 0 }}>
+                <button
+                  onClick={() => openEdit(task)}
+                  style={{
+                    padding: '0.4rem',
+                    borderRadius: 8,
+                    background: 'transparent',
+                    border: 'none',
+                    color: '#7C8B93',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  <Edit3 style={{ width: 14, height: 14 }} />
+                </button>
+                <button
+                  onClick={() => handleDelete(task.id)}
+                  style={{
+                    padding: '0.4rem',
+                    borderRadius: 8,
+                    background: 'transparent',
+                    border: 'none',
+                    color: '#7C8B93',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  <Trash2 style={{ width: 14, height: 14 }} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* FAB */}
+      <button className="mobile-fab" onClick={openCreate}>
+        <Plus style={{ width: 26, height: 26 }} />
+      </button>
+
+      {/* Create/Edit Modal */}
+      {modalOpen && (
+        <div className="mobile-modal-overlay" onClick={closeModal}>
+          <div className="mobile-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-modal-handle" />
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: 800, margin: 0 }}>
+                {editingTask ? 'Edit Task' : 'New Task'}
+              </h3>
+              <button
+                onClick={closeModal}
+                style={{ background: 'none', border: 'none', color: '#7C8B93', cursor: 'pointer', padding: '0.25rem' }}
+              >
+                <X style={{ width: 20, height: 20 }} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#7C8B93', marginBottom: '0.4rem' }}>
+                  Title
+                </label>
+                <input
+                  className="mobile-input"
+                  value={form.title}
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  placeholder="What needs to be done?"
+                  required
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#7C8B93', marginBottom: '0.4rem' }}>
+                  Description
+                </label>
+                <textarea
+                  className="mobile-input mobile-textarea"
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  placeholder="Add details..."
+                  rows={3}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#7C8B93', marginBottom: '0.4rem' }}>
+                    Status
+                  </label>
+                  <select
+                    className="mobile-input mobile-select"
+                    value={form.status}
+                    onChange={(e) => setForm({ ...form, status: e.target.value as Status })}
+                  >
+                    <option value="PENDING">Pending</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="COMPLETED">Completed</option>
+                  </select>
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: '#7C8B93', marginBottom: '0.4rem' }}>
+                    Priority
+                  </label>
+                  <select
+                    className="mobile-input mobile-select"
+                    value={form.priority}
+                    onChange={(e) => setForm({ ...form, priority: e.target.value as Priority })}
+                  >
+                    <option value="LOW">Low</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HIGH">High</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="mobile-btn-primary"
+                disabled={saving}
+              >
+                {saving ? (
+                  <Loader2 style={{ width: 20, height: 20, animation: 'spin 1s linear infinite' }} />
+                ) : editingTask ? (
+                  'Update Task'
+                ) : (
+                  'Create Task'
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Bottom spacer */}
+      <div style={{ height: '1rem' }} />
     </div>
   );
 };
-
-const TaskCard = ({ title, priority, time, done }: { title: string, priority: string, time: string, done?: boolean }) => (
-  <div className={`mobile-panel flex items-center gap-4 transition-all ${
-    done ? 'opacity-50' : ''
-  }`}>
-    <button className={`w-7 h-7 rounded-lg border-2 flex items-center justify-center transition-all ${
-      done ? 'bg-mobile-primary border-mobile-primary text-[#131321]' : 'border-white/10 text-transparent'
-    }`}>
-      {done ? <CheckCircle2 className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
-    </button>
-    
-    <div className="flex-1">
-      <h4 className={`text-sm font-bold mb-1 ${done ? 'line-through text-mobile-text-muted' : 'text-white'}`}>{title}</h4>
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1 text-[10px] text-mobile-text-muted font-medium">
-          <Clock className="w-3 h-3" /> {time}
-        </div>
-        <div className={`flex items-center gap-1 text-[10px] font-black uppercase tracking-widest ${
-          priority === 'high' ? 'text-rose-400' : priority === 'medium' ? 'text-amber-400' : 'text-mobile-primary'
-        }`}>
-          <Tag className="w-3 h-3" /> {priority}
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 export default MobileTasks;

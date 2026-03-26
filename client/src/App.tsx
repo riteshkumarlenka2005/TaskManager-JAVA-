@@ -12,6 +12,8 @@ import LandingPage from './pages/LandingPage';
 import MobileLayout from './components/mobile/MobileLayout';
 import MobileHome from './pages/mobile/MobileHome';
 import MobileTasks from './pages/mobile/MobileTasks';
+import MobileDocuments from './pages/mobile/MobileDocuments';
+import MobileProfile from './pages/mobile/MobileProfile';
  
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -46,6 +48,8 @@ function AppRoutes() {
         <Route index element={<Navigate to="/mobile/home" replace />} />
         <Route path="home" element={<MobileHome />} />
         <Route path="tasks" element={<MobileTasks />} />
+        <Route path="documents" element={<MobileDocuments />} />
+        <Route path="profile" element={<MobileProfile />} />
       </Route>
 
       {/* Default redirect */}

@@ -1,45 +1,81 @@
 import React from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
-import { Home, Calendar, Settings, User, LayoutGrid } from 'lucide-react';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Home, CheckSquare, FileText, User, LayoutGrid } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 import '../../mobile.css';
 
+const navItems = [
+  { path: '/mobile/home', icon: Home, label: 'Home' },
+  { path: '/mobile/tasks', icon: CheckSquare, label: 'Tasks' },
+  { path: '/mobile/documents', icon: FileText, label: 'Docs' },
+  { path: '/mobile/profile', icon: User, label: 'Profile' },
+];
+
 const MobileLayout: React.FC = () => {
+  const { username } = useAuth();
+  const location = useLocation();
+
+  const getPageTitle = () => {
+    if (location.pathname.includes('tasks')) return 'Tasks';
+    if (location.pathname.includes('documents')) return 'Documents';
+    if (location.pathname.includes('profile')) return 'Profile';
+    return null; // Home uses greeting
+  };
+
+  const pageTitle = getPageTitle();
+
   return (
-    <div className="mobile-app-container pt-8 pb-32 px-6">
+    <div className="mobile-app-container pt-8 pb-28 px-5">
       {/* Dynamic Header */}
-      <header className="flex items-center justify-between mb-8">
-        <div>
-          <h2 className="text-sm font-medium text-mobile-text-muted">Hey, Ektiar!</h2>
-          <p className="text-xs text-mobile-text-muted/60">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: '2-digit', year: 'numeric' })}</p>
-        </div>
-        <button className="mobile-icon-box bg-white/10 hover:bg-white/20 transition-colors">
-          <LayoutGrid className="w-5 h-5 text-mobile-primary" />
+      <header className="mobile-header">
+        {pageTitle ? (
+          <div>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', margin: 0 }}>
+              {pageTitle}
+            </h2>
+          </div>
+        ) : (
+          <div className="mobile-header-greeting">
+            <h2>
+              Hey, <span>{username || 'User'}</span>! 👋
+            </h2>
+            <p>
+              {new Date().toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'short',
+                day: '2-digit',
+                year: 'numeric',
+              })}
+            </p>
+          </div>
+        )}
+        <button
+          className="mobile-icon-box"
+          style={{ background: 'rgba(70,240,210,0.08)', border: '1px solid rgba(70,240,210,0.15)' }}
+        >
+          <LayoutGrid className="w-5 h-5" style={{ color: '#46F0D2' }} />
         </button>
       </header>
 
       {/* Main Content Area */}
-      <main className="relative z-10">
+      <main style={{ position: 'relative', zIndex: 10 }}>
         <Outlet />
       </main>
 
       {/* Bottom Navigation */}
       <nav className="mobile-bottom-nav">
-        <NavLink to="/mobile/home" className={({ isActive }) => `mobile-nav-item ${isActive ? 'active' : ''}`}>
-          <Home className="w-6 h-6" />
-          <span className="text-[10px] uppercase font-bold tracking-tight">Home</span>
-        </NavLink>
-        <NavLink to="/mobile/tasks" className={({ isActive }) => `mobile-nav-item ${isActive ? 'active' : ''}`}>
-          <Calendar className="w-6 h-6" />
-          <span className="text-[10px] uppercase font-bold tracking-tight">Tasks</span>
-        </NavLink>
-        <NavLink to="/mobile/settings" className={({ isActive }) => `mobile-nav-item ${isActive ? 'active' : ''}`}>
-          <Settings className="w-6 h-6" />
-          <span className="text-[10px] uppercase font-bold tracking-tight">Set</span>
-        </NavLink>
-        <NavLink to="/mobile/profile" className={({ isActive }) => `mobile-nav-item ${isActive ? 'active' : ''}`}>
-          <User className="w-6 h-6" />
-          <span className="text-[10px] uppercase font-bold tracking-tight">Pro</span>
-        </NavLink>
+        {navItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) =>
+              `mobile-nav-item ${isActive ? 'active' : ''}`
+            }
+          >
+            <item.icon style={{ width: 22, height: 22 }} />
+            <span className="mobile-nav-label">{item.label}</span>
+          </NavLink>
+        ))}
       </nav>
     </div>
   );

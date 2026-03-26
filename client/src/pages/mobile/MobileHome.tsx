@@ -1,98 +1,264 @@
-import React from 'react';
-import { Cloud, Wind, Thermometer, Droplets, Smartphone, Tv, Lamp, Speaker } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../../services/api';
+import type { Task } from '../../types';
+import {
+  ClipboardList,
+  Clock,
+  CheckCircle2,
+  AlertTriangle,
+  TrendingUp,
+  ArrowRight,
+  Loader2,
+} from 'lucide-react';
 
 const MobileHome: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const fetchTasks = useCallback(async () => {
+    try {
+      const res = await api.get<any>('/tasks');
+      const data = Array.isArray(res.data)
+        ? res.data
+        : res.data?.content || res.data?.data || [];
+      setTasks(data);
+    } catch {
+      // handled by interceptor
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
+  const stats = {
+    total: tasks.length,
+    pending: tasks.filter((t) => t.status === 'PENDING').length,
+    inProgress: tasks.filter((t) => t.status === 'IN_PROGRESS').length,
+    completed: tasks.filter((t) => t.status === 'COMPLETED').length,
+  };
+
+  const completionRate =
+    stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0;
+
+  const recentTasks = tasks.slice(0, 4);
+
+  if (loading) {
+    return (
+      <div className="mobile-spinner">
+        <Loader2 style={{ width: 32, height: 32 }} />
+      </div>
+    );
+  }
+
   return (
-    <div className="space-y-6">
-      {/* Status Widget */}
-      <div className="mobile-panel bg-gradient-to-br from-[#46F0D2]/20 to-[#131321] border-[#46F0D2]/20 shadow-[0_0_30px_rgba(70,240,210,0.1)]">
-        <div className="flex justify-between items-start mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
-              <Cloud className="w-6 h-6 text-mobile-primary" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold">Cloudy</h3>
-              <p className="text-xs text-mobile-text-muted">Rajshahi, Bangladesh</p>
-            </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      {/* Summary Hero Card */}
+      <div className="mobile-summary-card">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+          <div>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'white', margin: 0, marginBottom: '0.25rem' }}>
+              Task Overview
+            </h3>
+            <p style={{ fontSize: '0.75rem', color: '#7C8B93', margin: 0 }}>
+              {stats.total} total tasks this workspace
+            </p>
           </div>
-          <div className="text-right">
-            <span className="text-4xl font-extrabold text-mobile-primary">28°</span>
+          <div style={{ textAlign: 'right' }}>
+            <span style={{ fontSize: '2.25rem', fontWeight: 900, color: '#46F0D2', lineHeight: 1 }}>
+              {completionRate}%
+            </span>
+            <p style={{ fontSize: '0.6rem', color: '#7C8B93', margin: '0.15rem 0 0', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
+              Completed
+            </p>
           </div>
         </div>
-        
-        <div className="grid grid-cols-4 gap-4 pt-4 border-t border-white/05">
-          <StatMini icon={<Thermometer />} label="Sensible" value="31°" />
-          <StatMini icon={<Droplets />} label="Humidity" value="65%" />
-          <StatMini icon={<Wind />} label="W. force" value="3" />
-          <StatMini icon={<Smartphone />} label="Pressure" value="1009hpa" />
+
+        {/* Progress bar */}
+        <div style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 100, height: 6, overflow: 'hidden' }}>
+          <div
+            style={{
+              width: `${completionRate}%`,
+              height: '100%',
+              background: 'linear-gradient(90deg, #46F0D2, #00CFFF)',
+              borderRadius: 100,
+              boxShadow: '0 0 10px rgba(70,240,210,0.5)',
+              transition: 'width 0.5s ease',
+            }}
+          />
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: '1rem' }}>
+          <StatMini icon={<ClipboardList />} label="Total" value={String(stats.total)} />
+          <StatMini icon={<Clock />} label="Pending" value={String(stats.pending)} />
+          <StatMini icon={<AlertTriangle />} label="Active" value={String(stats.inProgress)} />
+          <StatMini icon={<CheckCircle2 />} label="Done" value={String(stats.completed)} />
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-4 overflow-x-auto pb-2 no-scrollbar">
-        <TabItem label="All Devices" active />
-        <TabItem label="Living Room" />
-        <TabItem label="Bedroom" />
-        <TabItem label="Kitchen" />
-      </div>
-
-      {/* Grid */}
+      {/* Quick Stats Grid */}
       <div className="mobile-grid">
-        <DeviceCard icon={<Wind />} name="Air Condition" count={4} active />
-        <DeviceCard icon={<Tv />} name="Smart TV" count={2} />
-        <DeviceCard icon={<Lamp />} name="Smart Lighting" count={8} />
-        <DeviceCard icon={<Speaker />} name="Speaker" count={6} />
+        <StatCard
+          icon={<ClipboardList />}
+          label="Total Tasks"
+          value={stats.total}
+          color="#46F0D2"
+          bg="rgba(70,240,210,0.08)"
+        />
+        <StatCard
+          icon={<Clock />}
+          label="Pending"
+          value={stats.pending}
+          color="#FFAD00"
+          bg="rgba(255,173,0,0.08)"
+        />
+        <StatCard
+          icon={<TrendingUp />}
+          label="In Progress"
+          value={stats.inProgress}
+          color="#00CFFF"
+          bg="rgba(0,207,255,0.08)"
+        />
+        <StatCard
+          icon={<CheckCircle2 />}
+          label="Completed"
+          value={stats.completed}
+          color="#46F0D2"
+          bg="rgba(70,240,210,0.08)"
+        />
       </div>
 
-      {/* Bottom spacer for nav */}
-      <div className="h-4" />
+      {/* Recent Tasks */}
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+          <span className="mobile-section-title" style={{ marginBottom: 0 }}>Recent Tasks</span>
+          <button
+            onClick={() => navigate('/mobile/tasks')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.25rem',
+              fontSize: '0.7rem',
+              fontWeight: 700,
+              color: '#46F0D2',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            View all <ArrowRight style={{ width: 12, height: 12 }} />
+          </button>
+        </div>
+
+        {recentTasks.length === 0 ? (
+          <div className="mobile-empty-state">
+            <div className="mobile-empty-state-icon">
+              <ClipboardList style={{ width: 24, height: 24 }} />
+            </div>
+            <p style={{ fontSize: '0.85rem', fontWeight: 600 }}>No tasks yet</p>
+            <p style={{ fontSize: '0.75rem' }}>Create your first task to get started</p>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            {recentTasks.map((task) => (
+              <RecentTaskItem key={task.id} task={task} />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Bottom spacer */}
+      <div style={{ height: '1rem' }} />
     </div>
   );
 };
 
-const StatMini = ({ icon, label, value }: { icon: React.ReactNode, label: string, value: string }) => (
-  <div className="text-center">
-    <div className="text-mobile-primary/60 mb-1 flex justify-center">{icon}</div>
-    <div className="text-[10px] font-bold text-white mb-0.5">{value}</div>
-    <div className="text-[8px] text-mobile-text-muted uppercase tracking-tighter">{label}</div>
+// Mini stat inside hero card
+const StatMini = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
+  <div className="mobile-stat-mini">
+    <div className="mobile-stat-mini-icon">
+      {React.cloneElement(icon as React.ReactElement<any, any>, { style: { width: 14, height: 14 } })}
+    </div>
+    <div className="mobile-stat-mini-value">{value}</div>
+    <div className="mobile-stat-mini-label">{label}</div>
   </div>
 );
 
-const TabItem = ({ label, active }: { label: string, active?: boolean }) => (
-  <button className={`px-6 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
-    active ? 'bg-mobile-primary text-[#131321] shadow-[0_4px_15px_rgba(70,240,210,0.3)]' : 'bg-white/05 text-mobile-text-muted'
-  }`}>
-    {label}
-  </button>
-);
-
-const DeviceCard = ({ icon, name, count, active }: { icon: React.ReactNode, name: string, count: number, active?: boolean }) => (
-  <div className={`mobile-panel p-5 group transition-all duration-500 cursor-pointer ${
-    active ? 'bg-mobile-primary border-mobile-primary' : 'bg-white/[0.03] border-white/05'
-  }`}>
-    <div className="flex justify-between items-start mb-4">
-      <div className={`mobile-icon-box ${active ? 'bg-[#131321]/20' : 'bg-white/05'}`}>
-        <div className={active ? 'text-[#131321]' : 'text-mobile-primary'}>{icon}</div>
-      </div>
-      <div className={`text-[10px] font-bold py-0.5 px-2 rounded-full ${active ? 'bg-[#131321]/10 text-[#131321]' : 'bg-white/05 text-mobile-text-muted'}`}>
-        WIFI
-      </div>
+// Grid stat card
+const StatCard = ({
+  icon,
+  label,
+  value,
+  color,
+  bg,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+  color: string;
+  bg: string;
+}) => (
+  <div className="mobile-stat-card">
+    <div className="mobile-stat-card-icon" style={{ background: bg }}>
+      {React.cloneElement(icon as React.ReactElement<any, any>, {
+        style: { width: 20, height: 20, color },
+      })}
     </div>
-    <h4 className={`text-sm font-bold mb-0.5 ${active ? 'text-[#131321]' : 'text-white'}`}>{name}</h4>
-    <p className={`text-[10px] ${active ? 'text-[#131321]/60' : 'text-mobile-text-muted'}`}>{count} Devices</p>
-    
-    <div className="flex justify-between items-center mt-6">
-      <span className={`text-[10px] font-black uppercase ${active ? 'text-[#131321]' : 'text-mobile-primary'}`}>
-        {active ? 'ON' : 'OFF'}
-      </span>
-      <div className={`w-10 h-5 rounded-full relative p-1 ${active ? 'bg-[#131321]/20' : 'bg-white/10'}`}>
-        <div className={`w-3 h-3 rounded-full shadow-lg transition-transform duration-300 ${
-          active ? 'bg-[#131321] translate-x-5' : 'bg-mobile-text-muted translate-x-0'
-        }`} />
-      </div>
-    </div>
+    <div className="mobile-stat-card-value" style={{ color }}>{value}</div>
+    <div className="mobile-stat-card-label">{label}</div>
   </div>
 );
+
+// Recent task row
+const RecentTaskItem = ({ task }: { task: Task }) => {
+  const priorityColor =
+    task.priority === 'HIGH'
+      ? '#FF4D6A'
+      : task.priority === 'MEDIUM'
+        ? '#FFAD00'
+        : '#46F0D2';
+
+  const statusLabel = task.status.replace('_', ' ');
+
+  return (
+    <div className="mobile-task-card">
+      <div
+        style={{
+          width: 4,
+          height: 36,
+          borderRadius: 100,
+          background: priorityColor,
+          flexShrink: 0,
+          boxShadow: `0 0 8px ${priorityColor}40`,
+        }}
+      />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div className="mobile-task-title" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {task.title}
+        </div>
+        <div className="mobile-task-meta">
+          <span
+            style={{
+              fontSize: '0.6rem',
+              fontWeight: 700,
+              padding: '0.15rem 0.5rem',
+              borderRadius: 100,
+              background: `${priorityColor}15`,
+              color: priorityColor,
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
+            }}
+          >
+            {statusLabel}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default MobileHome;

@@ -59,15 +59,13 @@ const LandingPage: React.FC = () => {
               <Link to="/login" className="btn-outline text-lg py-4 px-10 w-full sm:w-auto">
                 Access Terminal
               </Link>
-              <button 
-                onClick={() => {
-                  alert("Initializing secure download... \nTaskManager-v1.0.apk [24MB]");
-                }}
+              <Link 
+                to="/mobile/home"
                 className="flex items-center justify-center gap-2 py-4 px-10 glass-panel border-[#46F0D2]/40 text-[#46F0D2] hover:bg-[#46F0D2]/10 transition-all font-bold group w-full sm:w-auto"
               >
                 <Smartphone className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 Download App
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>
