@@ -41,13 +41,18 @@ const LandingPage: React.FC = () => (
     <section className="lp-hero">
       <div className="lp-hero-inner">
         {/* 1. Logo */}
-        <motion.div className="lp-logo"
+        <motion.div 
+          className="lp-logo"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <div className="lp-logo-icon"><Layers size={24} /></div>
-          <span className="lp-logo-name">TaskManager</span>
+          <Link to="/" className="auth-logo-link" style={{ flexDirection: 'row', gap: '12px' }}>
+            <div className="auth-logo-box" style={{ width: '42px', height: '42px', borderRadius: '12px', margin: 0 }}>
+              <Layers size={24} />
+            </div>
+            <span className="lp-logo-name">TaskManager</span>
+          </Link>
         </motion.div>
 
         {/* 2. Hero Image */}

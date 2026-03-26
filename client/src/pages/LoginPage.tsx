@@ -36,16 +36,18 @@ const LoginPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="auth-logo-box">
-          <Layers className="w-9 h-9" />
-        </div>
-        <motion.h2
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          Login
-        </motion.h2>
+        <Link to="/" className="auth-logo-link">
+          <div className="auth-logo-box">
+            <Layers className="w-9 h-9" />
+          </div>
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Login
+          </motion.h2>
+        </Link>
       </motion.header>
 
       {/* Main Body */}
