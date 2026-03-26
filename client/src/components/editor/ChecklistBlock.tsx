@@ -73,13 +73,13 @@ const ChecklistBlock: React.FC<Props> = ({ block, onChange }) => {
   return (
     <div className="checklist-block space-y-1" data-checklist-block={block.id}>
       {items.map((item, index) => (
-        <div key={item.id} className="group flex items-center gap-3 py-1 px-2 -mx-2 rounded-lg hover:bg-white/[0.02] transition-colors">
+        <div key={item.id} className="group flex items-center gap-3 py-1 px-2 -mx-2 rounded-lg hover:bg-[#00FF9C]/05 transition-colors">
           <button
             onClick={() => toggleItem(item.id)}
             className={`w-[18px] h-[18px] shrink-0 rounded-[5px] border-2 transition-all flex items-center justify-center ${
               item.checked
-                ? 'bg-[#E0D4FF] border-[#E0D4FF] text-[#0C0C0C]'
-                : 'border-white/[0.2] hover:border-[#E0D4FF]/50'
+                ? 'bg-[#00FF9C] border-[#00FF9C] text-[#05070A] shadow-[0_0_10px_rgba(0,255,156,0.4)]'
+                : 'border-white/[0.1] hover:border-[#00FF9C]/50'
             }`}
           >
             {item.checked && (
@@ -94,13 +94,13 @@ const ChecklistBlock: React.FC<Props> = ({ block, onChange }) => {
             onChange={(e) => updateText(item.id, e.target.value)}
             onKeyDown={(e) => handleKeyDown(e, index)}
             placeholder="To-do item..."
-            className={`flex-1 bg-transparent outline-none text-sm transition-all placeholder:text-text-secondary/30 ${
-              item.checked ? 'line-through text-text-secondary/50' : 'text-text-primary/90'
+            className={`flex-1 bg-transparent outline-none text-sm transition-all placeholder:text-[#7C8B93]/30 ${
+              item.checked ? 'line-through text-[#7C8B93]/50' : 'text-[#A8FFDF]'
             }`}
           />
           <button
             onClick={() => removeItem(item.id)}
-            className="opacity-0 group-hover:opacity-100 p-0.5 rounded text-text-secondary hover:text-danger transition-all"
+            className="opacity-0 group-hover:opacity-100 p-0.5 rounded text-[#7C8B93] hover:text-[#FF3E3E] transition-all"
           >
             <X className="w-3.5 h-3.5" />
           </button>
@@ -108,7 +108,7 @@ const ChecklistBlock: React.FC<Props> = ({ block, onChange }) => {
       ))}
       <button
         onClick={addItem}
-        className="flex items-center gap-2 text-xs text-text-secondary/50 hover:text-[#E0D4FF] transition-colors py-1.5 px-2"
+        className="flex items-center gap-2 text-xs text-[#7C8B93]/50 hover:text-[#00FF9C] transition-colors py-1.5 px-2"
       >
         <Plus className="w-3.5 h-3.5" /> Add item
       </button>

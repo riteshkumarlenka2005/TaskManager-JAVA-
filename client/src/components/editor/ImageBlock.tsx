@@ -26,33 +26,36 @@ const ImageBlock: React.FC<Props> = ({ block, onChange }) => {
     return (
       <div
         onClick={() => fileRef.current?.click()}
-        className="border-2 border-dashed border-white/[0.1] rounded-xl p-10 text-center cursor-pointer hover:border-[#E0D4FF]/40 hover:bg-[#E0D4FF]/5 transition-all"
+        className="border-2 border-dashed border-[#00FF9C]/20 rounded-xl p-10 text-center cursor-pointer hover:border-[#00FF9C]/50 hover:bg-[#00FF9C]/05 transition-all shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]"
       >
         <input ref={fileRef} type="file" accept="image/*" onChange={handleFile} className="hidden" />
-        <ImageIcon className="w-10 h-10 text-text-secondary mx-auto mb-3" />
-        <p className="text-text-secondary text-sm">Click to upload an image</p>
-        <p className="text-text-secondary/50 text-xs mt-1">PNG, JPG, GIF, SVG</p>
+        <ImageIcon className="w-10 h-10 text-[#7C8B93] mx-auto mb-3" />
+        <p className="text-[#A8FFDF] text-sm font-medium">Click to upload an image</p>
+        <p className="text-[#7C8B93]/50 text-xs mt-1 font-mono uppercase tracking-widest">PNG, JPG, GIF, SVG</p>
       </div>
     );
   }
 
   return (
-    <div className="rounded-xl overflow-hidden">
-      <img
-        src={url}
-        alt={caption || 'Image'}
-        className="max-w-full rounded-xl border border-white/[0.08]"
-      />
+    <div className="rounded-xl overflow-hidden glass-panel border-[#00FF9C]/20 p-2 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+      <div className="relative group/img rounded-lg overflow-hidden border border-white/05">
+        <img
+          src={url}
+          alt={caption || 'Image'}
+          className="max-w-full block transition-transform duration-500 group-hover/img:scale-[1.02]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity pointer-events-none" />
+      </div>
       <input
         value={caption}
         onChange={(e) => onChange({ caption: e.target.value })}
         placeholder="Add a caption..."
-        className="w-full mt-2 bg-transparent border-none outline-none text-sm text-text-secondary placeholder:text-text-secondary/50 px-1"
+        className="w-full mt-3 bg-transparent border-none outline-none text-sm text-[#A8FFDF] placeholder:text-[#7C8B93]/40 px-2 font-medium italic"
       />
-      <div className="flex gap-2 mt-2">
+      <div className="flex gap-2 mt-2 px-1">
         <button
           onClick={() => fileRef.current?.click()}
-          className="text-xs text-text-secondary hover:text-[#E0D4FF] transition-colors flex items-center gap-1"
+          className="text-[10px] uppercase tracking-wider font-bold text-[#7C8B93] hover:text-[#00FF9C] transition-colors flex items-center gap-1.5 py-1 px-2 rounded hover:bg-[#00FF9C]/10"
         >
           <Upload className="w-3 h-3" /> Replace
         </button>

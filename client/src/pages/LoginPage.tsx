@@ -29,8 +29,8 @@ const LoginPage: React.FC = () => {
       <div className="ambient-bg" />
 
       {/* Decorative orbs */}
-      <div className="absolute top-20 left-20 w-72 h-72 rounded-full bg-[#F5E6A7]/5 blur-[120px] animate-pulse" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-[#E0D4FF]/5 blur-[130px] animate-pulse" />
+      <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-[#00FF9C]/10 blur-[120px] animate-pulse" />
+      <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-[#00CFFF]/5 blur-[130px] animate-pulse" />
 
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -40,10 +40,10 @@ const LoginPage: React.FC = () => {
       >
         {/* Brand */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-[#F5E6A7]/10 flex items-center justify-center border border-[#F5E6A7]/20">
-            <Layers className="w-6 h-6 text-[#F5E6A7]" />
+          <div className="w-12 h-12 rounded-2xl bg-[#00FF9C]/10 flex items-center justify-center border border-[#00FF9C]/20 shadow-[0_0_15px_rgba(0,255,156,0.2)]">
+            <Layers className="w-6 h-6 text-[#00FF9C]" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight">TaskManager</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-[#A8FFDF]">TaskManager</h1>
         </div>
 
         <h2 className="text-xl font-semibold text-center mb-1">Welcome back</h2>
@@ -112,10 +112,10 @@ const LoginPage: React.FC = () => {
           </motion.button>
         </form>
 
-        <p className="text-center text-text-secondary text-sm mt-6">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-[#F5E6A7] hover:text-white transition-colors font-medium">
-            Create one
+        <p className="text-center text-[#7C8B93] text-sm mt-6">
+          Already have an account?{' '}
+          <Link to="/login" className="text-[#00FF9C] hover:text-[#00FFC6] transition-colors font-medium">
+            Sign in
           </Link>
         </p>
       </motion.div>

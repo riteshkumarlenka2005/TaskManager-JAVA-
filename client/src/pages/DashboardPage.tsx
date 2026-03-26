@@ -15,15 +15,15 @@ import {
 } from 'lucide-react';
 
 const statusColors: Record<Status, string> = {
-  PENDING: 'bg-warning/20 text-warning border-warning/30',
-  IN_PROGRESS: 'bg-info/20 text-info border-info/30',
-  COMPLETED: 'bg-[#CDEAC0]/10 text-[#CDEAC0] border-[#CDEAC0]/20',
+  PENDING: 'bg-warning/10 text-warning border-warning/20',
+  IN_PROGRESS: 'bg-[#00FFC6]/10 text-[#00FFC6] border-[#00FFC6]/20',
+  COMPLETED: 'bg-[#00FF9C]/10 text-[#00FF9C] border-[#00FF9C]/20',
 };
 
 const priorityColors: Record<Priority, string> = {
-  LOW: 'border-l-[#A1A1AA]',
-  MEDIUM: 'border-l-warning',
-  HIGH: 'border-l-danger',
+  LOW: 'border-l-[#4F5B62]',
+  MEDIUM: 'border-l-warning shadow-[inset_4px_0_10px_-4px_rgba(255,173,0,0.3)]',
+  HIGH: 'border-l-danger shadow-[inset_4px_0_10px_-4px_rgba(255,62,62,0.3)]',
 };
 
 function formatDate(dateArray: number[] | null): string {
@@ -126,8 +126,8 @@ const DashboardPage: React.FC = () => {
         className="mb-6 flex min-w-0 flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center"
       >
         <div className="min-w-0">
-          <h1 className="mb-1! break-words text-2xl font-bold sm:text-3xl">My Dashboard</h1>
-          <p className="text-text-secondary">Manage and track your tasks effectively.</p>
+          <h1 className="mb-1! break-words text-2xl font-bold sm:text-3xl text-[#A8FFDF]">My Dashboard</h1>
+          <p className="text-[#7C8B93]">Manage and track your tasks effectively.</p>
         </div>
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -148,10 +148,10 @@ const DashboardPage: React.FC = () => {
         className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8!"
       >
         {[
-          { label: 'Total Tasks', value: stats.total, icon: ClipboardList, color: 'text-text-primary' },
+          { label: 'Total Tasks', value: stats.total, icon: ClipboardList, color: 'text-[#A8FFDF]' },
           { label: 'Pending', value: stats.pending, icon: Clock, color: 'text-warning' },
-          { label: 'In Progress', value: stats.inProgress, icon: AlertTriangle, color: 'text-info' },
-          { label: 'Completed', value: stats.completed, icon: CheckCircle2, color: 'text-[#CDEAC0]' },
+          { label: 'In Progress', value: stats.inProgress, icon: AlertTriangle, color: 'text-[#00FFC6]' },
+          { label: 'Completed', value: stats.completed, icon: CheckCircle2, color: 'text-[#00FF9C]' },
         ].map((stat, i) => (
           <motion.div
             key={stat.label}
@@ -161,8 +161,8 @@ const DashboardPage: React.FC = () => {
             className="glass-panel glass-panel-hover min-w-0 cursor-default p-5!"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="min-w-0 break-words text-sm text-text-secondary">{stat.label}</span>
-              <stat.icon className={`w-5 h-5 ${stat.color}`} />
+              <span className="min-w-0 break-words text-sm text-[#7C8B93]">{stat.label}</span>
+              <stat.icon className={`w-5 h-5 ${stat.color}`} style={{ filter: stat.color !== 'text-[#A8FFDF]' ? 'drop-shadow(0 0 5px currentColor)' : '' }} />
             </div>
             <span className={`text-3xl font-bold ${stat.color}`}>{stat.value}</span>
           </motion.div>
@@ -172,7 +172,7 @@ const DashboardPage: React.FC = () => {
       {/* Task Grid */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 text-[#F5E6A7] animate-spin" />
+          <Loader2 className="w-8 h-8 text-[#00FF9C] animate-spin" />
         </div>
       ) : tasks.length === 0 ? (
         <motion.div
@@ -249,8 +249,8 @@ const DashboardPage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="glass-panel p-6 w-full max-w-lg"
-              style={{ background: 'rgba(26, 26, 31, 0.97)' }}
+              className="glass-panel p-6 w-full max-w-lg border-[#00FF9C]/30 shadow-[0_0_50px_rgba(0,0,0,0.8)]"
+              style={{ background: '#0A0F14' }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">

@@ -44,8 +44,8 @@ const DrawingBlock: React.FC<Props> = ({ block, onChange }) => {
     canvas.width = 800;
     canvas.height = 400;
 
-    // Dark background
-    ctx.fillStyle = '#111111';
+    // Deep cyber background
+    ctx.fillStyle = '#05070A';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Load existing drawing if any
@@ -168,7 +168,7 @@ const DrawingBlock: React.FC<Props> = ({ block, onChange }) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
     if (!ctx || !canvas) return;
-    ctx.fillStyle = '#111111';
+    ctx.fillStyle = '#05070A';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     saveToHistory(ctx, canvas);
   };
@@ -184,7 +184,7 @@ const DrawingBlock: React.FC<Props> = ({ block, onChange }) => {
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-2 mb-3">
         {/* Tool Selection */}
-        <div className="flex bg-white/[0.04] rounded-lg p-0.5 border border-white/[0.08]">
+        <div className="flex bg-[#05070A]/50 rounded-lg p-0.5 border border-[#00FF9C]/20">
           {tools.map((t) => (
             <button
               key={t.key}
@@ -192,8 +192,8 @@ const DrawingBlock: React.FC<Props> = ({ block, onChange }) => {
               title={t.label}
               className={`p-2 rounded-md transition-all ${
                 tool === t.key
-                  ? 'bg-[#F5E6A7]/20 text-[#F5E6A7]'
-                  : 'text-text-secondary hover:text-text-primary hover:bg-white/[0.06]'
+                  ? 'bg-[#00FF9C]/20 text-[#00FF9C] shadow-[0_0_8px_rgba(0,255,156,0.2)]'
+                  : 'text-[#7C8B93] hover:text-[#A8FFDF] hover:bg-[#00FF9C]/10'
               }`}
             >
               <t.icon className="w-4 h-4" />
@@ -207,14 +207,14 @@ const DrawingBlock: React.FC<Props> = ({ block, onChange }) => {
         <div className="relative">
           <button
             onClick={() => setShowColorPicker(!showColorPicker)}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-all"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#05070A]/50 border border-[#00FF9C]/20 hover:bg-[#00FF9C]/10 transition-all"
           >
             <div className="w-4 h-4 rounded-full border border-white/[0.2]" style={{ background: color }} />
-            <Palette className="w-3.5 h-3.5 text-text-secondary" />
+            <Palette className="w-3.5 h-3.5 text-[#7C8B93]" />
           </button>
 
           {showColorPicker && (
-            <div className="absolute top-full mt-2 left-0 z-50 glass-panel p-3 grid grid-cols-5 gap-1.5 w-44" style={{ background: 'rgba(18,18,18,0.97)' }}>
+            <div className="absolute top-full mt-2 left-0 z-50 glass-panel p-3 grid grid-cols-5 gap-1.5 w-44 border-[#00FF9C]/30 shadow-[0_0_20px_rgba(0,0,0,0.8)]" style={{ background: '#0A0F14' }}>
               {PRESET_COLORS.map((c) => (
                 <button
                   key={c}
@@ -223,7 +223,7 @@ const DrawingBlock: React.FC<Props> = ({ block, onChange }) => {
                     setShowColorPicker(false);
                   }}
                   className={`w-7 h-7 rounded-lg border-2 transition-all hover:scale-110 ${
-                    color === c ? 'border-[#F5E6A7] scale-110' : 'border-white/[0.1]'
+                    color === c ? 'border-[#00FF9C] shadow-[0_0_8px_rgba(0,255,156,0.4)] scale-110' : 'border-white/[0.1]'
                   }`}
                   style={{ background: c }}
                 />
@@ -244,16 +244,16 @@ const DrawingBlock: React.FC<Props> = ({ block, onChange }) => {
 
         {/* Brush Size */}
         <div className="flex items-center gap-2">
-          <span className="text-text-secondary text-xs">Size</span>
+          <span className="text-[#7C8B93] text-xs">Size</span>
           <input
             type="range"
             min="1"
             max="30"
             value={size}
             onChange={(e) => setSize(parseInt(e.target.value))}
-            className="w-20 accent-[#F5E6A7]"
+            className="w-20 accent-[#00FF9C]"
           />
-          <span className="text-text-secondary text-xs w-6 text-right">{size}</span>
+          <span className="text-[#7C8B93] text-xs w-6 text-right">{size}</span>
         </div>
 
         <div className="w-px h-6 bg-white/[0.1]" />
@@ -271,14 +271,14 @@ const DrawingBlock: React.FC<Props> = ({ block, onChange }) => {
       </div>
 
       {/* Canvas */}
-      <div className="rounded-xl border border-white/[0.1] overflow-hidden">
+      <div className="rounded-xl border border-[#00FF9C]/20 overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]">
         <canvas
           ref={canvasRef}
           onMouseDown={startDraw}
           onMouseMove={draw}
           onMouseUp={endDraw}
           onMouseLeave={endDraw}
-          className="w-full cursor-crosshair"
+          className="w-full cursor-crosshair opacity-90 hover:opacity-100 transition-opacity"
           style={{ aspectRatio: '2/1' }}
         />
       </div>

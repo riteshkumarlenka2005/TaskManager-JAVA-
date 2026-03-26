@@ -97,8 +97,8 @@ const DocumentsPage: React.FC = () => {
         className="mb-6 flex min-w-0 flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center"
       >
         <div className="min-w-0">
-          <h1 className="mb-1 break-words text-2xl font-bold sm:text-3xl">Documents</h1>
-          <p className="text-text-secondary">Create rich notes with text, images, tables & more.</p>
+          <h1 className="mb-1 break-words text-2xl font-bold sm:text-3xl text-[#A8FFDF]">Documents</h1>
+          <p className="text-[#7C8B93]">Create rich notes with text, images, tables & more.</p>
         </div>
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -118,7 +118,7 @@ const DocumentsPage: React.FC = () => {
         transition={{ delay: 0.1 }}
         className="relative mb-6"
       >
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7C8B93]" />
         <input
           type="text"
           value={search}
@@ -131,7 +131,7 @@ const DocumentsPage: React.FC = () => {
       {/* Document Grid */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 text-[#E0D4FF] animate-spin" />
+          <Loader2 className="w-8 h-8 text-[#00FFC6] animate-spin" />
         </div>
       ) : filtered.length === 0 ? (
         <motion.div
@@ -167,8 +167,8 @@ const DocumentsPage: React.FC = () => {
               >
                 <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
                   <div className="flex min-w-0 flex-1 items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#E0D4FF]/10 flex items-center justify-center border border-[#E0D4FF]/20">
-                      <FileText className="w-5 h-5 text-[#E0D4FF]" />
+                    <div className="w-10 h-10 rounded-xl bg-[#00FFC6]/10 flex items-center justify-center border border-[#00FFC6]/20">
+                      <FileText className="w-5 h-5 text-[#00FFC6]" />
                     </div>
                     <h3 className="min-w-0 flex-1 break-words text-lg font-semibold leading-tight">
                       {doc.title}
@@ -181,7 +181,7 @@ const DocumentsPage: React.FC = () => {
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
-                <div className="flex items-center justify-between text-xs text-text-secondary">
+                <div className="flex items-center justify-between text-xs text-[#7C8B93]">
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3" /> {formatDate(doc.updatedAt)}
                   </span>
@@ -207,8 +207,8 @@ const DocumentsPage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="glass-panel p-6 w-full max-w-md"
-              style={{ background: 'rgba(26, 26, 31, 0.97)' }}
+              className="glass-panel p-6 w-full max-w-md border-[#00FF9C]/30 shadow-[0_0_50px_rgba(0,0,0,0.8)]"
+              style={{ background: '#0A0F14' }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">

@@ -161,8 +161,8 @@ const TableBlock: React.FC<Props> = ({ block, onChange }) => {
         </button>
         {selectedCells.length >= 2 && (
           <>
-            <div className="w-px h-5 bg-white/[0.1]" />
-            <button onClick={mergeCells} className="btn-outline text-xs py-1.5 px-3 text-[#E0D4FF] border-[#E0D4FF]/30">
+            <div className="w-px h-5 bg-[#00FF9C]/10" />
+            <button onClick={mergeCells} className="btn-outline text-xs py-1.5 px-3 text-[#00FF9C] border-[#00FF9C]/30 hover:bg-[#00FF9C]/10 transition-all">
               <Merge className="w-3 h-3" /> Merge
             </button>
           </>
@@ -175,7 +175,7 @@ const TableBlock: React.FC<Props> = ({ block, onChange }) => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl border border-white/[0.1]">
+      <div className="overflow-x-auto rounded-xl border border-[#00FF9C]/20 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
         <table className="w-full border-collapse">
           <tbody>
             {rows.map((row, ri) => (
@@ -189,14 +189,14 @@ const TableBlock: React.FC<Props> = ({ block, onChange }) => {
                       colSpan={cell.colSpan || 1}
                       onMouseDown={(e) => handleCellMouseDown(ri, ci, e)}
                       onMouseEnter={() => handleCellMouseEnter(ri, ci)}
-                      className={`border border-white/[0.08] p-0 min-w-[100px] ${
-                        isCellSelected(ri, ci) ? 'bg-[#E0D4FF]/15 outline outline-1 outline-[#E0D4FF]/40' : ''
+                      className={`border border-[#00FF9C]/10 p-0 min-w-[100px] transition-colors ${
+                        isCellSelected(ri, ci) ? 'bg-[#00FF9C]/10 outline outline-1 outline-[#00FF9C]/30 shadow-[inset_0_0_10px_rgba(0,255,156,0.1)]' : ''
                       }`}
                     >
                       <input
                         value={cell.content}
                         onChange={(e) => updateCell(ri, ci, e.target.value)}
-                        className="w-full bg-transparent border-none outline-none px-3 py-2.5 text-sm text-text-primary"
+                        className="w-full bg-transparent border-none outline-none px-3 py-2.5 text-sm text-[#A8FFDF] placeholder:text-[#7C8B93]/30"
                         placeholder="..."
                       />
                     </td>
@@ -208,7 +208,7 @@ const TableBlock: React.FC<Props> = ({ block, onChange }) => {
         </table>
       </div>
 
-      <p className="text-text-secondary/40 text-xs mt-2">
+      <p className="text-[#7C8B93]/40 text-xs mt-2 italic px-1">
         Tip: Click & drag to select cells, then merge them. {rows.length} × {rows[0]?.length || 0}
       </p>
     </div>

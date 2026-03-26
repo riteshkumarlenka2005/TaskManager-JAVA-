@@ -1,50 +1,47 @@
 @import "tailwindcss";
 @source "../**/*.{ts,tsx,html}";
 
-/* ===== Custom Design Tokens ===== */
+/* ===== Cyberpunk Neon Design Tokens ===== */
 @theme {
-  --color-primary: #0D0D0F;     /* Base background */
-  --color-surface: #151518;     /* Inner sections */
-  --color-card: #1A1A1F;        /* Elevated cards */
+  --color-primary: #05070A;     /* Deep black base */
+  --color-surface: #0A0F14;     /* Cyber sidebar/surface */
+  --color-card: #0D1117;        /* Neon-border cards */
   
-  --color-accent-yellow: #F5E6A7;
-  --color-accent-green: #CDEAC0;
-  --color-accent-purple: #E0D4FF;
-  --color-info: #E0D4FF;
+  --color-accent-neon: #00FF9C;  /* Primary Neon Green/Cyan */
+  --color-accent-cyan: #00FFC6;  /* Secondary Cyan */
+  --color-accent-glow: rgba(0, 255, 156, 0.4);
   
-  --color-glass-border: rgba(255, 255, 255, 0.12);
+  --color-glass-border: rgba(0, 255, 156, 0.15);
   
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #A1A1AA;
-  --color-text-muted: #6B7280;
+  --color-text-primary: #A8FFDF;   /* Mint-tinted headings */
+  --color-text-secondary: #7C8B93; /* Muted slate/cyan text */
+  --color-text-muted: #4F5B62;
   
-  --color-btn-default: #2A2A2F;
-  --color-btn-hover: #323238;
-  --color-icon-default: #D4D4D8;
+  --color-btn-default: rgba(13, 17, 23, 0.6);
+  --color-btn-hover: rgba(0, 255, 156, 0.1);
+  --color-icon-default: #7C8B93;
   
-  --color-danger: #ef4444;
-  --color-warning: #F5E6A7;
+  --color-danger: #FF3E3E;
+  --color-warning: #FFAD00;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Explicit CSS Variables mapping for custom CSS & TSX var() usage */
 :root {
-  --color-primary: #0D0D0F;
-  --color-surface: #151518;
-  --color-card: #1A1A1F;
-  --color-accent-yellow: #F5E6A7;
-  --color-accent-green: #CDEAC0;
-  --color-accent-purple: #E0D4FF;
-  --color-info: #E0D4FF;
-  --color-glass-border: rgba(255, 255, 255, 0.12);
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #A1A1AA;
-  --color-text-muted: #6B7280;
-  --color-btn-default: rgba(42, 42, 47, 0.6);
-  --color-btn-hover: rgba(50, 50, 56, 0.8);
-  --color-icon-default: #D4D4D8;
-  --color-danger: #ef4444;
-  --color-warning: #F5E6A7;
+  --color-primary: #05070A;
+  --color-surface: #0A0F14;
+  --color-card: #0D1117;
+  --color-accent-neon: #00FF9C;
+  --color-accent-cyan: #00FFC6;
+  --color-accent-glow: rgba(0, 255, 156, 0.4);
+  --color-glass-border: rgba(0, 255, 156, 0.15);
+  --color-text-primary: #A8FFDF;
+  --color-text-secondary: #7C8B93;
+  --color-text-muted: #4F5B62;
+  --color-btn-default: rgba(13, 17, 23, 0.6);
+  --color-btn-hover: rgba(0, 255, 156, 0.1);
+  --color-icon-default: #7C8B93;
+  --color-danger: #FF3E3E;
+  --color-warning: #FFAD00;
 }
 
 /* ===== Base styles ===== */
@@ -80,31 +77,28 @@ body {
 }
 
 /* ===== Glass Panel (Cards) ===== */
-/* Background with transparency + border + shadow + blur for exact glass effect */
 .glass-panel {
-  background: rgba(26, 26, 31, 0.6);
-  border: 1px solid var(--color-glass-border);
-  border-radius: 20px;
-  box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(13, 17, 23, 0.8);
+  border: 1px solid rgba(0, 255, 156, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   min-width: 0;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-panel-hover:hover {
-  background: rgba(32, 32, 38, 0.85);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.7);
+  background: rgba(0, 255, 156, 0.03);
+  border-color: rgba(0, 255, 156, 0.4);
+  box-shadow: 0 0 20px rgba(0, 255, 156, 0.2), 0 0 40px rgba(0, 0, 0, 0.4);
   transform: translateY(-2px);
 }
 
 .surface-panel {
-  background: rgba(21, 21, 24, 0.6);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: #0A0F14;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 156, 0.08);
   min-width: 0;
 }
 
@@ -115,71 +109,53 @@ body {
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background: var(--color-primary);
+  background: #05070A;
 }
 
-/* Muted glowing orbs */
 .ambient-bg::before {
   content: '';
   position: absolute;
-  top: -20%;
-  left: -10%;
-  width: 50%;
-  height: 50%;
-  background: radial-gradient(ellipse, rgba(245, 230, 167, 0.02) 0%, transparent 60%);
-  animation: ambientFloat 25s ease-in-out infinite;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top, rgba(0, 255, 150, 0.12), transparent 70%);
 }
 
 .ambient-bg::after {
   content: '';
   position: absolute;
-  bottom: -20%;
-  right: -10%;
-  width: 45%;
-  height: 45%;
-  background: radial-gradient(ellipse, rgba(205, 234, 192, 0.02) 0%, transparent 60%);
-  animation: ambientFloat 30s ease-in-out infinite reverse;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
 }
 
-@keyframes ambientFloat {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(3%, 6%) scale(1.03); }
-  50% { transform: translate(-3%, 3%) scale(0.97); }
-  75% { transform: translate(6%, -3%) scale(1.02); }
+/* ===== Specialty Cyber Classes ===== */
+.cyber-glow {
+  box-shadow: 0 0 10px rgba(0, 255, 156, 0.4), 0 0 30px rgba(0, 255, 156, 0.2);
 }
 
-/* ===== Accent Gradients ===== */
-.accent-gradient {
-  background: linear-gradient(135deg, var(--color-accent-yellow), var(--color-accent-green), var(--color-accent-purple));
+.neon-text {
+  color: var(--color-accent-neon);
+  text-shadow: 0 0 8px rgba(0, 255, 156, 0.6);
 }
 
 .accent-gradient-text {
-  background: linear-gradient(135deg, var(--color-accent-yellow), var(--color-accent-green));
+  background: linear-gradient(135deg, #00FF9C, #00CFFF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Optional topic specific gradients */
-.accent-yellow-tone {
-  background: linear-gradient(135deg, rgba(245, 230, 167, 0.85), rgba(205, 234, 192, 0.5));
-}
-
-.accent-green-tone {
-  background: linear-gradient(135deg, rgba(205, 234, 192, 0.85), rgba(224, 212, 255, 0.5));
-}
-
-.accent-purple-tone {
-  background: linear-gradient(135deg, rgba(224, 212, 255, 0.85), rgba(245, 230, 167, 0.5));
-}
-
 /* ===== Button Styles ===== */
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-accent-yellow), var(--color-accent-green));
-  color: #111111;
+  background: linear-gradient(135deg, #00FF9C, #00CFFF);
+  color: #000000;
   border: none;
   padding: 0.7rem 1.5rem;
-  border-radius: 12px;
+  border-radius: 8px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -187,22 +163,21 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  opacity: 1;
-  box-shadow: 0 4px 15px rgba(205, 234, 192, 0.15);
+  box-shadow: 0 0 15px rgba(0, 255, 156, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(205, 234, 192, 0.35);
-  filter: brightness(1.05);
+  box-shadow: 0 0 25px rgba(0, 255, 156, 0.6);
+  filter: brightness(1.1);
 }
 
 .btn-outline {
-  background: var(--color-btn-default);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 255, 156, 0.05);
+  color: var(--color-accent-neon);
+  border: 1px solid rgba(0, 255, 156, 0.3);
   padding: 0.7rem 1.5rem;
-  border-radius: 12px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -214,64 +189,25 @@ body {
 }
 
 .btn-outline:hover {
-  background: var(--color-btn-hover);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.btn-icon {
-  background: var(--color-btn-default);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.5rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(8px);
-}
-
-.btn-icon:hover {
-  background: var(--color-btn-hover);
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
+  background: rgba(0, 255, 156, 0.12);
+  border-color: var(--color-accent-neon);
+  box-shadow: 0 0 15px rgba(0, 255, 156, 0.2);
 }
 
 .btn-icon-active {
-  background: linear-gradient(135deg, rgba(245, 230, 167, 0.2), rgba(205, 234, 192, 0.2));
-  color: var(--color-accent-green);
-  border-color: rgba(205, 234, 192, 0.4);
-}
-
-.btn-danger {
-  background: transparent;
-  color: var(--color-danger);
-  border: 1px solid rgba(239, 68, 68, 0.25);
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.85rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.btn-danger:hover {
-  background: rgba(239, 68, 68, 0.12);
-  border-color: var(--color-danger);
+  background: rgba(0, 255, 156, 0.15);
+  color: var(--color-accent-neon);
+  border-color: rgba(0, 255, 156, 0.5);
+  box-shadow: 0 0 10px rgba(0, 255, 156, 0.2);
 }
 
 /* ===== Input Styles ===== */
 .input-field {
-  background: var(--color-surface);
-  border: 1px solid var(--color-glass-border);
-  color: var(--color-text-primary);
+  background: rgba(13, 17, 23, 0.8);
+  border: 1px solid rgba(0, 255, 156, 0.1);
+  color: #FFFFFF;
   padding: 0.85rem 1rem;
-  border-radius: 12px;
+  border-radius: 8px;
   font-family: var(--font-sans);
   font-size: 0.95rem;
   transition: all 0.3s ease;
@@ -280,9 +216,9 @@ body {
 
 .input-field:focus {
   outline: none;
-  background: var(--color-card);
-  border-color: rgba(205, 234, 192, 0.3);
-  box-shadow: 0 0 0 2px rgba(205, 234, 192, 0.1);
+  background: rgba(0, 255, 156, 0.02);
+  border-color: var(--color-accent-neon);
+  box-shadow: 0 0 15px rgba(0, 255, 156, 0.15);
 }
 
 .input-field::placeholder {
