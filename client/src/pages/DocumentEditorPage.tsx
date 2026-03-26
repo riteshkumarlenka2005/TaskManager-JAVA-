@@ -273,7 +273,7 @@ const DocumentEditorPage: React.FC = () => {
     setExporting(true);
     try {
       const canvas = await html2canvas(contentRef.current, {
-        backgroundColor: '#0C0C0C',
+        backgroundColor: '#08080c',
         scale: 2,
         useCORS: true,
       });
@@ -315,7 +315,7 @@ const DocumentEditorPage: React.FC = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 text-[#00FF9C] animate-spin" />
+        <Loader2 className="w-8 h-8 text-[#BEC4FF] animate-spin" />
       </div>
     );
   }
@@ -331,7 +331,7 @@ const DocumentEditorPage: React.FC = () => {
         <div className="flex min-w-0 items-center gap-4">
           <button
             onClick={() => navigate('/documents')}
-            className="p-2 rounded-lg hover:bg-[#00FF9C]/10 text-[#7C8B93] hover:text-[#00FF9C] transition-all"
+            className="p-2 rounded-lg hover:bg-[#BEC4FF]/10 text-[#7C8B93] hover:text-[#BEC4FF] transition-all"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -341,7 +341,7 @@ const DocumentEditorPage: React.FC = () => {
               setTitle(e.target.value);
               triggerAutoSave();
             }}
-            className="w-full min-w-0 flex-1 bg-transparent text-xl font-bold outline-none placeholder:text-[#7C8B93] text-[#A8FFDF] sm:max-w-md sm:text-2xl"
+            className="w-full min-w-0 flex-1 bg-transparent text-xl font-bold outline-none placeholder:text-[#7C8B93] text-[#BEC4FF] sm:max-w-md sm:text-2xl"
             placeholder="Untitled Document"
           />
         </div>
@@ -351,7 +351,7 @@ const DocumentEditorPage: React.FC = () => {
               initial={{ opacity: 0, x: 10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0 }}
-              className="text-[#00FF9C] text-sm flex items-center gap-1"
+              className="text-[#BEC4FF] text-sm flex items-center gap-1"
             >
               <Check className="w-4 h-4" /> Saved
             </motion.span>
@@ -416,7 +416,7 @@ const DocumentEditorPage: React.FC = () => {
               onDragEnd={handleDragEnd}
               className={`group relative mb-2 ${
                 dropIndex === index && dragIndex !== index
-                  ? 'before:absolute before:left-0 before:right-0 before:-top-1 before:h-0.5 before:bg-[#00FF9C] before:rounded-full before:shadow-[0_0_8px_rgba(0,255,156,0.4)]'
+                  ? 'before:absolute before:left-0 before:right-0 before:-top-1 before:h-0.5 before:bg-[#BEC4FF] before:rounded-full before:shadow-[0_0_8px_rgba(190,196,255,0.4)]'
                   : ''
               }`}
             >
@@ -425,12 +425,12 @@ const DocumentEditorPage: React.FC = () => {
                  <button
                   onClick={() => moveBlock(index, 'up')}
                   disabled={index === 0}
-                  className="p-1 rounded hover:bg-[#00FF9C]/10 text-[#7C8B93] hover:text-[#00FF9C] disabled:opacity-20 transition-all"
+                  className="p-1 rounded hover:bg-[#BEC4FF]/10 text-[#7C8B93] hover:text-[#BEC4FF] disabled:opacity-20 transition-all"
                 >
                   <ChevronUp className="w-3.5 h-3.5" />
                 </button>
                 <div
-                  className="text-[#7C8B93] cursor-grab active:cursor-grabbing p-1 hover:bg-[#00FF9C]/10 rounded transition-all"
+                  className="text-[#7C8B93] cursor-grab active:cursor-grabbing p-1 hover:bg-[#BEC4FF]/10 rounded transition-all"
                   title="Drag to reorder"
                 >
                   <GripVertical className="w-3.5 h-3.5" />
@@ -438,7 +438,7 @@ const DocumentEditorPage: React.FC = () => {
                 <button
                   onClick={() => moveBlock(index, 'down')}
                   disabled={index === blocks.length - 1}
-                  className="p-1 rounded hover:bg-[#00FF9C]/10 text-[#7C8B93] hover:text-[#00FF9C] disabled:opacity-20 transition-all"
+                  className="p-1 rounded hover:bg-[#BEC4FF]/10 text-[#7C8B93] hover:text-[#BEC4FF] disabled:opacity-20 transition-all"
                 >
                   <ChevronDown className="w-3.5 h-3.5" />
                 </button>
@@ -495,7 +495,7 @@ const DocumentEditorPage: React.FC = () => {
               )}
               {block.type === 'divider' && (
                  <div className="py-4">
-                  <hr className="border-[#00FF9C]/10" />
+                  <hr className="border-[#BEC4FF]/10" />
                 </div>
               )}
 
@@ -516,7 +516,7 @@ const DocumentEditorPage: React.FC = () => {
               <div className="relative flex justify-center -mb-1 mt-1">
                  <button
                   onClick={() => setShowBlockMenu(showBlockMenu === index ? null : index)}
-                  className="p-1 rounded-full bg-[#00FF9C]/10 text-[#00FF9C] opacity-0 group-hover:opacity-100 border border-[#00FF9C]/20 cyber-glow hover:bg-[#00FF9C]/20 transition-all"
+                  className="p-1 rounded-full bg-[#BEC4FF]/10 text-[#BEC4FF] opacity-0 group-hover:opacity-100 border border-[#BEC4FF]/20 cyber-glow hover:bg-[#BEC4FF]/20 transition-all"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
@@ -528,14 +528,14 @@ const DocumentEditorPage: React.FC = () => {
                       initial={{ opacity: 0, y: -5, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -5, scale: 0.95 }}
-                      className="absolute top-8 z-50 glass-panel p-2 grid grid-cols-3 gap-1 w-80 border-[#00FF9C]/30 shadow-[0_0_30px_rgba(0,0,0,0.8)]"
-                      style={{ background: '#0A0F14' }}
+                      className="absolute top-8 z-50 glass-panel p-2 grid grid-cols-3 gap-1 w-80 border-[#BEC4FF]/30 shadow-[0_0_30px_rgba(0,0,0,0.8)]"
+                      style={{ background: '#12121a' }}
                     >
                       {blockOptions.map((opt) => (
                         <button
                           key={opt.label}
                           onClick={() => addBlock(opt.type, index, opt.data)}
-                          className="flex flex-col items-center gap-1.5 p-3 rounded-lg hover:bg-[#00FF9C]/10 text-[#7C8B93] hover:text-[#A8FFDF] transition-all text-xs"
+                          className="flex flex-col items-center gap-1.5 p-3 rounded-lg hover:bg-[#BEC4FF]/10 text-[#7C8B93] hover:text-[#BEC4FF] transition-all text-xs"
                         >
                           <opt.icon className="w-5 h-5" />
                           {opt.label}

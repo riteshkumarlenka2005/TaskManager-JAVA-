@@ -8,9 +8,9 @@ interface Props {
 }
 
 const CALLOUT_CONFIG: Record<CalloutType, { icon: React.FC<{ className?: string }>; emoji: string; bg: string; border: string; text: string }> = {
-  info: { icon: Info, emoji: 'ℹ️', bg: 'bg-[#00FFC6]/[0.08]', border: 'border-[#00FFC6]/30', text: 'text-[#00FFC6]' },
+  info: { icon: Info, emoji: 'ℹ️', bg: 'bg-[#BEC4FF]/[0.08]', border: 'border-[#BEC4FF]/30', text: 'text-[#BEC4FF]' },
   warning: { icon: AlertTriangle, emoji: '⚠️', bg: 'bg-warning/10', border: 'border-warning/30', text: 'text-warning' },
-  success: { icon: CheckCircle, emoji: '✅', bg: 'bg-[#00FF9C]/[0.08]', border: 'border-[#00FF9C]/30', text: 'text-[#00FF9C]' },
+  success: { icon: CheckCircle, emoji: '✅', bg: 'bg-[#BEC4FF]/[0.08]', border: 'border-[#BEC4FF]/30', text: 'text-[#BEC4FF]' },
   error: { icon: XCircle, emoji: '🚫', bg: 'bg-danger/10', border: 'border-danger/30', text: 'text-danger' },
 };
 
@@ -28,7 +28,7 @@ const CalloutBlock: React.FC<Props> = ({ block, onChange }) => {
         <div className="relative shrink-0">
           <button
             onClick={() => setShowTypeMenu(!showTypeMenu)}
-            className={`text-lg flex items-center gap-1 p-1 rounded-md hover:bg-[#00FF9C]/10 transition-all`}
+            className={`text-lg flex items-center gap-1 p-1 rounded-md hover:bg-[#BEC4FF]/10 transition-all`}
             title="Change callout type"
           >
             <span>{CALLOUT_CONFIG[calloutType].emoji}</span>
@@ -36,8 +36,8 @@ const CalloutBlock: React.FC<Props> = ({ block, onChange }) => {
           </button>
           {showTypeMenu && (
             <div
-              className="absolute top-full left-0 mt-1 z-50 glass-panel p-1.5 w-36 border-[#00FF9C]/20 shadow-[0_0_20px_rgba(0,0,0,0.8)]"
-              style={{ background: '#0A0F14' }}
+              className="absolute top-full left-0 mt-1 z-50 glass-panel p-1.5 w-36 border-[#BEC4FF]/20 shadow-[0_0_20px_rgba(0,0,0,0.8)]"
+              style={{ background: '#12121a' }}
             >
               {(Object.keys(CALLOUT_CONFIG) as CalloutType[]).map((t) => (
                 <button
@@ -48,8 +48,8 @@ const CalloutBlock: React.FC<Props> = ({ block, onChange }) => {
                   }}
                   className={`w-full flex items-center gap-2 text-xs px-3 py-2 rounded-md transition-all ${
                     calloutType === t
-                      ? 'bg-[#00FF9C]/10 text-[#A8FFDF]'
-                      : 'text-[#7C8B93] hover:text-[#A8FFDF] hover:bg-[#00FF9C]/05'
+                      ? 'bg-[#BEC4FF]/10 text-[#BEC4FF]'
+                      : 'text-[#7C8B93] hover:text-[#BEC4FF] hover:bg-[#BEC4FF]/05'
                   }`}
                 >
                   <span>{CALLOUT_CONFIG[t].emoji}</span>

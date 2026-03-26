@@ -73,13 +73,13 @@ const ChecklistBlock: React.FC<Props> = ({ block, onChange }) => {
   return (
     <div className="checklist-block space-y-1" data-checklist-block={block.id}>
       {items.map((item, index) => (
-        <div key={item.id} className="group flex items-center gap-3 py-1 px-2 -mx-2 rounded-lg hover:bg-[#00FF9C]/05 transition-colors">
+        <div key={item.id} className="group flex items-center gap-3 py-1 px-2 -mx-2 rounded-lg hover:bg-[#BEC4FF]/05 transition-colors">
           <button
             onClick={() => toggleItem(item.id)}
             className={`w-[18px] h-[18px] shrink-0 rounded-[5px] border-2 transition-all flex items-center justify-center ${
               item.checked
-                ? 'bg-[#00FF9C] border-[#00FF9C] text-[#05070A] shadow-[0_0_10px_rgba(0,255,156,0.4)]'
-                : 'border-white/[0.1] hover:border-[#00FF9C]/50'
+                ? 'bg-[#BEC4FF] border-[#BEC4FF] text-[#08080c] shadow-[0_0_10px_rgba(190,196,255,0.4)]'
+                : 'border-white/[0.1] hover:border-[#BEC4FF]/50'
             }`}
           >
             {item.checked && (
@@ -95,7 +95,7 @@ const ChecklistBlock: React.FC<Props> = ({ block, onChange }) => {
             onKeyDown={(e) => handleKeyDown(e, index)}
             placeholder="To-do item..."
             className={`flex-1 bg-transparent outline-none text-sm transition-all placeholder:text-[#7C8B93]/30 ${
-              item.checked ? 'line-through text-[#7C8B93]/50' : 'text-[#A8FFDF]'
+              item.checked ? 'line-through text-[#7C8B93]/50' : 'text-[#BEC4FF]'
             }`}
           />
           <button
@@ -108,7 +108,7 @@ const ChecklistBlock: React.FC<Props> = ({ block, onChange }) => {
       ))}
       <button
         onClick={addItem}
-        className="flex items-center gap-2 text-xs text-[#7C8B93]/50 hover:text-[#00FF9C] transition-colors py-1.5 px-2"
+        className="flex items-center gap-2 text-xs text-[#7C8B93]/50 hover:text-[#BEC4FF] transition-colors py-1.5 px-2"
       >
         <Plus className="w-3.5 h-3.5" /> Add item
       </button>

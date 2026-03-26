@@ -4,13 +4,13 @@
 */
 
 :root {
-  --mobile-bg: #0E0E10;
-  --mobile-card: #18181B;
+  --mobile-bg: #08080c;
+  --mobile-card: #12121a;
   --mobile-primary: #BEC4FF;
-  --mobile-primary-foreground: #0E0E10;
+  --mobile-primary-foreground: #08080c;
   --mobile-accent: #7C8B93;
   --mobile-radius: 2rem;
-  --mobile-font: 'Outfit', 'Inter', sans-serif;
+  --mobile-font: 'Poppins', 'Inter', sans-serif;
 }
 
 /* Base resets & layout */

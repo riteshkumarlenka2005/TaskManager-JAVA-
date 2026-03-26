@@ -161,8 +161,8 @@ const TableBlock: React.FC<Props> = ({ block, onChange }) => {
         </button>
         {selectedCells.length >= 2 && (
           <>
-            <div className="w-px h-5 bg-[#00FF9C]/10" />
-            <button onClick={mergeCells} className="btn-outline text-xs py-1.5 px-3 text-[#00FF9C] border-[#00FF9C]/30 hover:bg-[#00FF9C]/10 transition-all">
+            <div className="w-px h-5 bg-[#BEC4FF]/10" />
+            <button onClick={mergeCells} className="btn-outline text-xs py-1.5 px-3 text-[#BEC4FF] border-[#BEC4FF]/30 hover:bg-[#BEC4FF]/10 transition-all">
               <Merge className="w-3 h-3" /> Merge
             </button>
           </>
@@ -175,7 +175,7 @@ const TableBlock: React.FC<Props> = ({ block, onChange }) => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-xl border border-[#00FF9C]/20 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+      <div className="overflow-x-auto rounded-xl border border-[#BEC4FF]/20 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
         <table className="w-full border-collapse">
           <tbody>
             {rows.map((row, ri) => (
@@ -189,14 +189,14 @@ const TableBlock: React.FC<Props> = ({ block, onChange }) => {
                       colSpan={cell.colSpan || 1}
                       onMouseDown={(e) => handleCellMouseDown(ri, ci, e)}
                       onMouseEnter={() => handleCellMouseEnter(ri, ci)}
-                      className={`border border-[#00FF9C]/10 p-0 min-w-[100px] transition-colors ${
-                        isCellSelected(ri, ci) ? 'bg-[#00FF9C]/10 outline outline-1 outline-[#00FF9C]/30 shadow-[inset_0_0_10px_rgba(0,255,156,0.1)]' : ''
+                      className={`border border-[#BEC4FF]/10 p-0 min-w-[100px] transition-colors ${
+                        isCellSelected(ri, ci) ? 'bg-[#BEC4FF]/10 outline outline-1 outline-[#BEC4FF]/30 shadow-[inset_0_0_10px_rgba(190,196,255,0.1)]' : ''
                       }`}
                     >
                       <input
                         value={cell.content}
                         onChange={(e) => updateCell(ri, ci, e.target.value)}
-                        className="w-full bg-transparent border-none outline-none px-3 py-2.5 text-sm text-[#A8FFDF] placeholder:text-[#7C8B93]/30"
+                        className="w-full bg-transparent border-none outline-none px-3 py-2.5 text-sm text-[#BEC4FF] placeholder:text-[#7C8B93]/30"
                         placeholder="..."
                       />
                     </td>

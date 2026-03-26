@@ -147,7 +147,7 @@ const DashboardPage: React.FC = () => {
           { label: 'Pending', value: stats.pending, color: 'text-orange-400' },
           { label: 'Done', value: stats.completed, color: 'text-emerald-400' },
         ].map((stat) => (
-          <div key={stat.label} className="glass-panel p-6 border-none bg-[#18181B]">
+          <div key={stat.label} className="glass-panel p-6 border-none bg-[#12121a]">
             <p className="text-sm font-bold text-[#7C8B93] mb-1 uppercase tracking-wider">{stat.label}</p>
             <p className={`text-4xl font-black ${stat.color}`}>{stat.value}</p>
           </div>
@@ -178,7 +178,7 @@ const DashboardPage: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ delay: i * 0.05 }}
-                className={`glass-panel p-6 flex flex-col gap-4 border-none bg-[#18181B] group hover:bg-[#222226] relative overflow-hidden`}
+                className={`glass-panel p-6 flex flex-col gap-4 border-none bg-[#12121a] group hover:bg-[#1a1a24] relative overflow-hidden`}
               >
                 {/* Priority Indicator */}
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: task.priority === 'HIGH' ? '#BEC4FF' : 'transparent' }} />
@@ -235,7 +235,7 @@ const DashboardPage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-[#18181B] rounded-[32px] p-8 w-full max-w-xl shadow-2xl ring-1 ring-white/10"
+              className="bg-[#12121a] rounded-[32px] p-8 w-full max-w-xl shadow-2xl ring-1 ring-white/10"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-8">

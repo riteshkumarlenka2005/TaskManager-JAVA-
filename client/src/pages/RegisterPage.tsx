@@ -34,7 +34,7 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0E0E10] text-white flex items-center justify-center relative overflow-hidden px-4 font-['Outfit']">
+    <div className="min-h-screen bg-[#08080c] text-white flex items-center justify-center relative overflow-hidden px-4 font-['Poppins']">
       {/* Background Decorative Elements */}
       <div className="absolute top-[-10%] right-[-10%] w-1/2 h-1/2 bg-[#BEC4FF]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] left-[-10%] w-1/2 h-1/2 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
@@ -45,7 +45,7 @@ const RegisterPage: React.FC = () => {
         transition={{ duration: 0.6 }}
         className="w-full max-w-lg"
       >
-        <div className="bg-[#18181B] rounded-[40px] p-10 md:p-16 shadow-2xl ring-1 ring-white/5 relative overflow-hidden">
+        <div className="bg-[#12121a] rounded-[40px] p-10 md:p-16 shadow-2xl ring-1 ring-white/5 relative overflow-hidden">
           {/* Brand Icon */}
           <div className="flex flex-col items-center mb-10">
             <div className="w-16 h-16 rounded-[24px] bg-[#222226] flex items-center justify-center border border-white/5 shadow-2xl mb-6">

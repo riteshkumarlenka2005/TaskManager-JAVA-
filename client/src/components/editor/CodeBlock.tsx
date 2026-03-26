@@ -26,21 +26,21 @@ const CodeBlock: React.FC<Props> = ({ block, onChange }) => {
   };
 
   return (
-    <div className="code-block-wrapper rounded-xl border border-[#00FF9C]/20 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+    <div className="code-block-wrapper rounded-xl border border-[#BEC4FF]/20 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-[#05070A]/50 border-b border-[#00FF9C]/10">
+      <div className="flex items-center justify-between px-4 py-2 bg-[#08080c]/50 border-b border-[#BEC4FF]/10">
         <div className="relative">
           <button
             onClick={() => setShowLangMenu(!showLangMenu)}
-            className="flex items-center gap-1.5 text-xs text-[#7C8B93] hover:text-[#00FF9C] transition-colors px-2 py-1 rounded-md hover:bg-[#00FF9C]/10"
+            className="flex items-center gap-1.5 text-xs text-[#7C8B93] hover:text-[#BEC4FF] transition-colors px-2 py-1 rounded-md hover:bg-[#BEC4FF]/10"
           >
             {language}
             <ChevronDown className="w-3 h-3" />
           </button>
           {showLangMenu && (
             <div
-              className="absolute top-full left-0 mt-1 z-50 glass-panel p-1.5 max-h-48 overflow-y-auto w-40 scrollbar-thin border-[#00FF9C]/30 shadow-[0_0_20px_rgba(0,0,0,0.8)]"
-              style={{ background: '#0A0F14' }}
+              className="absolute top-full left-0 mt-1 z-50 glass-panel p-1.5 max-h-48 overflow-y-auto w-40 scrollbar-thin border-[#BEC4FF]/30 shadow-[0_0_20px_rgba(0,0,0,0.8)]"
+              style={{ background: '#12121a' }}
             >
               {LANGUAGES.map((lang) => (
                 <button
@@ -51,8 +51,8 @@ const CodeBlock: React.FC<Props> = ({ block, onChange }) => {
                   }}
                   className={`w-full text-left text-xs px-3 py-1.5 rounded-md transition-all ${
                     language === lang
-                      ? 'bg-[#00FF9C]/15 text-[#00FF9C]'
-                      : 'text-[#7C8B93] hover:text-[#A8FFDF] hover:bg-[#00FF9C]/05'
+                      ? 'bg-[#BEC4FF]/15 text-[#BEC4FF]'
+                      : 'text-[#7C8B93] hover:text-[#BEC4FF] hover:bg-[#BEC4FF]/05'
                   }`}
                 >
                   {lang}
@@ -63,11 +63,11 @@ const CodeBlock: React.FC<Props> = ({ block, onChange }) => {
         </div>
         <button
           onClick={handleCopy}
-           className="flex items-center gap-1 text-xs text-[#7C8B93] hover:text-[#00FF9C] transition-colors px-2 py-1 rounded-md hover:bg-[#00FF9C]/10"
+           className="flex items-center gap-1 text-xs text-[#7C8B93] hover:text-[#BEC4FF] transition-colors px-2 py-1 rounded-md hover:bg-[#BEC4FF]/10"
         >
           {copied ? (
             <>
-              <Check className="w-3 h-3 text-[#00FF9C]" /> Copied
+              <Check className="w-3 h-3 text-[#BEC4FF]" /> Copied
             </>
           ) : (
             <>
@@ -83,7 +83,7 @@ const CodeBlock: React.FC<Props> = ({ block, onChange }) => {
         onChange={(e) => onChange({ code: e.target.value })}
         placeholder="// Paste or type your code..."
         spellCheck={false}
-        className="w-full bg-[#05070A] text-[#A8FFDF] font-mono text-sm leading-relaxed p-4 outline-none resize-none min-h-[120px] placeholder:text-[#00FF9C]/20"
+        className="w-full bg-[#08080c] text-[#BEC4FF] font-mono text-sm leading-relaxed p-4 outline-none resize-none min-h-[120px] placeholder:text-[#BEC4FF]/20"
         rows={Math.max(4, code.split('\n').length)}
       />
     </div>

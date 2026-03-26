@@ -1,0 +1,355 @@
+/* ═══════════════════════════════════════════════════════
+   LANDING PAGE — Hero Only
+   Theme: Dark Black + Purple (matching app design)
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Base ── */
+.lp {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background: #08080c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+}
+
+/* ── Logo (Top Left) ── */
+.lp-logo {
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lp-logo-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: #1a1a22;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #BEC4FF;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.lp-logo-name {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+}
+
+/* ── Grid Background ── */
+.lp-grid-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(190, 196, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(190, 196, 255, 0.08) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 85%);
+}
+
+/* ── Hero Layout ── */
+.lp-hero {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.lp-hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1140px;
+  width: 100%;
+}
+
+/* ── Left — Text ── */
+.lp-hero-left {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Badge */
+.lp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border-radius: 100px;
+  background: rgba(190, 196, 255, 0.06);
+  border: 1px solid rgba(190, 196, 255, 0.12);
+  color: #BEC4FF;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem;
+}
+
+.lp-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #BEC4FF;
+  box-shadow: 0 0 8px rgba(190, 196, 255, 0.6);
+}
+
+/* Heading */
+.lp-h1 {
+  font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 80px rgba(190, 196, 255, 0.08);
+}
+
+.lp-h1 .accent {
+  background: linear-gradient(135deg, #BEC4FF 0%, #9ba2ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtitle */
+.lp-sub {
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+  max-width: 480px;
+  font-weight: 400;
+}
+
+.lp-trust {
+  font-size: 0.82rem;
+  color: rgba(190, 196, 255, 0.35);
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+/* CTA */
+.lp-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.lp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 14px;
+  background: #BEC4FF;
+  color: #08080c;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 24px rgba(190, 196, 255, 0.2);
+}
+
+.lp-btn-primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(190, 196, 255, 0.35);
+}
+
+.lp-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 14px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid rgba(190, 196, 255, 0.12);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lp-btn-secondary:hover {
+  background: rgba(190, 196, 255, 0.06);
+  border-color: rgba(190, 196, 255, 0.25);
+  color: #fff;
+}
+
+/* Trust Badges */
+.lp-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.lp-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+}
+
+.lp-badge-item .chk {
+  color: #BEC4FF;
+  font-weight: 700;
+}
+
+/* ── Right — Floating Cards ── */
+.lp-hero-right {
+  flex: 0 0 400px;
+  position: relative;
+  height: 380px;
+  perspective: 800px;
+}
+
+.lp-hero-glow {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(190, 196, 255, 0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.lp-hero-card {
+  position: absolute;
+  border-radius: 16px;
+  padding: 16px 20px;
+  background: rgba(14, 14, 20, 0.8);
+  border: 1px solid rgba(190, 196, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  min-width: 170px;
+}
+
+.lp-card-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #BEC4FF;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+
+.lp-card-line {
+  height: 5px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+
+.lp-card-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.lp-card-check {
+  width: 15px;
+  height: 15px;
+  border-radius: 5px;
+  border: 1.5px solid rgba(190, 196, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lp-card-check.done {
+  background: rgba(190, 196, 255, 0.12);
+  border-color: #BEC4FF;
+  color: #BEC4FF;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .lp-hero-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .lp-hero-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .lp-sub {
+    max-width: 100%;
+  }
+
+  .lp-cta {
+    justify-content: center;
+  }
+
+  .lp-badges {
+    justify-content: center;
+  }
+
+  .lp-hero-right {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 340px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lp-h1 {
+    font-size: 2.2rem;
+  }
+
+  .lp-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .lp-btn-primary,
+  .lp-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .lp-hero-right {
+    max-width: 280px;
+    height: 260px;
+  }
+
+  .lp-hero-card {
+    min-width: 140px;
+    padding: 12px 14px;
+  }
+}

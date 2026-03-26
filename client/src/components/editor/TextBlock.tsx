@@ -103,8 +103,8 @@ const TextBlock: React.FC<Props> = ({ block, onChange, isHeading, onSlashCommand
       title={title}
       className={`p-1.5 rounded-lg transition-all ${
         isActive
-          ? 'bg-[#00FF9C]/20 text-[#00FF9C] shadow-[0_0_8px_rgba(0,255,156,0.2)]'
-          : 'text-[#7C8B93] hover:text-[#A8FFDF] hover:bg-[#00FF9C]/10'
+          ? 'bg-[#BEC4FF]/20 text-[#BEC4FF] shadow-[0_0_8px_rgba(190,196,255,0.2)]'
+          : 'text-[#7C8B93] hover:text-[#BEC4FF] hover:bg-[#BEC4FF]/10'
       }`}
     >
       {children}

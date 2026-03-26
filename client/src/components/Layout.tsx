@@ -49,7 +49,7 @@ const Layout: React.FC = () => {
   const sidebarWidth = isMobile ? 280 : collapsed ? 80 : 280;
 
   return (
-    <div className="min-h-screen bg-[#0E0E10] text-white font-['Outfit']">
+    <div className="min-h-screen bg-[#08080c] text-white font-['Poppins']">
       {/* Sidebar */}
       <AnimatePresence>
         {(!isMobile || mobileOpen) && (
@@ -58,7 +58,7 @@ const Layout: React.FC = () => {
             animate={{ x: 0, width: sidebarWidth }}
             exit={isMobile ? { x: -300 } : undefined}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed top-0 left-0 h-screen z-[100] flex flex-col bg-[#18181B] border-r border-white/5"
+            className="fixed top-0 left-0 h-screen z-[100] flex flex-col bg-[#12121a] border-r border-white/5"
           >
             {/* Brand */}
             <div className="flex items-center justify-between px-6 py-8">
@@ -148,7 +148,7 @@ const Layout: React.FC = () => {
 
       {/* Mobile Top Bar */}
       {isMobile && !mobileOpen && (
-        <div className="fixed top-0 left-0 right-0 z-[50] flex items-center justify-between px-6 py-4 bg-[#18181B] border-b border-white/5">
+        <div className="fixed top-0 left-0 right-0 z-[50] flex items-center justify-between px-6 py-4 bg-[#12121a] border-b border-white/5">
           <div className="flex items-center gap-3">
              <div className="w-8 h-8 rounded-lg bg-[#BEC4FF] flex items-center justify-center">
                <Layers className="w-4 h-4 text-black" />

@@ -99,23 +99,23 @@ const SlashCommandMenu: React.FC<Props> = ({ isOpen, onClose, onSelect, position
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -8, scale: 0.96 }}
           transition={{ duration: 0.15 }}
-          className="absolute z-[60] w-72 glass-panel shadow-[0_0_30px_rgba(0,0,0,0.8)] overflow-hidden border-[#00FF9C]/30"
+          className="absolute z-[60] w-72 glass-panel shadow-[0_0_30px_rgba(0,0,0,0.8)] overflow-hidden border-[#BEC4FF]/30"
           style={{
             top: position?.top ?? 'auto',
             left: position?.left ?? 0,
-            background: '#0A0F14',
+            background: '#12121a',
             backdropFilter: 'blur(20px)',
           }}
         >
           {/* Search */}
-          <div className="p-2 border-b border-[#00FF9C]/10">
+          <div className="p-2 border-b border-[#BEC4FF]/10">
             <input
               ref={inputRef}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Search blocks..."
-              className="w-full bg-[#05070A]/50 rounded-lg px-3 py-2 text-sm outline-none placeholder:text-[#7C8B93]/40 text-[#A8FFDF] border border-[#00FF9C]/10 focus:border-[#00FF9C]/40 transition-colors"
+              className="w-full bg-[#08080c]/50 rounded-lg px-3 py-2 text-sm outline-none placeholder:text-[#7C8B93]/40 text-[#BEC4FF] border border-[#BEC4FF]/10 focus:border-[#BEC4FF]/40 transition-colors"
             />
           </div>
 
@@ -136,15 +136,15 @@ const SlashCommandMenu: React.FC<Props> = ({ isOpen, onClose, onSelect, position
                   onMouseEnter={() => setSelectedIndex(i)}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all ${
                     i === selectedIndex
-                      ? 'bg-[#00FF9C]/10 text-[#A8FFDF] cyber-glow'
-                      : 'text-[#7C8B93] hover:bg-[#00FF9C]/05'
+                      ? 'bg-[#BEC4FF]/10 text-[#BEC4FF] cyber-glow'
+                      : 'text-[#7C8B93] hover:bg-[#BEC4FF]/05'
                   }`}
                 >
                   <div
                     className={`w-9 h-9 rounded-lg flex items-center justify-center border transition-all ${
                       i === selectedIndex
-                        ? 'bg-[#00FF9C]/15 border-[#00FF9C]/40 text-[#00FF9C] shadow-[0_0_8px_rgba(0,255,156,0.3)]'
-                        : 'bg-[#05070A]/30 border-[#00FF9C]/10'
+                        ? 'bg-[#BEC4FF]/15 border-[#BEC4FF]/40 text-[#BEC4FF] shadow-[0_0_8px_rgba(190,196,255,0.3)]'
+                        : 'bg-[#08080c]/30 border-[#BEC4FF]/10'
                     }`}
                   >
                     <opt.icon className="w-4 h-4" />

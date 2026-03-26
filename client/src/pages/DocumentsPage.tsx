@@ -97,7 +97,7 @@ const DocumentsPage: React.FC = () => {
         className="mb-6 flex min-w-0 flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center"
       >
         <div className="min-w-0">
-          <h1 className="mb-1 break-words text-2xl font-bold sm:text-3xl text-[#A8FFDF]">Documents</h1>
+          <h1 className="mb-1 break-words text-2xl font-bold sm:text-3xl text-[#BEC4FF]">Documents</h1>
           <p className="text-[#7C8B93]">Create rich notes with text, images, tables & more.</p>
         </div>
         <motion.button
@@ -131,7 +131,7 @@ const DocumentsPage: React.FC = () => {
       {/* Document Grid */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 text-[#00FFC6] animate-spin" />
+          <Loader2 className="w-8 h-8 text-[#BEC4FF] animate-spin" />
         </div>
       ) : filtered.length === 0 ? (
         <motion.div
@@ -167,8 +167,8 @@ const DocumentsPage: React.FC = () => {
               >
                 <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
                   <div className="flex min-w-0 flex-1 items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#00FFC6]/10 flex items-center justify-center border border-[#00FFC6]/20">
-                      <FileText className="w-5 h-5 text-[#00FFC6]" />
+                    <div className="w-10 h-10 rounded-xl bg-[#BEC4FF]/10 flex items-center justify-center border border-[#BEC4FF]/20">
+                      <FileText className="w-5 h-5 text-[#BEC4FF]" />
                     </div>
                     <h3 className="min-w-0 flex-1 break-words text-lg font-semibold leading-tight">
                       {doc.title}
@@ -207,8 +207,8 @@ const DocumentsPage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="glass-panel p-6 w-full max-w-md border-[#00FF9C]/30 shadow-[0_0_50px_rgba(0,0,0,0.8)]"
-              style={{ background: '#0A0F14' }}
+              className="glass-panel p-6 w-full max-w-md border-[#BEC4FF]/30 shadow-[0_0_50px_rgba(0,0,0,0.8)]"
+              style={{ background: '#12121a' }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-6">
