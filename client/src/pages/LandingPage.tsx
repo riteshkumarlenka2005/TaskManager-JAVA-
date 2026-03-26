@@ -104,11 +104,11 @@ const LandingPage: React.FC = () => {
 
             {/* Sub-actions */}
             <div className="flex items-center gap-10">
-               <button className="flex items-center gap-3 text-white font-black hover:opacity-80 transition-opacity">
-                  Buy a space <ChevronDown className="w-5 h-5 bg-white/10 rounded-full" />
+               <button className="flex items-center gap-3 text-white font-black hover:opacity-80 transition-opacity uppercase text-[10px] tracking-widest">
+                  Create Folder <ChevronDown className="w-5 h-5 bg-white/10 rounded-full" />
                </button>
-               <button className="flex items-center gap-3 text-white font-black hover:opacity-80 transition-opacity">
-                  Rent a space <ChevronDown className="w-5 h-5 bg-white/10 rounded-full" />
+               <button className="flex items-center gap-3 text-white font-black hover:opacity-80 transition-opacity uppercase text-[10px] tracking-widest">
+                  Import Docs <ChevronDown className="w-5 h-5 bg-white/10 rounded-full" />
                </button>
             </div>
           </motion.div>
@@ -130,7 +130,7 @@ const LandingPage: React.FC = () => {
             <div className="relative w-full h-full">
               {/* Badge Card */}
               <div className="absolute top-[20px] left-[-40px] z-30 bg-[#E2837E] p-6 rounded-[32px] shadow-2xl max-w-[200px]">
-                 <span className="text-white font-black text-lg block leading-tight">Our Special <br /> Services</span>
+                 <span className="text-white font-black text-lg block leading-tight">Advanced <br /> Organization</span>
               </div>
 
               {/* Central Large Card */}
@@ -162,8 +162,8 @@ const LandingPage: React.FC = () => {
 
           {/* Contact Overlay */}
           <div className="absolute bottom-[-20px] left-10 z-30 text-[#7C8B93] text-[10px] font-bold max-w-xs">
-             Give us a Call 1-888-498-9240 and <br />
-             we can set you up, or <span className="text-orange-400 underline decoration-dotted">check our services out</span>
+             Join 10k+ researchers and <br />
+             professionals using TaskManager, or <span className="text-orange-400 underline decoration-dotted">learn more here</span>
           </div>
         </div>
       </div>
@@ -182,19 +182,19 @@ const LandingPage: React.FC = () => {
               </div>
               <div className="pr-8">
                 <div className="flex items-center gap-2 text-[10px] font-black text-gray-300 uppercase mb-1">
-                   <Folder className="w-3 h-3 text-orange-400" /> Jakarta Barat, Indonesia
+                   <Folder className="w-3 h-3 text-orange-400" /> Cloud Workspace • Main
                 </div>
                 <div className="flex items-center gap-4 mb-2">
                    <div className="flex items-center gap-1 text-[10px] font-black text-black">
-                      <Layout className="w-3 h-3 text-gray-400" /> 4 bed
+                      <Layout className="w-3 h-3 text-gray-400" /> 128 Notes
                    </div>
                    <div className="flex items-center gap-1 text-[10px] font-black text-black">
-                      <FileText className="w-3 h-3 text-gray-400" /> 12x10 m
+                      <FileText className="w-3 h-3 text-gray-400" /> 12 Folders
                    </div>
                 </div>
                 <div className="flex items-center justify-between gap-8">
-                   <span className="text-lg font-black text-black">$5,200,000</span>
-                   <button className="bg-green-500/10 text-green-600 px-4 py-1 rounded-md text-[10px] font-black uppercase">Book Now</button>
+                   <span className="text-lg font-black text-black">Elite Space</span>
+                   <button className="bg-[#BEC4FF]/10 text-[#3D44A7] px-4 py-1 rounded-md text-[10px] font-black uppercase">Open Now</button>
                 </div>
               </div>
            </motion.div>

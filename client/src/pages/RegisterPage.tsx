@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { Layers, Eye, EyeOff, UserPlus } from 'lucide-react';
+import { Layers, Eye, EyeOff, UserPlus, Loader2 } from 'lucide-react';
 
 const RegisterPage: React.FC = () => {
   const { register, loading } = useAuth();
@@ -29,117 +29,120 @@ const RegisterPage: React.FC = () => {
       navigate('/dashboard');
     } catch (err: unknown) {
       const axiosErr = err as { response?: { data?: { message?: string } } };
-      setError(axiosErr.response?.data?.message || 'Registration failed. Please try again.');
+      setError(axiosErr.response?.data?.message || 'Registration failed.');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden px-4">
-      <div className="ambient-bg" />
-
-      <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-[#CDEAC0]/5 blur-[120px] animate-pulse" />
-      <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-[#F5E6A7]/5 blur-[130px] animate-pulse" />
+    <div className="min-h-screen bg-[#0E0E10] text-white flex items-center justify-center relative overflow-hidden px-4 font-['Outfit']">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-[-10%] right-[-10%] w-1/2 h-1/2 bg-[#BEC4FF]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-1/2 h-1/2 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
 
       <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="glass-panel w-full max-w-md p-8 relative z-10 shadow-2xl shadow-black/40"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-lg"
       >
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-[#CDEAC0]/10 flex items-center justify-center border border-[#CDEAC0]/20">
-            <Layers className="w-6 h-6 text-[#CDEAC0]" />
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight">TaskManager</h1>
-        </div>
-
-        <h2 className="text-xl font-semibold text-center mb-1">Create Account</h2>
-        <p className="text-center text-text-secondary text-sm mb-8">Join your productivity workspace</p>
-
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            className="mb-4 p-3 rounded-xl bg-danger/10 border border-danger/30 text-danger text-sm"
-          >
-            {error}
-          </motion.div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-text-secondary mb-2">Username</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="input-field"
-              placeholder="Choose a username"
-              required
-            />
+        <div className="bg-[#18181B] rounded-[40px] p-10 md:p-16 shadow-2xl ring-1 ring-white/5 relative overflow-hidden">
+          {/* Brand Icon */}
+          <div className="flex flex-col items-center mb-10">
+            <div className="w-16 h-16 rounded-[24px] bg-[#222226] flex items-center justify-center border border-white/5 shadow-2xl mb-6">
+              <Layers className="w-8 h-8 text-[#BEC4FF]" />
+            </div>
+            <h1 className="text-3xl font-black tracking-tighter mb-2">Create Workspace</h1>
+            <p className="text-[#7C8B93] font-bold text-sm tracking-widest uppercase">Start Your Elite Journey</p>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-text-secondary mb-2">Password</label>
-            <div className="relative">
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="mb-8 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-bold text-center"
+              >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#7C8B93] ml-2">Username</label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="input-field pr-11"
-                placeholder="Create a password"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full bg-[#222226] border-none rounded-[20px] py-5 px-8 text-white focus:ring-2 focus:ring-[#BEC4FF] transition-all placeholder:text-[#4F5B62] font-medium"
+                placeholder="choose identity..."
                 required
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary hover:text-text-primary transition-colors"
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
             </div>
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-text-secondary mb-2">Confirm Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="input-field"
-              placeholder="Confirm your password"
-              required
-            />
-          </div>
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#7C8B93] ml-2">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-[#222226] border-none rounded-[20px] py-5 px-8 text-white focus:ring-2 focus:ring-[#BEC4FF] transition-all placeholder:text-[#4F5B62] font-medium pr-16"
+                  placeholder="create secret key..."
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 text-[#7C8B93] hover:text-white transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
 
-          <motion.button
-            type="submit"
-            disabled={loading}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="btn-primary w-full justify-center text-base py-3 disabled:opacity-50"
-          >
-            {loading ? (
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
-                className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#7C8B93] ml-2">Confirm Identity Key</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full bg-[#222226] border-none rounded-[20px] py-5 px-8 text-white focus:ring-2 focus:ring-[#BEC4FF] transition-all placeholder:text-[#4F5B62] font-medium"
+                placeholder="re-enter key..."
+                required
               />
-            ) : (
-              <>
-                <UserPlus className="w-5 h-5" />
-                Create Account
-              </>
-            )}
-          </motion.button>
-        </form>
+            </div>
 
-        <p className="text-center text-text-secondary text-sm mt-6">
-          Already have an account?{' '}
-          <Link to="/login" className="text-[#CDEAC0] hover:text-white transition-colors font-medium">
-            Sign in
-          </Link>
-        </p>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-[#BEC4FF] hover:bg-[#D6DAFF] text-black font-black py-5 rounded-[24px] transition-all shadow-xl shadow-[#BEC4FF]/10 flex items-center justify-center gap-2 group h-16 mt-4"
+            >
+              {loading ? (
+                <Loader2 className="w-6 h-6 animate-spin" />
+              ) : (
+                <>
+                  Initialize Account <UserPlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-12 text-center pt-8 border-t border-white/5">
+            <p className="text-[#7C8B93] text-sm font-bold">
+              Already have an account?{' '}
+              <Link to="/login" className="text-white hover:text-[#BEC4FF] transition-colors">
+                Sign In
+              </Link>
+            </p>
+          </div>
+        </div>
+
+        {/* System Info */}
+        <div className="mt-10 text-center">
+            <p className="text-[#4F5B62] text-[10px] font-black uppercase tracking-[0.4em]">Integrated Task Management Hub • v3.2.0</p>
+        </div>
       </motion.div>
     </div>
   );
