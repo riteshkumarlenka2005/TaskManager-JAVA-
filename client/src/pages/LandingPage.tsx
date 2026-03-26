@@ -3,185 +3,225 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Layers, 
-  LayoutDashboard, 
-  FileText, 
-  Paintbrush, 
-  CheckCircle2, 
-  Zap, 
-  Shield, 
-  Globe,
-  Smartphone,
+  Search,
+  ChevronDown,
+  Folder,
+  FileText,
+  Book,
+  CheckCircle2,
+  Users,
+  Layout,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Smartphone
 } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#0E0E10] text-[#FFFFFF] selection:bg-[#BEC4FF]/20 relative overflow-hidden font-['Outfit']">
-      {/* Background glow effects */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#BEC4FF]/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#7C8B93]/5 blur-[150px] rounded-full pointer-events-none" />
-      
-      {/* Navbar */}
-      <nav className="relative z-50 flex items-center justify-between px-8 py-8 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#18181B] text-white selection:bg-[#BEC4FF]/20 relative overflow-hidden font-['Outfit']">
+      {/* Curved Background Transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-white rounded-t-[100px] md:rounded-t-[200px] z-0" />
+
+      {/* Navbar Container */}
+      <nav className="relative z-50 flex items-center justify-between px-8 py-8 max-w-7xl mx-auto backdrop-blur-sm">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#18181B] flex items-center justify-center border border-white/5 shadow-2xl">
-            <Layers className="w-6 h-6 text-[#BEC4FF]" />
+          <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 shadow-xl">
+             <Layers className="w-5 h-5 text-[#BEC4FF]" />
           </div>
-          <span className="text-2xl font-black tracking-tighter">TaskManager</span>
+          <span className="text-xl font-black tracking-tighter">TaskManager</span>
         </div>
-        <div className="hidden md:flex items-center gap-10">
-          <a href="#features" className="text-sm font-bold text-[#7C8B93] hover:text-[#BEC4FF] transition-all uppercase tracking-widest">Features</a>
-          <a href="#mobile" className="text-sm font-bold text-[#7C8B93] hover:text-[#BEC4FF] transition-all uppercase tracking-widest">Mobile App</a>
+        
+        <div className="hidden lg:flex items-center gap-10">
+          <a href="#" className="text-sm font-bold text-[#BEC4FF] border-b-2 border-[#BEC4FF] pb-1">Home</a>
+          <a href="#" className="text-sm font-bold text-[#7C8B93] hover:text-white transition-all">Projects</a>
+          <a href="#" className="text-sm font-bold text-[#7C8B93] hover:text-white transition-all">Members</a>
+          <a href="#" className="text-sm font-bold text-[#7C8B93] hover:text-white transition-all">Pages</a>
+          <a href="#" className="text-sm font-bold text-[#7C8B93] hover:text-white transition-all">Docs</a>
         </div>
-        <div className="flex items-center gap-4">
-          <Link to="/login" className="text-sm font-bold text-[#7C8B93] hover:text-white transition-colors">Sign In</Link>
-          <Link to="/register" className="bg-[#BEC4FF] text-[#0E0E10] px-8 py-3 rounded-2xl font-black text-sm hover:bg-[#D6DAFF] transition-all shadow-xl shadow-[#BEC4FF]/10">
-            Get Started
+
+        <div className="flex items-center gap-6">
+          <Link to="/login" className="text-sm font-bold text-white hover:opacity-80 transition-opacity">Log in</Link>
+          <Link to="/register" className="bg-transparent border border-white/20 px-8 py-3 rounded-full font-bold text-sm hover:bg-white hover:text-black transition-all">
+            Sign Up
           </Link>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <header className="relative z-10 pt-16 pb-32 px-6">
-        <div className="max-w-7xl mx-auto text-center">
+      {/* Hero Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-8 pt-16 pb-40 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        {/* Left Column: Heading & Filter Bar */}
+        <div className="lg:col-span-7">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 border border-white/10 text-[#BEC4FF] text-[10px] font-black tracking-[0.2em] uppercase mb-10">
-              <Sparkles className="w-3 h-3" /> Redefining Productivity
+            <div className="w-20 h-10 bg-[#BEC4FF]/20 rounded-2xl flex items-center justify-center mb-10 overflow-hidden relative">
+               <div className="w-4 h-4 rounded-full bg-orange-500 absolute top-[-5px] right-2 animate-bounce" />
+               <Layers className="text-[#BEC4FF] w-6 h-6" />
             </div>
-            <h1 className="text-6xl sm:text-8xl font-black tracking-tighter mb-8 leading-[0.95] max-w-5xl mx-auto">
-              Master your <span className="text-[#BEC4FF]">workflow</span> with precision.
+
+            <h1 className="text-6xl md:text-[5.5rem] font-black leading-[0.9] tracking-tighter mb-8 max-w-2xl">
+              Organize Your <br />
+              Best <span className="text-[#BEC4FF]">Happy Space</span>
             </h1>
-            <p className="text-xl sm:text-2xl text-[#7C8B93] max-w-2xl mx-auto mb-14 font-medium leading-relaxed">
-              The premium workspace for high-performance individuals. Organize tasks, 
-              documents, and designs in one visually stunning, unified hub.
+            
+            <p className="text-[#7C8B93] text-xl font-medium mb-12 max-w-md leading-relaxed">
+              Folders & Documents For Work Or Play In 12+ Categories.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <button 
-                onClick={() => navigate('/register')}
-                className="bg-white text-black text-lg font-black py-5 px-12 rounded-[2rem] hover:bg-[#BEC4FF] transition-all w-full sm:w-auto shadow-2xl shadow-white/5"
-              >
-                Create Workspace
-              </button>
-              <a 
-                href="/TaskManager.apk"
-                download="TaskManager.apk"
-                className="flex items-center justify-center gap-3 py-5 px-10 rounded-[2rem] bg-[#18181B] border border-white/5 text-white hover:bg-[#222226] transition-all font-bold group w-full sm:w-auto no-underline shadow-xl"
-              >
-                <Smartphone className="w-6 h-6 text-[#BEC4FF]" />
-                Get Mobile App
-              </a>
+
+            {/* Custom Filter Bar (Real Estate Style) */}
+            <div className="bg-white p-3 rounded-[32px] shadow-2xl flex flex-col md:flex-row items-center gap-4 max-w-2xl mb-10">
+               <div className="flex-1 flex items-center gap-4 px-6 py-2 border-r border-gray-100 last:border-none">
+                  <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                     <Folder className="w-5 h-5 text-orange-600" />
+                  </div>
+                  <div className="flex flex-col">
+                     <span className="text-[10px] uppercase font-black text-gray-400 tracking-wider">Storage Type</span>
+                     <div className="flex items-center gap-1">
+                        <span className="text-black font-black text-sm">Folder</span>
+                        <ChevronDown className="w-4 h-4 text-gray-400" />
+                     </div>
+                  </div>
+               </div>
+               <div className="flex-1 flex items-center gap-4 px-6 py-2 border-r border-gray-100 last:border-none">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                     <FileText className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div className="flex flex-col">
+                     <span className="text-[10px] uppercase font-black text-gray-400 tracking-wider">Complexity</span>
+                     <div className="flex items-center gap-1">
+                        <span className="text-black font-black text-sm">Standard</span>
+                        <ChevronDown className="w-4 h-4 text-gray-400" />
+                     </div>
+                  </div>
+               </div>
+               <button 
+                  onClick={() => navigate('/register')}
+                  className="bg-[#3D44A7] hover:bg-[#2F358C] text-white px-10 py-4 rounded-[24px] font-black transition-all flex items-center gap-2"
+               >
+                  Search
+               </button>
+            </div>
+
+            {/* Sub-actions */}
+            <div className="flex items-center gap-10">
+               <button className="flex items-center gap-3 text-white font-black hover:opacity-80 transition-opacity">
+                  Buy a space <ChevronDown className="w-5 h-5 bg-white/10 rounded-full" />
+               </button>
+               <button className="flex items-center gap-3 text-white font-black hover:opacity-80 transition-opacity">
+                  Rent a space <ChevronDown className="w-5 h-5 bg-white/10 rounded-full" />
+               </button>
             </div>
           </motion.div>
         </div>
 
-        {/* Hero Preview Card */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 1 }}
-          className="max-w-6xl mx-auto mt-24 relative px-4"
-        >
-          <div className="relative bg-[#18181B] p-4 rounded-[40px] shadow-[0_40px_100px_rgba(0,0,0,0.6)] ring-1 ring-white/10">
-            <div className="bg-[#0E0E10] rounded-[32px] overflow-hidden aspect-video flex items-center justify-center relative p-12">
-               <div className="absolute inset-0 bg-gradient-to-tr from-[#BEC4FF]/5 to-transparent pointer-events-none" />
-               <div className="text-center z-10">
-                  <LayoutDashboard className="w-24 h-24 text-[#BEC4FF]/20 mx-auto mb-6" />
-                  <p className="text-[#7C8B93] font-bold text-sm uppercase tracking-[0.3em]">System Interface Ready</p>
-               </div>
-            </div>
-          </div>
-        </motion.div>
-      </header>
-
-      {/* Features Section */}
-      <section id="features" className="relative z-10 py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <div className="max-w-xl">
-              <h2 className="text-5xl font-black tracking-tighter mb-4 leading-tight">Hyper-focused modules for deep work.</h2>
-              <p className="text-[#7C8B93] text-xl font-medium">No bloat. Just the tools you need.</p>
-            </div>
-            <Link to="/register" className="text-[#BEC4FF] font-black flex items-center gap-2 group text-lg">
-              Explore All <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-            </Link>
-          </div>
+        {/* Right Column: Cards (Overlapping) */}
+        <div className="lg:col-span-5 relative h-[500px] mt-12 lg:mt-0">
+          <div className="absolute inset-0 bg-cover bg-center rounded-[50px] opacity-20 filter grayscale" 
+               style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80)' }} 
+          />
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard 
-              icon={<LayoutDashboard className="w-8 h-8" />}
-              title="SaaS Dashboard"
-              description="Minimalist task management with priority focus and fluid state animations."
-            />
-            <FeatureCard 
-              icon={<FileText className="w-8 h-8" />}
-              title="Modern Docs"
-              description="Clean document editor designed for clarity and rapid information architectural."
-            />
-            <FeatureCard 
-              icon={<Paintbrush className="w-8 h-8" />}
-              title="Creative Canvas"
-              description="Professional drawing tools for sketching ideas and engineering blueprints."
-            />
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 1 }}
+            className="absolute top-0 right-0 z-20 w-full"
+          >
+            {/* Main Overlapping Cards Container */}
+            <div className="relative w-full h-full">
+              {/* Badge Card */}
+              <div className="absolute top-[20px] left-[-40px] z-30 bg-[#E2837E] p-6 rounded-[32px] shadow-2xl max-w-[200px]">
+                 <span className="text-white font-black text-lg block leading-tight">Our Special <br /> Services</span>
+              </div>
+
+              {/* Central Large Card */}
+              <div className="bg-[#2C2C30] p-10 rounded-[40px] shadow-2xl border border-white/5 mt-20 ml-10 flex flex-col gap-6 relative group overflow-hidden">
+                 <div className="absolute top-[-20px] right-[-20px] w-40 h-40 bg-[#BEC4FF]/5 rounded-full blur-3xl pointer-events-none" />
+                 
+                 <div className="w-14 h-14 rounded-full bg-[#3A3A3E] flex items-center justify-center text-[#BEC4FF]">
+                    <Layout className="w-7 h-7" />
+                 </div>
+                 
+                 <div>
+                    <h3 className="text-2xl font-black mb-3 text-white">Comfortable</h3>
+                    <p className="text-[#7C8B93] text-sm font-medium leading-relaxed">
+                       Manage your Folders, Notes, <br /> and Tasks efficiently.
+                    </p>
+                 </div>
+              </div>
+
+              {/* Side Card (Peeking) */}
+              <div className="absolute top-[180px] right-[-60px] z-10 bg-[#1D1D21] p-10 rounded-[40px] shadow-2xl border border-white/5 opacity-60 scale-95 blur-[1px]">
+                 <div className="w-14 h-14 rounded-full bg-[#3A3A3E] flex items-center justify-center text-[#BEC4FF] mb-6">
+                    <Book className="w-7 h-7" />
+                 </div>
+                 <h3 className="text-2xl font-black mb-3">Luxury</h3>
+                 <p className="text-[#7C8B93] text-sm">Premium Workspace</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Contact Overlay */}
+          <div className="absolute bottom-[-20px] left-10 z-30 text-[#7C8B93] text-[10px] font-bold max-w-xs">
+             Give us a Call 1-888-498-9240 and <br />
+             we can set you up, or <span className="text-orange-400 underline decoration-dotted">check our services out</span>
           </div>
+        </div>
+      </div>
+
+      {/* Trust Section / Logos Container */}
+      <section className="relative z-20 px-8 pb-20">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
+           {/* Detailed Card at Bottom Left */}
+           <motion.div 
+             initial={{ opacity: 0, scale: 0.9 }}
+             whileInView={{ opacity: 1, scale: 1 }}
+             className="bg-white rounded-[40px] p-2 flex items-center gap-6 shadow-2xl shadow-black/5"
+           >
+              <div className="w-24 h-24 rounded-[32px] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=200" alt="Office" className="w-full h-full object-cover" />
+              </div>
+              <div className="pr-8">
+                <div className="flex items-center gap-2 text-[10px] font-black text-gray-300 uppercase mb-1">
+                   <Folder className="w-3 h-3 text-orange-400" /> Jakarta Barat, Indonesia
+                </div>
+                <div className="flex items-center gap-4 mb-2">
+                   <div className="flex items-center gap-1 text-[10px] font-black text-black">
+                      <Layout className="w-3 h-3 text-gray-400" /> 4 bed
+                   </div>
+                   <div className="flex items-center gap-1 text-[10px] font-black text-black">
+                      <FileText className="w-3 h-3 text-gray-400" /> 12x10 m
+                   </div>
+                </div>
+                <div className="flex items-center justify-between gap-8">
+                   <span className="text-lg font-black text-black">$5,200,000</span>
+                   <button className="bg-green-500/10 text-green-600 px-4 py-1 rounded-md text-[10px] font-black uppercase">Book Now</button>
+                </div>
+              </div>
+           </motion.div>
+
+           {/* Trusted Logos */}
+           <div className="flex-1 overflow-hidden">
+              <div className="flex flex-wrap items-center justify-between gap-8 opacity-40 grayscale contrast-125">
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_Bélo.svg" alt="Airbnb" className="h-6" />
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Cisco_logo_blue_2016.svg" alt="Cisco" className="h-6" />
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg" alt="eBay" className="h-6" />
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" className="h-6" />
+              </div>
+           </div>
         </div>
       </section>
 
-      {/* Mobile Promo */}
-      <section id="mobile" className="py-32 px-6 bg-[#18181B]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
-          <Stat icon={<Shield className="w-6 h-6" />} label="Security" value="E2E Encrypted" />
-          <Stat icon={<Zap className="w-6 h-6" />} label="Speed" value="Instant Sync" />
-          <Stat icon={<Globe className="w-6 h-6" />} label="Availability" value="Any Device" />
-          <Stat icon={<CheckCircle2 className="w-6 h-6" />} label="Result" value="+60% Focus" />
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-20 px-8 text-center bg-[#0E0E10]">
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
-          <div className="flex items-center gap-3">
-             <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
-               <Layers className="w-5 h-5 text-[#BEC4FF]" />
-             </div>
-             <span className="text-xl font-black tracking-tighter">TaskManager</span>
-          </div>
-          <p className="text-[#7C8B93] text-sm font-bold tracking-widest max-w-sm uppercase">
-            &copy; 2026 TaskManager Elite. Designed for the top 1%.
-          </p>
-        </div>
-      </footer>
+      {/* Floating CTA for Mobile App */}
+      <Link to="/TaskManager.apk" download="TaskManager.apk" className="fixed bottom-10 right-10 z-[100] bg-[#BEC4FF] text-black w-14 h-14 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
+         <Smartphone className="w-6 h-6" />
+      </Link>
     </div>
   );
 };
-
-const FeatureCard: React.FC<{ icon: React.ReactNode, title: string, description: string }> = ({ icon, title, description }) => (
-  <motion.div 
-    whileHover={{ y: -10 }}
-    className="bg-[#18181B] p-10 rounded-[3rem] group border border-white/5 hover:border-[#BEC4FF]/30 transition-all duration-500 shadow-2xl"
-  >
-    <div className="w-16 h-16 rounded-[1.5rem] bg-[#0E0E10] flex items-center justify-center border border-white/10 mb-8 group-hover:bg-[#BEC4FF] transition-all group-hover:text-black">
-      <div className="text-[#BEC4FF] group-hover:text-black group-hover:scale-110 transition-all">{icon}</div>
-    </div>
-    <h3 className="text-2xl font-black mb-4 tracking-tight">{title}</h3>
-    <p className="text-[#7C8B93] leading-relaxed font-medium">{description}</p>
-  </motion.div>
-);
-
-const Stat: React.FC<{ icon: React.ReactNode, label: string, value: string }> = ({ icon, label, value }) => (
-  <div className="flex flex-col items-center">
-    <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#BEC4FF] mb-6 mb-4">
-      {icon}
-    </div>
-    <div className="text-2xl font-black mb-2">{value}</div>
-    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#7C8B93]">{label}</div>
-  </div>
-);
 
 export default LandingPage;

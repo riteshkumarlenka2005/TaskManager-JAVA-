@@ -12,7 +12,6 @@ import {
   Layers,
   Menu,
   X,
-  Plus,
 } from 'lucide-react';
 
 const navItems = [
