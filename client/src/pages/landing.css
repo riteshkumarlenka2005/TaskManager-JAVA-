@@ -280,9 +280,9 @@
 
   .lp-hero-image-container {
     order: 1;
-    max-width: min(100%, 200px);
+    max-width: min(100%, 170px);
     margin-top: 2rem;
-    margin-bottom: -0.5rem;
+    margin-bottom: -1rem;
   }
 
   .lp-hero-img {
@@ -290,7 +290,7 @@
   }
 
   .lp-h1 {
-    font-size: clamp(2rem, 7vw, 2.8rem);
+    font-size: clamp(2.4rem, 9vw, 3.2rem);
     margin-bottom: 0.75rem;
   }
 }
@@ -298,35 +298,42 @@
 @media (max-width: 480px) {
   .lp-logo {
     top: 1rem;
-    left: 1.5rem;
+    left: 1rem;
   }
   .lp-logo-icon {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
   }
   .lp-logo-name {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
   }
   .lp-h1 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.1rem;
+    margin-bottom: 0.4rem;
   }
   .lp-sub {
-    font-size: 0.85rem;
-    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    max-width: 100%;
+    line-height: 1.4;
   }
   .lp-cta {
-    gap: 0.5rem;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.6rem;
     margin-bottom: 0;
   }
   .lp-btn-primary,
   .lp-btn-secondary {
-    padding: 10px 24px;
-    font-size: 0.85rem;
-    border-radius: 12px;
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 0.95rem;
+    border-radius: 14px;
+    justify-content: center;
   }
 
   .lp-hero-image-container {
-    max-width: 100%;
+    max-width: 160px;
+    margin-top: 1.5rem;
   }
 }
