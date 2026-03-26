@@ -9,6 +9,9 @@ import DocumentEditorPage from './pages/DocumentEditorPage';
 import DrawingPage from './pages/DrawingPage';
 
 import LandingPage from './pages/LandingPage';
+import MobileLayout from './components/mobile/MobileLayout';
+import MobileHome from './pages/mobile/MobileHome';
+import MobileTasks from './pages/mobile/MobileTasks';
  
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
@@ -36,6 +39,13 @@ function AppRoutes() {
         <Route path="/documents" element={<DocumentsPage />} />
         <Route path="/documents/:id" element={<DocumentEditorPage />} />
         <Route path="/drawing" element={<DrawingPage />} />
+      </Route>
+
+      {/* Mobile App Routes (Dedicated UI) */}
+      <Route path="/mobile" element={<PrivateRoute><MobileLayout /></PrivateRoute>}>
+        <Route index element={<Navigate to="/mobile/home" replace />} />
+        <Route path="home" element={<MobileHome />} />
+        <Route path="tasks" element={<MobileTasks />} />
       </Route>
 
       {/* Default redirect */}
