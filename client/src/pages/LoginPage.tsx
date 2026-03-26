@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { Layers, Eye, EyeOff, ArrowRight, Loader2 } from 'lucide-react';
+import './auth.css';
 
 const LoginPage: React.FC = () => {
   const { login, loading } = useAuth();
@@ -25,73 +26,81 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#08080c] text-white flex items-center justify-center relative overflow-hidden px-4 font-['Poppins']">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-1/2 h-1/2 bg-[#BEC4FF]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-1/2 h-1/2 bg-white/5 rounded-full blur-[120px] pointer-events-none" />
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+    <div className="auth-container">
+      <div className="auth-grid-bg" />
+      
+      {/* Top Header */}
+      <motion.header 
+        className="auth-header"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-lg"
       >
-        <div className="bg-[#12121a] rounded-[40px] p-10 md:p-16 shadow-2xl ring-1 ring-white/5 relative overflow-hidden">
-          {/* Brand Icon */}
-          <div className="flex flex-col items-center mb-12">
-            <div className="w-16 h-16 rounded-[24px] bg-[#222226] flex items-center justify-center border border-white/5 shadow-2xl mb-6">
-              <Layers className="w-8 h-8 text-[#BEC4FF]" />
-            </div>
-            <h1 className="text-3xl font-black tracking-tighter mb-2">Welcome Back</h1>
-            <p className="text-[#7C8B93] font-bold text-sm tracking-widest uppercase">Elite Workspace Entry</p>
-          </div>
+        <div className="auth-logo-box">
+          <Layers className="w-9 h-9" />
+        </div>
+        <motion.h2
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Login
+        </motion.h2>
+      </motion.header>
 
+      {/* Main Body */}
+      <motion.div 
+        className="auth-body-wrapper"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.2 }}
+      >
+        <div className="auth-body">
           <AnimatePresence>
             {error && (
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="mb-8 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-bold text-center"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="w-full mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center"
               >
                 {error}
               </motion.div>
             )}
           </AnimatePresence>
 
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#7C8B93] ml-2">Username</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-[#222226] border-none rounded-[20px] py-5 px-8 text-white focus:ring-2 focus:ring-[#BEC4FF] transition-all placeholder:text-[#4F5B62] font-medium"
-                placeholder="identity..."
-                required
-              />
+          <form onSubmit={handleSubmit} className="auth-form">
+            <div className="auth-input-group">
+              <label className="auth-label">Username</label>
+              <div className="auth-input-wrapper">
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="auth-input"
+                  placeholder="name or email..."
+                  required
+                />
+              </div>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex justify-between items-center ml-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#7C8B93]">Password</label>
-                <a href="#" className="text-[10px] font-black text-[#BEC4FF] uppercase tracking-widest hover:opacity-80 transition-opacity">Forgot?</a>
-              </div>
-              <div className="relative">
+            <div className="auth-input-group">
+              <label className="auth-label">Password</label>
+              <div className="auth-input-wrapper">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-[#222226] border-none rounded-[20px] py-5 px-8 text-white focus:ring-2 focus:ring-[#BEC4FF] transition-all placeholder:text-[#4F5B62] font-medium pr-16"
+                  className="auth-input"
                   placeholder="secure key..."
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-6 top-1/2 -translate-y-1/2 text-[#7C8B93] hover:text-white transition-colors"
+                  className="auth-toggle-pass"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
@@ -99,33 +108,28 @@ const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#BEC4FF] hover:bg-[#D6DAFF] text-black font-black py-5 rounded-[24px] transition-all shadow-xl shadow-[#BEC4FF]/10 flex items-center justify-center gap-2 group h-16"
+              className="auth-btn-primary"
             >
               {loading ? (
                 <Loader2 className="w-6 h-6 animate-spin" />
               ) : (
                 <>
-                  Connect <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  Connect <ArrowRight size={20} />
                 </>
               )}
             </button>
           </form>
 
-          <div className="mt-12 text-center pt-8 border-t border-white/5">
-            <p className="text-[#7C8B93] text-sm font-bold">
-              New to the system?{' '}
-              <Link to="/register" className="text-white hover:text-[#BEC4FF] transition-colors">
-                Create Account
-              </Link>
+          <footer className="auth-footer">
+            <p>
+              New to the system? 
+              <Link to="/register">Create Account</Link>
             </p>
-          </div>
-        </div>
-
-        {/* System Info */}
-        <div className="mt-10 text-center">
-            <p className="text-[#4F5B62] text-[10px] font-black uppercase tracking-[0.4em]">Integrated Task Management Hub • v3.2.0</p>
+          </footer>
         </div>
       </motion.div>
+
+      <p className="auth-system-info">Integrated Task Management Hub • v3.2.0</p>
     </div>
   );
 };
