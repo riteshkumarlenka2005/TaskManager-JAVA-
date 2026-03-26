@@ -1,6 +1,5 @@
 @import "tailwindcss";
-@source "./";
-@source "../index.html";
+@source "../**/*.{ts,tsx,html}";
 
 /* ===== Custom Design Tokens ===== */
 @theme {
@@ -49,12 +48,6 @@
 }
 
 /* ===== Base styles ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html {
   scroll-behavior: smooth;
 }

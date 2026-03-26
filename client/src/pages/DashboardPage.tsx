@@ -126,7 +126,7 @@ const DashboardPage: React.FC = () => {
         className="mb-6 flex min-w-0 flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center"
       >
         <div className="min-w-0">
-          <h1 className="mb-1 break-words text-2xl font-bold sm:text-3xl">Dashboard</h1>
+          <h1 className="mb-1! break-words text-2xl font-bold sm:text-3xl">My Dashboard</h1>
           <p className="text-text-secondary">Manage and track your tasks effectively.</p>
         </div>
         <motion.button
@@ -145,7 +145,7 @@ const DashboardPage: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8!"
       >
         {[
           { label: 'Total Tasks', value: stats.total, icon: ClipboardList, color: 'text-text-primary' },
@@ -158,7 +158,7 @@ const DashboardPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 + i * 0.05 }}
-            className="glass-panel glass-panel-hover min-w-0 cursor-default p-5"
+            className="glass-panel glass-panel-hover min-w-0 cursor-default p-5!"
           >
             <div className="flex items-center justify-between mb-3">
               <span className="min-w-0 break-words text-sm text-text-secondary">{stat.label}</span>
