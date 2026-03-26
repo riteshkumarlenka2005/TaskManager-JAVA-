@@ -132,7 +132,7 @@ const DrawingPage: React.FC = () => {
     [isDrawing, lastPos, tool, color, size]
   );
 
-  const endDraw = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
+  const endDraw = useCallback(() => {
     if (!isDrawing) return;
     setIsDrawing(false);
     setLastPos(null);
