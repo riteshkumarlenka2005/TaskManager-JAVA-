@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Layers, Play, CheckSquare, FileText, Cloud } from 'lucide-react';
+import { ArrowRight, Layers, CheckSquare, FileText, Cloud } from 'lucide-react';
 import './landing.css';
 
 /* ─── Shaking Folder Image ─── */
@@ -122,9 +122,6 @@ const LandingPage: React.FC = () => (
           transition={{ delay: 1, duration: 0.6, ease: "easeOut" }}>
           <Link to="/register" className="lp-btn-primary">
             Start Free <ArrowRight size={18} />
-          </Link>
-          <Link to="/login" className="lp-btn-secondary">
-            <Play size={16} /> View Demo
           </Link>
         </motion.div>
       </div>
