@@ -3,16 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Layers, 
-  Search,
   ChevronDown,
   Folder,
   FileText,
   Book,
-  CheckCircle2,
-  Users,
   Layout,
-  ArrowRight,
-  Sparkles,
   Smartphone
 } from 'lucide-react';
 
