@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Layers, Play } from 'lucide-react';
+import { ArrowRight, Layers, Play, CheckSquare, FileText, Cloud } from 'lucide-react';
 import './landing.css';
 
 /* ─── Shaking Folder Image ─── */
@@ -37,43 +37,65 @@ const LandingPage: React.FC = () => (
     {/* Grid Background */}
     <div className="lp-grid-bg" />
 
-    {/* Logo — Top Left */}
-    <div className="lp-logo">
-      <div className="lp-logo-icon"><Layers size={24} /></div>
-      <span className="lp-logo-name">TaskManager</span>
-    </div>
-
-    {/* Hero Section */}
+    {/* Hero Section Container */}
     <section className="lp-hero">
       <div className="lp-hero-inner">
-        {/* Hero Text */}
+        {/* 1. Logo */}
+        <div className="lp-logo">
+          <div className="lp-logo-icon"><Layers size={24} /></div>
+          <span className="lp-logo-name">TaskManager</span>
+        </div>
+
+        {/* 2. Hero Image */}
+        <HeroImage />
+
+        {/* 3. Hero Text (Heading + Subtext) */}
         <motion.div className="lp-hero-left" initial="hidden" animate="visible">
           <motion.h1 className="lp-h1"
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.7 }}>
             Organize. <span className="accent">Simplify.</span><br />Achieve.
           </motion.h1>
 
           <motion.p className="lp-sub"
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.6 }}>
             The all-in-one workspace for tasks, notes, and productivity — built for clarity, speed, and focus.
           </motion.p>
 
-          <motion.div className="lp-cta"
-            initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.55, duration: 0.6 }}>
-            <Link to="/register" className="lp-btn-primary">
-              Start Free <ArrowRight size={18} />
-            </Link>
-            <Link to="/login" className="lp-btn-secondary">
-              <Play size={16} /> View Demo
-            </Link>
+          {/* Feature Cubes */}
+          <motion.div 
+            className="lp-feature-cubes"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.45, duration: 0.6 }}
+          >
+            <div className="lp-cube">
+              <div className="lp-cube-icon tasks"><CheckSquare size={20} /></div>
+              <span className="lp-cube-label">Smart Tasks</span>
+            </div>
+            <div className="lp-cube">
+              <div className="lp-cube-icon notes"><FileText size={20} /></div>
+              <span className="lp-cube-label">Notes</span>
+            </div>
+            <div className="lp-cube">
+              <div className="lp-cube-icon cloud"><Cloud size={20} /></div>
+              <span className="lp-cube-label">Cloud Sync</span>
+            </div>
           </motion.div>
         </motion.div>
 
-        {/* Hero Image */}
-        <HeroImage />
+        {/* 4. CTA Buttons */}
+        <motion.div className="lp-cta"
+          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}>
+          <Link to="/register" className="lp-btn-primary">
+            Start Free <ArrowRight size={18} />
+          </Link>
+          <Link to="/login" className="lp-btn-secondary">
+            <Play size={16} /> View Demo
+          </Link>
+        </motion.div>
       </div>
     </section>
   </div>

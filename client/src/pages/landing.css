@@ -1,63 +1,71 @@
-/* ═══════════════════════════════════════════════════════
-   LANDING PAGE — Hero Only
-   Theme: Dark Black + Purple (matching app design)
-   ═══════════════════════════════════════════════════════ */
+/* ═══ LANDING PAGE STYLES ═══ */
 
-/* ── Base ── */
 .lp {
   position: relative;
-  min-height: 100vh;
   width: 100%;
+  min-height: 100vh;
   background: #08080c;
+  color: #fff;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  font-family: 'Poppins', 'Inter', system-ui, sans-serif;
-}
-
-/* ── Logo (Top Left) ── */
-.lp-logo {
-  position: absolute;
-  top: 1.5rem;
-  left: 2rem;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.lp-logo-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  background: #1a1a22;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #BEC4FF;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.lp-logo-name {
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: -0.03em;
+  flex-direction: column;
 }
 
 /* ── Grid Background ── */
 .lp-grid-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(190, 196, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(190, 196, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lp-grid-bg::after {
+  content: '';
   position: absolute;
   inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(190, 196, 255, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(190, 196, 255, 0.08) 1px, transparent 1px);
-  background-size: 50px 50px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 85%);
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(190, 196, 255, 0.08), transparent 65%),
+    radial-gradient(circle at 50% 50%, transparent 0%, #08080c 90%);
+}
+
+/* ── Logo ── */
+.lp-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+}
+
+.lp-logo-icon {
+  width: 42px;
+  height: 42px;
+  background: rgba(190, 196, 255, 0.1);
+  border: 1px solid rgba(190, 196, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #BEC4FF;
+  box-shadow: 0 0 20px rgba(190, 196, 255, 0.1);
+}
+
+.lp-logo-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(to right, #fff, rgba(255,255,255,0.8));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ── Hero Layout ── */
@@ -76,42 +84,16 @@
   display: flex;
   align-items: center;
   gap: 4rem;
-  max-width: 1140px;
+  max-width: 1200px;
   width: 100%;
 }
 
-/* ── Left — Text ── */
+/* ── Hero Text ── */
 .lp-hero-left {
   flex: 1.2;
   min-width: 0;
-  order: 1;
 }
 
-/* Badge */
-.lp-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 18px;
-  border-radius: 100px;
-  background: rgba(190, 196, 255, 0.06);
-  border: 1px solid rgba(190, 196, 255, 0.12);
-  color: #BEC4FF;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  margin-bottom: 2rem;
-}
-
-.lp-badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #BEC4FF;
-  box-shadow: 0 0 8px rgba(190, 196, 255, 0.6);
-}
-
-/* Heading */
 .lp-h1 {
   font-size: clamp(2.8rem, 5.5vw, 4.5rem);
   font-weight: 800;
@@ -123,35 +105,93 @@
 }
 
 .lp-h1 .accent {
-  background: linear-gradient(135deg, #BEC4FF 0%, #9ba2ff 100%);
+  background: linear-gradient(90deg, #BEC4FF 0%, #a2a9ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  display: inline-block;
 }
 
-/* Subtitle */
 .lp-sub {
   font-size: clamp(0.9rem, 1.4vw, 1.1rem);
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.6); /* Increased brightness */
   line-height: 1.5;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
   max-width: 480px;
-  font-weight: 400;
+  transition: color 0.25s ease;
 }
 
-.lp-trust {
+/* ── Feature Cubes ── */
+.lp-feature-cubes {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.lp-cube {
+  width: 105px;
+  height: 105px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.lp-cube:hover {
+  transform: translateY(-4px) scale(1.05); /* Increased scale */
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.lp-cube-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Radial glows behind icons */
+.lp-cube-icon.tasks::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, rgba(59, 130, 246, 0.25), transparent 70%); z-index: -1; }
+.lp-cube-icon.notes::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, rgba(139, 92, 246, 0.25), transparent 70%); z-index: -1; }
+.lp-cube-icon.cloud::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, rgba(190, 196, 255, 0.25), transparent 70%); z-index: -1; }
+
+.lp-cube-icon svg {
+  color: #fff;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
+}
+
+.lp-cube-icon.tasks { background: rgba(59, 130, 246, 0.1); }
+.lp-cube-icon.notes { background: rgba(139, 92, 246, 0.1); }
+.lp-cube-icon.cloud { background: rgba(190, 196, 255, 0.1); }
+
+.lp-cube-label {
   font-size: 0.75rem;
-  color: rgba(190, 196, 255, 0.35);
-  margin-bottom: 1.25rem;
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.01em;
 }
 
-/* CTA */
+/* ── CTA ── */
 .lp-cta {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  gap: 1rem;
 }
 
 .lp-btn-primary {
@@ -160,20 +200,18 @@
   gap: 8px;
   padding: 14px 32px;
   border-radius: 14px;
-  background: #BEC4FF;
+  background: linear-gradient(135deg, #BEC4FF, #a2a9ff);
   color: #08080c;
   font-weight: 700;
   font-size: 0.95rem;
   text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 24px rgba(190, 196, 255, 0.2);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 20px rgba(190, 196, 255, 0.15);
 }
 
 .lp-btn-primary:hover {
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 8px 32px rgba(190, 196, 255, 0.35);
+  box-shadow: 0 10px 30px rgba(190, 196, 255, 0.4);
 }
 
 .lp-btn-secondary {
@@ -188,52 +226,27 @@
   font-size: 0.95rem;
   text-decoration: none;
   border: 1px solid rgba(190, 196, 255, 0.12);
-  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.lp-btn-secondary:hover {
-  background: rgba(190, 196, 255, 0.06);
-  border-color: rgba(190, 196, 255, 0.25);
-  color: #fff;
-}
-
-/* Trust Badges */
-.lp-badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.lp-badge-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
-  font-weight: 500;
-}
-
-.lp-badge-item .chk {
-  color: #BEC4FF;
-  font-weight: 700;
-}
-
-/* ── Right — Hero Image ── */
+/* ── Hero Image ── */
 .lp-hero-image-container {
   flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
   position: relative;
-  order: 2;
 }
 
 .lp-hero-img {
   max-width: min(100%, 500px);
   height: auto;
   filter: drop-shadow(0 0 40px rgba(190, 196, 255, 0.15));
-  border-radius: 24px;
+  animation: float 4s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) rotate(0); }
+  100% { transform: translateY(-8px) rotate(1deg); }
 }
 
 .lp-hero-glow {
@@ -241,99 +254,123 @@
   width: 100%;
   height: 100%;
   background: radial-gradient(circle, rgba(190, 196, 255, 0.1) 0%, transparent 70%);
-  pointer-events: none;
   z-index: -1;
 }
 
-/* ── Responsive ── */
+/* ── Desktop Default Positioning ── */
+.lp-logo {
+  position: absolute;
+  top: 2rem;
+  left: 3rem;
+}
+
+/* ── Responsive Mobile ── */
 @media (max-width: 900px) {
   .lp {
     height: 100svh;
-    min-height: -webkit-fill-available;
-    align-items: center;
-    padding-top: 0;
+    height: 100dvh;
+    overflow: hidden;
   }
 
   .lp-hero {
-    min-height: auto;
     height: 100%;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
+    padding: 1rem 1.5rem 1.5rem;
   }
 
   .lp-hero-inner {
     flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-    justify-content: center;
-    height: auto;
+    height: 100%;
+    gap: 0;
+    justify-content: space-between; /* Equal Gaps */
+    align-items: center;
     max-height: 100%;
   }
 
-  .lp-hero-left {
-    order: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  /* Reset desktop positioning */
+  .lp-logo {
+    position: static;
+    width: 100%;
+    justify-content: center;
+    padding-top: 0.5rem;
+    order: 1; /* TOP */
   }
 
   .lp-hero-image-container {
-    order: 1;
-    max-width: min(100%, 170px);
-    margin-top: 2rem;
-    margin-bottom: -1rem;
+    order: 2; /* IMAGE MIDDLE */
+    max-width: 240px;
+    flex: 0 0 auto;
+    margin-top: -4.5rem; /* Move further upward */
   }
 
-  .lp-hero-img {
-    max-width: 100%;
+  .lp-hero-left {
+    order: 3; /* TEXT Content */
+    flex: 0 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .lp-feature-cubes {
+    order: 4;
+    gap: 0.75rem;
+    margin-bottom: 0; 
+    padding: 0.5rem 0;
+  }
+
+  .lp-cube {
+    width: 82px;
+    height: 82px;
+    border-radius: 14px;
+    gap: 6px;
+  }
+
+  .lp-cube-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .lp-cube-label {
+    font-size: 0.65rem;
+  }
+
+  .lp-cta {
+    order: 5; /* BUTTONS BOTTOM */
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+    flex: 0 0 auto;
   }
 
   .lp-h1 {
-    font-size: clamp(2.4rem, 9vw, 3.2rem);
-    margin-bottom: 0.75rem;
+    font-size: 2.2rem;
+    margin: -6rem 0 0;
+  }
+
+  .lp-sub {
+    font-size: 0.88rem;
+    margin: 0;
+    max-width: 100%;
+    line-height: 1.4;
+  }
+
+  .lp-btn-primary, .lp-btn-secondary {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
-  .lp-logo {
-    top: 1rem;
-    left: 1rem;
-  }
-  .lp-logo-icon {
-    width: 38px;
-    height: 38px;
-  }
-  .lp-logo-name {
-    font-size: 1.15rem;
-  }
   .lp-h1 {
-    font-size: 2.1rem;
-    margin-bottom: 0.4rem;
+    font-size: 2rem;
+    margin-top: -6rem;
   }
-  .lp-sub {
-    font-size: 0.95rem;
-    margin-bottom: 0.75rem;
-    max-width: 100%;
-    line-height: 1.4;
-  }
-  .lp-cta {
-    flex-direction: column;
-    width: 100%;
-    gap: 0.6rem;
-    margin-bottom: 0;
-  }
-  .lp-btn-primary,
-  .lp-btn-secondary {
-    width: 100%;
-    padding: 14px 24px;
-    font-size: 0.95rem;
-    border-radius: 14px;
-    justify-content: center;
-  }
-
   .lp-hero-image-container {
-    max-width: 160px;
-    margin-top: 1.5rem;
+    max-width: 220px;
+    margin-top: -5.5rem; /* More nudge for small screens */
   }
 }
