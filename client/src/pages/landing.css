@@ -316,7 +316,6 @@
   .lp-feature-cubes {
     order: 4;
     gap: 0.75rem;
-    margin-top: -1.5rem; /* Nudge upward closer to subtext */
     margin-bottom: 0; 
     padding: 0.5rem 0;
   }
@@ -348,12 +347,12 @@
 
   .lp-h1 {
     font-size: 2.2rem;
-    margin: -8.5rem 0 0; /* Move further upward closer to image */
+    margin: -6rem 0 0;
   }
 
   .lp-sub {
     font-size: 0.88rem;
-    margin: -0.5rem 0 0; /* Tighten subtext too */
+    margin: 0;
     max-width: 100%;
     line-height: 1.4;
   }
@@ -369,7 +368,7 @@
 @media (max-width: 480px) {
   .lp-h1 {
     font-size: 2rem;
-    margin-top: -8rem;
+    margin-top: -6rem;
   }
   .lp-hero-image-container {
     max-width: 220px;
