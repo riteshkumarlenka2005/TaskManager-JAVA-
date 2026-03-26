@@ -6,12 +6,12 @@ import type { Task } from '../../types';
 import {
   User,
   LogOut,
-  CheckCircle2,
-  ClipboardList,
-  TrendingUp,
-  Shield,
   ChevronRight,
   Loader2,
+  Shield,
+  Settings,
+  Bell,
+  HelpCircle
 } from 'lucide-react';
 
 const MobileProfile: React.FC = () => {
@@ -45,156 +45,94 @@ const MobileProfile: React.FC = () => {
     }
   };
 
-  const stats = {
-    total: tasks.length,
-    completed: tasks.filter((t) => t.status === 'COMPLETED').length,
-    inProgress: tasks.filter((t) => t.status === 'IN_PROGRESS').length,
-  };
+  const completedCount = tasks.filter((t) => t.status === 'COMPLETED').length;
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
+        <Loader2 className="animate-spin text-[#BEC4FF]" style={{ width: 32, height: 32 }} />
+      </div>
+    );
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-      {/* User Info Card */}
-      <div className="mobile-panel" style={{ textAlign: 'center', padding: '2rem 1.5rem' }}>
-        <div className="mobile-profile-avatar" style={{ margin: '0 auto 1rem' }}>
-          <User style={{ width: 32, height: 32, color: '#46F0D2' }} />
+      {/* Profile Header */}
+      <div className="mobile-panel" style={{ padding: '2.5rem 1.5rem', textAlign: 'center' }}>
+        <div 
+          style={{ 
+            width: 80, height: 80, borderRadius: '32px', background: '#222226', 
+            margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            border: '4px solid #18181B', boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+          }}
+        >
+          <img 
+            src={`https://ui-avatars.com/api/?name=${username || 'User'}&background=222226&color=BEC4FF&size=128`} 
+            alt="Avatar"
+            style={{ width: '100%', height: '100%', borderRadius: '28px' }}
+          />
         </div>
-        <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '0.25rem' }}>
-          {username || 'User'}
-        </h3>
-        <p style={{ fontSize: '0.75rem', color: '#7C8B93', margin: 0 }}>TaskManager Member</p>
+        <h3 style={{ fontSize: '1.5rem', fontBlack: 900, marginBottom: '0.25rem' }}>{username || 'User'}</h3>
+        <p style={{ fontSize: '0.85rem', color: '#7C8B93', fontWeight: 600 }}>Platinum Member</p>
       </div>
 
       {/* Stats Row */}
-      {loading ? (
-        <div className="mobile-spinner">
-          <Loader2 style={{ width: 24, height: 24 }} />
+      <div className="mobile-stat-grid">
+        <div className="mobile-stat-card">
+          <div className="mobile-stat-value text-[#BEC4FF]">{tasks.length}</div>
+          <div className="mobile-stat-label tracking-widest uppercase">Total Tasks</div>
         </div>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.6rem' }}>
-          <ProfileStat icon={<ClipboardList />} value={stats.total} label="Total" />
-          <ProfileStat icon={<TrendingUp />} value={stats.inProgress} label="Active" />
-          <ProfileStat icon={<CheckCircle2 />} value={stats.completed} label="Done" />
+        <div className="mobile-stat-card">
+          <div className="mobile-stat-value text-white">{completedCount}</div>
+          <div className="mobile-stat-label tracking-widest uppercase">Finished</div>
         </div>
-      )}
-
-      {/* Menu Items */}
-      <div className="mobile-panel" style={{ padding: 0, overflow: 'hidden' }}>
-        <MenuItem
-          icon={<Shield style={{ width: 18, height: 18, color: '#46F0D2' }} />}
-          label="Security"
-          sublabel="Password & authentication"
-        />
-        <div className="mobile-divider" style={{ margin: 0 }} />
-        <MenuItem
-          icon={<ClipboardList style={{ width: 18, height: 18, color: '#46F0D2' }} />}
-          label="My Tasks"
-          sublabel={`${stats.total} tasks total`}
-          onClick={() => navigate('/mobile/tasks')}
-        />
       </div>
 
-      {/* App Info */}
-      <div className="mobile-panel" style={{ textAlign: 'center' }}>
-        <p style={{ fontSize: '0.7rem', color: '#4F5B62', margin: '0 0 0.25rem', fontWeight: 700 }}>
-          TaskManager Mobile
-        </p>
-        <p style={{ fontSize: '0.6rem', color: '#4F5B62', margin: 0 }}>
-          Version 1.0.0 • Cyber Edition
-        </p>
+      {/* Settings Menu */}
+      <div className="mobile-panel" style={{ padding: '0.5rem' }}>
+        <ProfileMenuItem icon={<Settings />} label="Settings" />
+        <ProfileMenuItem icon={<Bell />} label="Notifications" />
+        <ProfileMenuItem icon={<Shield />} label="Privacy & Security" />
+        <ProfileMenuItem icon={<HelpCircle />} label="Support Center" />
       </div>
 
-      {/* Logout Button */}
-      <button className="mobile-btn-danger" style={{ width: '100%' }} onClick={handleLogout}>
-        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-          <LogOut style={{ width: 16, height: 16 }} />
-          Log Out
-        </span>
+      {/* Logout */}
+      <button 
+        onClick={handleLogout}
+        className="mobile-btn-danger" 
+        style={{ marginTop: '0.5rem' }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+          <LogOut style={{ width: 18, height: 18 }} />
+          <span>Sign Out</span>
+        </div>
       </button>
 
-      {/* Bottom spacer */}
-      <div style={{ height: '1rem' }} />
+      <div style={{ textAlign: 'center', padding: '1rem' }}>
+        <p style={{ fontSize: '0.65rem', color: '#4F5B62', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+          TaskManager Elite v1.2.0
+        </p>
+      </div>
+
+      <div style={{ height: '2rem' }} />
     </div>
   );
 };
 
-const ProfileStat = ({
-  icon,
-  value,
-  label,
-}: {
-  icon: React.ReactNode;
-  value: number;
-  label: string;
-}) => (
-  <div className="mobile-stat-card" style={{ textAlign: 'center' }}>
-    <div
-      style={{
-        width: 36,
-        height: 36,
-        borderRadius: 10,
-        background: 'rgba(70,240,210,0.08)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        margin: '0 auto 0.5rem',
-      }}
-    >
-      {React.cloneElement(icon as React.ReactElement<any, any>, {
-        style: { width: 16, height: 16, color: '#46F0D2' },
-      })}
-    </div>
-    <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'white' }}>{value}</div>
-    <div style={{ fontSize: '0.65rem', color: '#7C8B93', fontWeight: 600 }}>{label}</div>
-  </div>
-);
-
-const MenuItem = ({
-  icon,
-  label,
-  sublabel,
-  onClick,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  sublabel: string;
-  onClick?: () => void;
-}) => (
+const ProfileMenuItem = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
   <button
-    onClick={onClick}
     style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.8rem',
-      padding: '1rem 1.25rem',
-      width: '100%',
-      background: 'none',
-      border: 'none',
-      cursor: onClick ? 'pointer' : 'default',
-      textAlign: 'left',
-      color: 'inherit',
-      fontFamily: 'var(--mobile-font)',
-      transition: 'background 0.2s',
+      width: '100%', display: 'flex', alignItems: 'center', gap: '1rem', 
+      padding: '1.25rem', background: 'transparent', border: 'none', color: 'white',
+      borderRadius: '1.5rem', transition: 'all 0.2s'
     }}
+    className="hover:bg-white/5"
   >
-    <div
-      style={{
-        width: 36,
-        height: 36,
-        borderRadius: 10,
-        background: 'rgba(70,240,210,0.08)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexShrink: 0,
-      }}
-    >
-      {icon}
+    <div style={{ color: '#7C8B93' }}>
+      {React.cloneElement(icon as React.ReactElement, { size: 20 })}
     </div>
-    <div style={{ flex: 1 }}>
-      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'white' }}>{label}</div>
-      <div style={{ fontSize: '0.7rem', color: '#7C8B93' }}>{sublabel}</div>
-    </div>
-    <ChevronRight style={{ width: 16, height: 16, color: '#4F5B62' }} />
+    <span style={{ flex: 1, textAlign: 'left', fontWeight: 700, fontSize: '0.9rem' }}>{label}</span>
+    <ChevronRight size={16} style={{ color: '#4F5B62' }} />
   </button>
 );
 

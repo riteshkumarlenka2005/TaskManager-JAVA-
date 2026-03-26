@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Layers, 
@@ -10,142 +10,152 @@ import {
   Zap, 
   Shield, 
   Globe,
-  Smartphone
+  Smartphone,
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="min-h-screen bg-[#05070A] text-[#A8FFDF] selection:bg-[#00FF9C]/20 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0E0E10] text-[#FFFFFF] selection:bg-[#BEC4FF]/20 relative overflow-hidden font-['Outfit']">
       {/* Background glow effects */}
-      <div className="ambient-bg" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[#00FF9C]/10 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#BEC4FF]/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#7C8B93]/5 blur-[150px] rounded-full pointer-events-none" />
       
       {/* Navbar */}
-      <nav className="relative z-50 flex items-center justify-between px-6 py-6 max-w-7xl mx-auto">
+      <nav className="relative z-50 flex items-center justify-between px-8 py-8 max-w-7xl mx-auto">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#00FF9C]/10 flex items-center justify-center border border-[#00FF9C]/20 shadow-[0_0_15px_rgba(0,255,156,0.2)]">
-            <Layers className="w-5 h-5 text-[#00FF9C]" />
+          <div className="w-12 h-12 rounded-2xl bg-[#18181B] flex items-center justify-center border border-white/5 shadow-2xl">
+            <Layers className="w-6 h-6 text-[#BEC4FF]" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-[#A8FFDF]">TaskManager</span>
+          <span className="text-2xl font-black tracking-tighter">TaskManager</span>
         </div>
-        <div className="flex items-center gap-4 sm:gap-8">
-          <Link to="/login" className="text-sm font-medium text-[#7C8B93] hover:text-[#00FF9C] transition-colors">Sign In</Link>
-          <Link to="/register" className="btn-primary py-2 px-6">Get Started</Link>
+        <div className="hidden md:flex items-center gap-10">
+          <a href="#features" className="text-sm font-bold text-[#7C8B93] hover:text-[#BEC4FF] transition-all uppercase tracking-widest">Features</a>
+          <a href="#mobile" className="text-sm font-bold text-[#7C8B93] hover:text-[#BEC4FF] transition-all uppercase tracking-widest">Mobile App</a>
+        </div>
+        <div className="flex items-center gap-4">
+          <Link to="/login" className="text-sm font-bold text-[#7C8B93] hover:text-white transition-colors">Sign In</Link>
+          <Link to="/register" className="bg-[#BEC4FF] text-[#0E0E10] px-8 py-3 rounded-2xl font-black text-sm hover:bg-[#D6DAFF] transition-all shadow-xl shadow-[#BEC4FF]/10">
+            Get Started
+          </Link>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <header className="relative z-10 pt-20 pb-32 px-6 overflow-hidden">
+      <header className="relative z-10 pt-16 pb-32 px-6">
         <div className="max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00FF9C]/10 border border-[#00FF9C]/20 text-[#00FF9C] text-xs font-bold tracking-widest uppercase mb-8 cyber-glow">
-              <Zap className="w-3 h-3" /> Next-Gen Productivity
+            <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 border border-white/10 text-[#BEC4FF] text-[10px] font-black tracking-[0.2em] uppercase mb-10">
+              <Sparkles className="w-3 h-3" /> Redefining Productivity
             </div>
-            <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight mb-8 leading-tight">
-              Design Your <span className="accent-gradient-text">Future</span> <br className="hidden sm:block" /> Workforce
+            <h1 className="text-6xl sm:text-8xl font-black tracking-tighter mb-8 leading-[0.95] max-w-5xl mx-auto">
+              Master your <span className="text-[#BEC4FF]">workflow</span> with precision.
             </h1>
-            <p className="text-lg sm:text-xl text-[#7C8B93] max-w-2xl mx-auto mb-12">
-              The ultimate workspace for creators, hackers, and teams. Organize tasks, 
-              write professional documentation, and draw futuristic blueprints in one neon-powered hub.
+            <p className="text-xl sm:text-2xl text-[#7C8B93] max-w-2xl mx-auto mb-14 font-medium leading-relaxed">
+              The premium workspace for high-performance individuals. Organize tasks, 
+              documents, and designs in one visually stunning, unified hub.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/register" className="btn-primary text-lg py-4 px-10 w-full sm:w-auto">
-                Deploy Your Space
-              </Link>
-              <Link to="/login" className="btn-outline text-lg py-4 px-10 w-full sm:w-auto">
-                Access Terminal
-              </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <button 
+                onClick={() => navigate('/register')}
+                className="bg-white text-black text-lg font-black py-5 px-12 rounded-[2rem] hover:bg-[#BEC4FF] transition-all w-full sm:w-auto shadow-2xl shadow-white/5"
+              >
+                Create Workspace
+              </button>
               <a 
                 href="/TaskManager.apk"
                 download="TaskManager.apk"
-                className="flex items-center justify-center gap-2 py-4 px-10 glass-panel border-[#46F0D2]/40 text-[#46F0D2] hover:bg-[#46F0D2]/10 transition-all font-bold group w-full sm:w-auto no-underline"
+                className="flex items-center justify-center gap-3 py-5 px-10 rounded-[2rem] bg-[#18181B] border border-white/5 text-white hover:bg-[#222226] transition-all font-bold group w-full sm:w-auto no-underline shadow-xl"
               >
-                <Smartphone className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                Download App
+                <Smartphone className="w-6 h-6 text-[#BEC4FF]" />
+                Get Mobile App
               </a>
             </div>
           </motion.div>
         </div>
 
-        {/* Hero Image / Mockup Placeholder */}
+        {/* Hero Preview Card */}
         <motion.div 
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 60 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.4, duration: 1 }}
-          className="max-w-5xl mx-auto mt-20 relative px-4"
+          className="max-w-6xl mx-auto mt-24 relative px-4"
         >
-          <div className="relative glass-panel p-2 rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] border-[#00FF9C]/30">
-            <div className="bg-[#0A0F14] rounded-xl overflow-hidden border border-[#00FF9C]/10 aspect-video flex items-center justify-center p-8">
-               <div className="text-center">
-                  <LayoutDashboard className="w-20 h-20 text-[#00FF9C]/20 mx-auto mb-4" />
-                  <p className="text-[#00FF9C]/40 font-mono text-sm uppercase tracking-widest animate-pulse">Initializing System Interface...</p>
+          <div className="relative bg-[#18181B] p-4 rounded-[40px] shadow-[0_40px_100px_rgba(0,0,0,0.6)] ring-1 ring-white/10">
+            <div className="bg-[#0E0E10] rounded-[32px] overflow-hidden aspect-video flex items-center justify-center relative p-12">
+               <div className="absolute inset-0 bg-gradient-to-tr from-[#BEC4FF]/5 to-transparent pointer-events-none" />
+               <div className="text-center z-10">
+                  <LayoutDashboard className="w-24 h-24 text-[#BEC4FF]/20 mx-auto mb-6" />
+                  <p className="text-[#7C8B93] font-bold text-sm uppercase tracking-[0.3em]">System Interface Ready</p>
                </div>
             </div>
-            {/* Floating elements */}
-            <div className="absolute top-10 -right-10 w-32 h-32 bg-[#00FF9C]/20 blur-[60px] rounded-full" />
-            <div className="absolute bottom-10 -left-10 w-40 h-40 bg-[#00CFFF]/20 blur-[80px] rounded-full" />
           </div>
         </motion.div>
       </header>
 
       {/* Features Section */}
-      <section className="relative z-10 py-32 px-6 border-t border-[#00FF9C]/10 bg-[#0A0F14]/50">
+      <section id="features" className="relative z-10 py-32 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Hyper-Connected Modules</h2>
-            <p className="text-[#7C8B93]">Everything you need to build the future.</p>
+          <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <div className="max-w-xl">
+              <h2 className="text-5xl font-black tracking-tighter mb-4 leading-tight">Hyper-focused modules for deep work.</h2>
+              <p className="text-[#7C8B93] text-xl font-medium">No bloat. Just the tools you need.</p>
+            </div>
+            <Link to="/register" className="text-[#BEC4FF] font-black flex items-center gap-2 group text-lg">
+              Explore All <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+            </Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FeatureCard 
               icon={<LayoutDashboard className="w-8 h-8" />}
-              title="Neon Dashboard"
-              description="High-contrast task management with priority tagging and real-time state tracking."
+              title="SaaS Dashboard"
+              description="Minimalist task management with priority focus and fluid state animations."
             />
             <FeatureCard 
               icon={<FileText className="w-8 h-8" />}
-              title="Cyber Docs"
-              description="Rich-text document platform with support for code blocks, tables, and neon styling."
+              title="Modern Docs"
+              description="Clean document editor designed for clarity and rapid information architectural."
             />
             <FeatureCard 
               icon={<Paintbrush className="w-8 h-8" />}
-              title="Digital Canvas"
-              description="Built-in drawing tool for sketching ideas, diagrams, and futuristic blueprints."
+              title="Creative Canvas"
+              description="Professional drawing tools for sketching ideas and engineering blueprints."
             />
           </div>
         </div>
       </section>
 
-      {/* Stats / Trust Section */}
-      <section className="py-24 px-6 border-t border-[#00FF9C]/05">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-          <Stat icon={<Shield />} label="Encrypted" value="100%" />
-          <Stat icon={<Zap />} label="Latancy" value="~14ms" />
-          <Stat icon={<Globe />} label="Uptime" value="99.9%" />
-          <Stat icon={<CheckCircle2 />} label="Efficiency" value="+40%" />
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-32 px-6 text-center bg-gradient-to-b from-[#05070A] to-[#0A1F1A]">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold mb-8 text-[#A8FFDF]">Ready to hack your productivity?</h2>
-          <p className="text-[#7C8B93] mb-12 text-lg">
-            Join thousands of developers and designers who have switched to the neon side of work.
-          </p>
-          <Link to="/register" className="btn-primary text-xl py-5 px-12 group">
-             Initialize Now <Zap className="w-6 h-6 ml-2 group-hover:scale-125 transition-transform" />
-          </Link>
+      {/* Mobile Promo */}
+      <section id="mobile" className="py-32 px-6 bg-[#18181B]">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+          <Stat icon={<Shield className="w-6 h-6" />} label="Security" value="E2E Encrypted" />
+          <Stat icon={<Zap className="w-6 h-6" />} label="Speed" value="Instant Sync" />
+          <Stat icon={<Globe className="w-6 h-6" />} label="Availability" value="Any Device" />
+          <Stat icon={<CheckCircle2 className="w-6 h-6" />} label="Result" value="+60% Focus" />
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-[#00FF9C]/05 text-center text-[#7C8B93] text-sm">
-        <p>&copy; 2026 TaskManager Cyber Systems. All rights reserved.</p>
+      <footer className="py-20 px-8 text-center bg-[#0E0E10]">
+        <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
+          <div className="flex items-center gap-3">
+             <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center">
+               <Layers className="w-5 h-5 text-[#BEC4FF]" />
+             </div>
+             <span className="text-xl font-black tracking-tighter">TaskManager</span>
+          </div>
+          <p className="text-[#7C8B93] text-sm font-bold tracking-widest max-w-sm uppercase">
+            &copy; 2026 TaskManager Elite. Designed for the top 1%.
+          </p>
+        </div>
       </footer>
     </div>
   );
@@ -153,24 +163,24 @@ const LandingPage: React.FC = () => {
 
 const FeatureCard: React.FC<{ icon: React.ReactNode, title: string, description: string }> = ({ icon, title, description }) => (
   <motion.div 
-    whileHover={{ y: -5 }}
-    className="glass-panel p-8 group border-[#00FF9C]/10 hover:border-[#00FF9C]/40 transition-all duration-300"
+    whileHover={{ y: -10 }}
+    className="bg-[#18181B] p-10 rounded-[3rem] group border border-white/5 hover:border-[#BEC4FF]/30 transition-all duration-500 shadow-2xl"
   >
-    <div className="w-16 h-16 rounded-2xl bg-[#00FF9C]/05 flex items-center justify-center border border-[#00FF9C]/10 mb-6 group-hover:bg-[#00FF9C]/10 transition-colors">
-      <div className="text-[#00FF9C] group-hover:scale-110 transition-transform">{icon}</div>
+    <div className="w-16 h-16 rounded-[1.5rem] bg-[#0E0E10] flex items-center justify-center border border-white/10 mb-8 group-hover:bg-[#BEC4FF] transition-all group-hover:text-black">
+      <div className="text-[#BEC4FF] group-hover:text-black group-hover:scale-110 transition-all">{icon}</div>
     </div>
-    <h3 className="text-xl font-bold mb-3 text-[#A8FFDF]">{title}</h3>
-    <p className="text-[#7C8B93] leading-relaxed">{description}</p>
+    <h3 className="text-2xl font-black mb-4 tracking-tight">{title}</h3>
+    <p className="text-[#7C8B93] leading-relaxed font-medium">{description}</p>
   </motion.div>
 );
 
 const Stat: React.FC<{ icon: React.ReactNode, label: string, value: string }> = ({ icon, label, value }) => (
-  <div className="text-center">
-    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#00FF9C]/10 text-[#00FF9C] mb-4">
+  <div className="flex flex-col items-center">
+    <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#BEC4FF] mb-6 mb-4">
       {icon}
     </div>
-    <div className="text-3xl font-bold text-[#A8FFDF] mb-1">{value}</div>
-    <div className="text-xs uppercase tracking-widest text-[#7C8B93] font-bold">{label}</div>
+    <div className="text-2xl font-black mb-2">{value}</div>
+    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#7C8B93]">{label}</div>
   </div>
 );
 

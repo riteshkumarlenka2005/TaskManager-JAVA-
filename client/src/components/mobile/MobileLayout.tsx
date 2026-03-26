@@ -6,14 +6,16 @@ import '../../mobile.css';
 
 const navItems = [
   { path: '/mobile/home', icon: Home, label: 'Home' },
-  { path: '/mobile/tasks', icon: CheckSquare, label: 'Tasks' },
   { path: '/mobile/documents', icon: FileText, label: 'Docs' },
+  { path: 'plus', icon: CheckSquare, label: 'Add' }, // Special center button
+  { path: '/mobile/tasks', icon: CheckSquare, label: 'Tasks' },
   { path: '/mobile/profile', icon: User, label: 'Profile' },
 ];
 
 const MobileLayout: React.FC = () => {
   const { username } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getPageTitle = () => {
     if (location.pathname.includes('tasks')) return 'Tasks';
@@ -25,36 +27,25 @@ const MobileLayout: React.FC = () => {
   const pageTitle = getPageTitle();
 
   return (
-    <div className="mobile-app-container pt-8 pb-28 px-5">
+    <div className="mobile-view">
       {/* Dynamic Header */}
       <header className="mobile-header">
-        {pageTitle ? (
-          <div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', margin: 0 }}>
-              {pageTitle}
-            </h2>
-          </div>
-        ) : (
-          <div className="mobile-header-greeting">
-            <h2>
-              Hey, <span>{username || 'User'}</span>! 👋
-            </h2>
-            <p>
-              {new Date().toLocaleDateString('en-US', {
-                weekday: 'long',
-                month: 'short',
-                day: '2-digit',
-                year: 'numeric',
-              })}
-            </p>
-          </div>
-        )}
-        <button
-          className="mobile-icon-box"
-          style={{ background: 'rgba(70,240,210,0.08)', border: '1px solid rgba(70,240,210,0.15)' }}
-        >
-          <LayoutGrid className="w-5 h-5" style={{ color: '#46F0D2' }} />
-        </button>
+        <div>
+          <h2 className="mobile-greeting">
+            {pageTitle || (
+              <>
+                Manage <br /> 
+                your tasks <span role="img" aria-label="pencil">✏️</span>
+              </>
+            )}
+          </h2>
+        </div>
+        <div className="mobile-avatar">
+          <img 
+            src={`https://ui-avatars.com/api/?name=${username || 'User'}&background=18181B&color=BEC4FF`} 
+            alt="Profile" 
+          />
+        </div>
       </header>
 
       {/* Main Content Area */}
@@ -63,19 +54,31 @@ const MobileLayout: React.FC = () => {
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="mobile-bottom-nav">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) =>
-              `mobile-nav-item ${isActive ? 'active' : ''}`
-            }
-          >
-            <item.icon style={{ width: 22, height: 22 }} />
-            <span className="mobile-nav-label">{item.label}</span>
-          </NavLink>
-        ))}
+      <nav className="mobile-nav">
+        {navItems.map((item, idx) => {
+          if (item.path === 'plus') {
+            return (
+              <button 
+                key="plus" 
+                className="mobile-nav-center"
+                onClick={() => navigate('/mobile/tasks')}
+              >
+                <div style={{ fontSize: '1.5rem', fontWeight: 300 }}>+</div>
+              </button>
+            );
+          }
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `mobile-nav-item ${isActive ? 'active' : ''}`
+              }
+            >
+              <item.icon style={{ width: 24, height: 24 }} />
+            </NavLink>
+          );
+        })}
       </nav>
     </div>
   );

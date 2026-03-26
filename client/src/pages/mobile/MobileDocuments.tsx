@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import {
   FileText,
-  Plus,
   Clock,
   Loader2,
-  ExternalLink,
+  ChevronRight,
+  Plus
 } from 'lucide-react';
 
 interface Document {
@@ -40,27 +40,23 @@ const MobileDocuments: React.FC = () => {
     fetchDocs();
   }, [fetchDocs]);
 
-  const formatDate = (dateArray?: number[] | null): string => {
-    if (!dateArray || !Array.isArray(dateArray)) return '';
-    const date = new Date(
-      dateArray[0],
-      dateArray[1] - 1,
-      dateArray[2],
-      dateArray[3] || 0,
-      dateArray[4] || 0
-    );
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    });
+  const parseDocDate = (dateVal: any): string => {
+    if (!dateVal) return 'Recently';
+    try {
+      if (Array.isArray(dateVal)) {
+        const d = new Date(dateVal[0], dateVal[1] - 1, dateVal[2]);
+        return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+      }
+      return new Date(dateVal).toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+    } catch {
+      return 'Recently';
+    }
   };
 
   const getPreview = (content?: string): string => {
-    if (!content) return 'No content yet...';
-    // Strip any HTML/markdown
+    if (!content) return 'Empty document...';
     const clean = content.replace(/<[^>]+>/g, '').replace(/[#*_~`]/g, '');
-    return clean.length > 80 ? clean.substring(0, 80) + '...' : clean;
+    return clean.length > 60 ? clean.substring(0, 60) + '...' : clean;
   };
 
   const handleCreateDoc = async () => {
@@ -69,8 +65,7 @@ const MobileDocuments: React.FC = () => {
         title: 'Untitled Document',
         content: '',
       });
-      const newDoc = res.data;
-      navigate(`/documents/${newDoc.id}`);
+      navigate(`/documents/${res.data.id}`);
     } catch {
       // error
     }
@@ -78,113 +73,64 @@ const MobileDocuments: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="mobile-spinner">
-        <Loader2 style={{ width: 32, height: 32 }} />
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
+        <Loader2 className="animate-spin text-[#BEC4FF]" style={{ width: 32, height: 32 }} />
       </div>
     );
   }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {/* Doc count */}
-      <p style={{ fontSize: '0.75rem', color: '#7C8B93', fontWeight: 600, margin: 0 }}>
-        {docs.length} document{docs.length !== 1 ? 's' : ''}
-      </p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+        <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>Documents</h3>
+        <button 
+          onClick={handleCreateDoc}
+          style={{ background: '#BEC4FF', color: 'black', borderRadius: '12px', padding: '0.5rem', border: 'none' }}
+        >
+          <Plus style={{ width: 20, height: 20 }} />
+        </button>
+      </div>
 
-      {/* Document list */}
       {docs.length === 0 ? (
-        <div className="mobile-empty-state">
-          <div className="mobile-empty-state-icon">
-            <FileText style={{ width: 24, height: 24 }} />
-          </div>
-          <p style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.25rem' }}>
-            No documents yet
-          </p>
-          <p style={{ fontSize: '0.75rem', marginBottom: '1rem' }}>
-            Tap the + button to create one
-          </p>
+        <div className="mobile-panel" style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+          <FileText style={{ width: 48, height: 48, color: '#7C8B93', margin: '0 auto 1rem', opacity: 0.3 }} />
+          <p style={{ color: '#7C8B93', fontWeight: 600 }}>No documents yet</p>
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           {docs.map((doc) => (
             <div
               key={doc.id}
-              className="mobile-doc-card"
+              className="mobile-panel"
+              style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1.25rem' }}
               onClick={() => navigate(`/documents/${doc.id}`)}
             >
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem' }}>
-                <div
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 12,
-                    background: 'rgba(70,240,210,0.08)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                  }}
-                >
-                  <FileText style={{ width: 18, height: 18, color: '#46F0D2' }} />
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <h4
-                    style={{
-                      fontSize: '0.9rem',
-                      fontWeight: 700,
-                      color: 'white',
-                      margin: '0 0 0.25rem',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {doc.title || 'Untitled'}
-                  </h4>
-                  <p
-                    style={{
-                      fontSize: '0.75rem',
-                      color: '#7C8B93',
-                      margin: '0 0 0.4rem',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {getPreview(doc.content)}
-                  </p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    {(doc.updatedAt || doc.createdAt) && (
-                      <span
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.2rem',
-                          fontSize: '0.65rem',
-                          color: '#4F5B62',
-                        }}
-                      >
-                        <Clock style={{ width: 10, height: 10 }} />
-                        {formatDate(doc.updatedAt || doc.createdAt)}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <ExternalLink
-                  style={{ width: 14, height: 14, color: '#4F5B62', flexShrink: 0, marginTop: 4 }}
-                />
+              <div 
+                style={{ 
+                  width: 48, height: 48, borderRadius: '16px', background: '#222226', 
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 
+                }}
+              >
+                <FileText style={{ width: 22, height: 22, color: '#BEC4FF' }} />
               </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.25rem' }} className="truncate">
+                  {doc.title || 'Untitled'}
+                </h4>
+                <p style={{ fontSize: '0.75rem', color: '#7C8B93' }} className="truncate">
+                  {getPreview(doc.content)}
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.5rem', fontSize: '0.65rem', color: '#7C8B93', fontWeight: 600 }}>
+                  <Clock style={{ width: 10, height: 10 }} />
+                  <span>{parseDocDate(doc.updatedAt || doc.createdAt)}</span>
+                </div>
+              </div>
+              <ChevronRight style={{ width: 16, height: 16, color: '#7C8B93', opacity: 0.5 }} />
             </div>
           ))}
         </div>
       )}
-
-      {/* FAB */}
-      <button className="mobile-fab" onClick={handleCreateDoc}>
-        <Plus style={{ width: 26, height: 26 }} />
-      </button>
-
-      {/* Bottom spacer */}
+      
       <div style={{ height: '1rem' }} />
     </div>
   );

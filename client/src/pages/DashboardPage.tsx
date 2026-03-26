@@ -12,24 +12,35 @@ import {
   Edit3,
   X,
   Loader2,
+  Calendar,
 } from 'lucide-react';
 
 const statusColors: Record<Status, string> = {
-  PENDING: 'bg-warning/10 text-warning border-warning/20',
-  IN_PROGRESS: 'bg-[#00FFC6]/10 text-[#00FFC6] border-[#00FFC6]/20',
-  COMPLETED: 'bg-[#00FF9C]/10 text-[#00FF9C] border-[#00FF9C]/20',
+  PENDING: 'bg-orange-500/10 text-orange-500 border-orange-500/20',
+  IN_PROGRESS: 'bg-blue-400/10 text-blue-400 border-blue-400/20',
+  COMPLETED: 'bg-emerald-400/10 text-emerald-400 border-emerald-400/20',
 };
 
-const priorityColors: Record<Priority, string> = {
-  LOW: 'border-l-[#4F5B62]',
-  MEDIUM: 'border-l-warning shadow-[inset_4px_0_10px_-4px_rgba(255,173,0,0.3)]',
-  HIGH: 'border-l-danger shadow-[inset_4px_0_10px_-4px_rgba(255,62,62,0.3)]',
+const priorityStyles: Record<Priority, string> = {
+  LOW: 'bg-gray-500/10 text-gray-400',
+  MEDIUM: 'bg-blue-500/10 text-blue-400',
+  HIGH: 'bg-[#BEC4FF]/20 text-[#BEC4FF] ring-1 ring-[#BEC4FF]/30',
 };
 
 function formatDate(dateArray: number[] | null): string {
-  if (!dateArray || !Array.isArray(dateArray)) return 'Unknown';
-  const date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2], dateArray[3] || 0, dateArray[4] || 0);
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  if (!dateArray || !Array.isArray(dateArray)) return 'Just now';
+  try {
+    const date = new Date(
+      dateArray[0],
+      dateArray[1] - 1,
+      dateArray[2],
+      dateArray[3] || 0,
+      dateArray[4] || 0
+    );
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  } catch {
+    return 'Recent';
+  }
 }
 
 const DashboardPage: React.FC = () => {
@@ -118,116 +129,94 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="min-w-0">
+    <div className="max-w-6xl mx-auto py-8">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-6 flex min-w-0 flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center"
-      >
-        <div className="min-w-0">
-          <h1 className="mb-1! break-words text-2xl font-bold sm:text-3xl text-[#A8FFDF]">My Dashboard</h1>
-          <p className="text-[#7C8B93]">Manage and track your tasks effectively.</p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <h1 className="text-4xl font-black tracking-tight mb-2">My Workspace</h1>
+          <p className="text-[#7C8B93] text-lg font-medium">Manage and organize your projects with ease.</p>
         </div>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={openCreate}
-          className="btn-primary"
-        >
-          <Plus className="w-4 h-4" />
-          New Task
-        </motion.button>
-      </motion.div>
+        <button onClick={openCreate} className="btn-primary flex items-center gap-2 px-8 py-4 text-black bg-[#BEC4FF] hover:bg-[#D6DAFF] rounded-2xl font-bold transition-all shadow-xl shadow-[#BEC4FF]/10">
+          <Plus className="w-5 h-5" />
+          Create New Task
+        </button>
+      </div>
 
-      {/* Stats Cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8!"
-      >
+      {/* Stats Mini Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {[
-          { label: 'Total Tasks', value: stats.total, icon: ClipboardList, color: 'text-[#A8FFDF]' },
-          { label: 'Pending', value: stats.pending, icon: Clock, color: 'text-warning' },
-          { label: 'In Progress', value: stats.inProgress, icon: AlertTriangle, color: 'text-[#00FFC6]' },
-          { label: 'Completed', value: stats.completed, icon: CheckCircle2, color: 'text-[#00FF9C]' },
-        ].map((stat, i) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 + i * 0.05 }}
-            className="glass-panel glass-panel-hover min-w-0 cursor-default p-5!"
-          >
-            <div className="flex items-center justify-between mb-3">
-              <span className="min-w-0 break-words text-sm text-[#7C8B93]">{stat.label}</span>
-              <stat.icon className={`w-5 h-5 ${stat.color}`} style={{ filter: stat.color !== 'text-[#A8FFDF]' ? 'drop-shadow(0 0 5px currentColor)' : '' }} />
-            </div>
-            <span className={`text-3xl font-bold ${stat.color}`}>{stat.value}</span>
-          </motion.div>
+          { label: 'Total', value: stats.total, color: 'text-white' },
+          { label: 'Active', value: stats.inProgress, color: 'text-blue-400' },
+          { label: 'Pending', value: stats.pending, color: 'text-orange-400' },
+          { label: 'Done', value: stats.completed, color: 'text-emerald-400' },
+        ].map((stat) => (
+          <div key={stat.label} className="glass-panel p-6 border-none bg-[#18181B]">
+            <p className="text-sm font-bold text-[#7C8B93] mb-1 uppercase tracking-wider">{stat.label}</p>
+            <p className={`text-4xl font-black ${stat.color}`}>{stat.value}</p>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
       {/* Task Grid */}
       {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-8 h-8 text-[#00FF9C] animate-spin" />
+        <div className="flex items-center justify-center py-24">
+          <Loader2 className="w-10 h-10 text-[#BEC4FF] animate-spin" />
         </div>
       ) : tasks.length === 0 ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="glass-panel flex flex-col items-center p-12 text-center"
-        >
-          <ClipboardList className="w-16 h-16 text-text-secondary mx-auto mb-4" />
-          <h3 className="text-xl font-semibold mb-2">No tasks yet</h3>
-          <p className="text-text-secondary mb-6">Create your first task to get started.</p>
-          <button onClick={openCreate} className="btn-primary">
-            <Plus className="w-4 h-4" /> Create Task
+        <div className="glass-panel text-center py-24 border-dashed border-2 border-white/5">
+          <ClipboardList className="w-16 h-16 text-[#7C8B93] mx-auto mb-6 opacity-30" />
+          <h3 className="text-2xl font-bold mb-2">Empty Workspace</h3>
+          <p className="text-[#7C8B93] mb-8 max-w-xs mx-auto">No tasks found in your workspace yet. Start by creating one!</p>
+          <button onClick={openCreate} className="btn-outline border-[#BEC4FF] text-[#BEC4FF] px-8 py-3 rounded-xl font-bold">
+            Get Started
           </button>
-        </motion.div>
+        </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
             {tasks.map((task, i) => (
               <motion.div
                 key={task.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ delay: i * 0.03 }}
-                className={`glass-panel glass-panel-hover min-w-0 border-l-4 p-5 ${priorityColors[task.priority]}`}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ delay: i * 0.05 }}
+                className={`glass-panel p-6 flex flex-col gap-4 border-none bg-[#18181B] group hover:bg-[#222226] relative overflow-hidden`}
               >
-                <div className="mb-3 flex min-w-0 items-start justify-between gap-3">
-                  <h3 className="min-w-0 flex-1 break-words text-lg font-semibold leading-tight">
-                    {task.title}
-                  </h3>
-                  <span className={`text-xs px-2.5 py-1 rounded-full border shrink-0 ${statusColors[task.status]}`}>
-                    {task.status.replace('_', ' ')}
+                {/* Priority Indicator */}
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: task.priority === 'HIGH' ? '#BEC4FF' : 'transparent' }} />
+                
+                <div className="flex items-start justify-between">
+                  <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest ${priorityStyles[task.priority]}`}>
+                    {task.priority}
                   </span>
-                </div>
-                <p className="mb-4 break-words text-sm text-text-secondary line-clamp-2">
-                  {task.description || 'No description provided.'}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-text-secondary text-xs flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> {formatDate(task.createdAt)}
-                  </span>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => openEdit(task)}
-                      className="p-2 rounded-lg hover:bg-white/[0.05] text-text-secondary hover:text-[#FFFFFF] transition-all"
-                    >
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onClick={() => openEdit(task)} className="p-2 rounded-xl hover:bg-white/10 text-[#7C8B93] hover:text-white transition-colors">
                       <Edit3 className="w-4 h-4" />
                     </button>
-                    <button
-                      onClick={() => handleDelete(task.id)}
-                      className="p-2 rounded-lg hover:bg-danger/10 text-text-secondary hover:text-danger transition-all"
-                    >
+                    <button onClick={() => handleDelete(task.id)} className="p-2 rounded-xl hover:bg-red-500/10 text-[#7C8B93] hover:text-red-400 transition-colors">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
+                </div>
+
+                <div>
+                  <h3 className={`text-xl font-bold mb-2 line-clamp-1 ${task.status === 'COMPLETED' ? 'line-through opacity-40' : ''}`}>
+                    {task.title}
+                  </h3>
+                  <p className="text-sm text-[#7C8B93] line-clamp-2 min-h-[2.5rem]">
+                    {task.description || 'No description provided.'}
+                  </p>
+                </div>
+
+                <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs font-bold text-[#7C8B93]">
+                    <Clock className="w-3 h-3" />
+                    {formatDate(task.createdAt)}
+                  </div>
+                  <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter ${statusColors[task.status]}`}>
+                    {task.status.replace('_', ' ')}
+                  </span>
                 </div>
               </motion.div>
             ))}
@@ -235,73 +224,72 @@ const DashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* Create/Edit Modal */}
+      {/* Modal - Redesigned Modal for SaaS Theme */}
       <AnimatePresence>
         {modalOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4"
             onClick={closeModal}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="glass-panel p-6 w-full max-w-lg border-[#00FF9C]/30 shadow-[0_0_50px_rgba(0,0,0,0.8)]"
-              style={{ background: '#0A0F14' }}
+              className="bg-[#18181B] rounded-[32px] p-8 w-full max-w-xl shadow-2xl ring-1 ring-white/10"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold">{editingTask ? 'Edit Task' : 'Create New Task'}</h2>
-                <button onClick={closeModal} className="p-1 hover:text-[#FFFFFF] transition-colors">
-                  <X className="w-5 h-5" />
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl font-black tracking-tight">{editingTask ? 'Edit Task' : 'New Task'}</h2>
+                <button onClick={closeModal} className="p-3 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <X className="w-6 h-6" />
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Title</label>
+                  <label className="block text-xs font-black uppercase tracking-widest text-[#7C8B93] mb-2">Title</label>
                   <input
                     value={form.title}
                     onChange={(e) => setForm({ ...form, title: e.target.value })}
-                    className="input-field"
-                    placeholder="What needs to be done?"
+                    className="w-full bg-[#222226] border-none rounded-2xl py-4 px-6 focus:ring-2 focus:ring-[#BEC4FF] transition-all"
+                    placeholder="Enter task title..."
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Description</label>
+                  <label className="block text-xs font-black uppercase tracking-widest text-[#7C8B93] mb-2">Description</label>
                   <textarea
                     value={form.description}
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
-                    className="input-field resize-y min-h-[80px]"
-                    placeholder="Add some details..."
-                    rows={3}
+                    className="w-full bg-[#222226] border-none rounded-2xl py-4 px-6 focus:ring-2 focus:ring-[#BEC4FF] transition-all resize-none"
+                    placeholder="Add more context..."
+                    rows={4}
                   />
                 </div>
 
-                <div className="flex flex-col gap-4 sm:flex-row">
-                  <div className="flex-1">
-                    <label className="block text-sm font-medium text-text-secondary mb-2">Status</label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-xs font-black uppercase tracking-widest text-[#7C8B93] mb-2">Status</label>
                     <select
                       value={form.status}
                       onChange={(e) => setForm({ ...form, status: e.target.value as Status })}
-                      className="input-field"
+                      className="w-full bg-[#222226] border-none rounded-2xl py-4 px-6 focus:ring-2 focus:ring-[#BEC4FF] transition-all"
                     >
                       <option value="PENDING">Pending</option>
                       <option value="IN_PROGRESS">In Progress</option>
                       <option value="COMPLETED">Completed</option>
                     </select>
                   </div>
-                  <div className="flex-1">
-                    <label className="block text-sm font-medium text-text-secondary mb-2">Priority</label>
+                  <div>
+                    <label className="block text-xs font-black uppercase tracking-widest text-[#7C8B93] mb-2">Priority</label>
                     <select
                       value={form.priority}
                       onChange={(e) => setForm({ ...form, priority: e.target.value as Priority })}
-                      className="input-field"
+                      className="w-full bg-[#222226] border-none rounded-2xl py-4 px-6 focus:ring-2 focus:ring-[#BEC4FF] transition-all"
                     >
                       <option value="LOW">Low</option>
                       <option value="MEDIUM">Medium</option>
@@ -310,15 +298,13 @@ const DashboardPage: React.FC = () => {
                   </div>
                 </div>
 
-                <motion.button
+                <button
                   type="submit"
                   disabled={saving}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="btn-primary w-full justify-center py-3 disabled:opacity-50"
+                  className="w-full bg-[#BEC4FF] hover:bg-[#D6DAFF] text-black font-black py-4 rounded-2xl transition-all shadow-xl shadow-[#BEC4FF]/10 mt-4 h-14 flex items-center justify-center"
                 >
-                  {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : editingTask ? 'Update Task' : 'Create Task'}
-                </motion.button>
+                  {saving ? <Loader2 className="w-6 h-6 animate-spin" /> : editingTask ? 'Update Task' : 'Confirm'}
+                </button>
               </form>
             </motion.div>
           </motion.div>

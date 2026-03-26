@@ -12,6 +12,7 @@ import {
   Layers,
   Menu,
   X,
+  Plus,
 } from 'lucide-react';
 
 const navItems = [
@@ -30,7 +31,7 @@ const Layout: React.FC = () => {
 
   // Detect mobile
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => setIsMobile(window.innerWidth < 1024);
     check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
@@ -46,42 +47,10 @@ const Layout: React.FC = () => {
     navigate('/login');
   };
 
-  const sidebarWidth = isMobile ? 280 : collapsed ? 72 : 260;
+  const sidebarWidth = isMobile ? 280 : collapsed ? 80 : 280;
 
   return (
-    <div className="min-h-screen">
-      <div className="ambient-bg" />
-
-      {/* Mobile Header */}
-      {isMobile && (
-        <div
-          className="fixed top-0 left-0 right-0 z-[60] flex items-center gap-3 px-4 py-3"
-          style={{ background: 'rgba(5, 7, 10, 0.95)', borderBottom: '1px solid rgba(0,255,156,0.15)', boxShadow: '0 0 15px rgba(0,255,156,0.1)' }}
-        >
-          <button
-            onClick={() => setMobileOpen(true)}
-            className="p-2 rounded-lg hover:bg-[#00FF9C]/10 text-[#7C8B93] transition-all"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          <Layers className="w-5 h-5 text-[#00FF9C]" style={{ filter: 'drop-shadow(0 0 5px rgba(0,255,156,0.5))' }} />
-          <span className="text-base font-bold tracking-tight text-[#A8FFDF]">TaskManager</span>
-        </div>
-      )}
-
-      {/* Mobile Overlay */}
-      <AnimatePresence>
-        {isMobile && mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm"
-            onClick={() => setMobileOpen(false)}
-          />
-        )}
-      </AnimatePresence>
-
+    <div className="min-h-screen bg-[#0E0E10] text-white font-['Outfit']">
       {/* Sidebar */}
       <AnimatePresence>
         {(!isMobile || mobileOpen) && (
@@ -89,25 +58,20 @@ const Layout: React.FC = () => {
             initial={isMobile ? { x: -300 } : false}
             animate={{ x: 0, width: sidebarWidth }}
             exit={isMobile ? { x: -300 } : undefined}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="fixed top-0 left-0 h-screen z-[80] flex flex-col"
-            style={{
-              background: '#0A0F14',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              borderRight: '1px solid rgba(0,255,156,0.15)',
-              boxShadow: '4px 0 24px -1px rgba(0, 0, 0, 0.5)',
-            }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed top-0 left-0 h-screen z-[100] flex flex-col bg-[#18181B] border-r border-white/5"
           >
             {/* Brand */}
-            <div className="flex items-center justify-between px-5 py-5 border-b border-[#00FF9C]/10">
+            <div className="flex items-center justify-between px-6 py-8">
               <div className="flex items-center gap-3">
-                <Layers className="w-7 h-7 text-[#00FF9C]" style={{ filter: 'drop-shadow(0 0 8px rgba(0,255,156,0.4))' }} />
+                <div className="w-10 h-10 rounded-xl bg-[#BEC4FF] flex items-center justify-center shadow-lg shadow-[#BEC4FF]/10">
+                  <Layers className="w-5 h-5 text-black" />
+                </div>
                 {(!collapsed || isMobile) && (
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-lg font-bold tracking-tight text-[#A8FFDF]"
+                    className="text-xl font-black tracking-tighter"
                   >
                     TaskManager
                   </motion.span>
@@ -116,7 +80,7 @@ const Layout: React.FC = () => {
               {isMobile && (
                 <button
                   onClick={() => setMobileOpen(false)}
-                  className="p-1.5 rounded-lg hover:bg-white/[0.08] text-[#A1A1AA]"
+                  className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-[#7C8B93]"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -124,25 +88,25 @@ const Layout: React.FC = () => {
             </div>
 
             {/* Nav Links */}
-            <nav className="flex-1 py-4 px-3 space-y-1">
+            <nav className="flex-1 py-4 px-4 space-y-2">
               {navItems.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-300 group ${
+                    `flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group ${
                       isActive
-                        ? 'bg-[#00FF9C]/10 text-[#00FF9C] border border-[#00FF9C]/30 cyber-glow'
-                        : 'text-[#7C8B93] hover:text-[#A8FFDF] hover:bg-[#00FF9C]/05'
+                        ? 'bg-[#BEC4FF] text-black shadow-lg shadow-[#BEC4FF]/10'
+                        : 'text-[#7C8B93] hover:text-white hover:bg-white/5'
                     }`
                   }
                 >
-                  <item.icon className="w-5 h-5 shrink-0" />
+                  <item.icon className={`w-5 h-5 shrink-0 ${location.pathname === item.path ? 'text-black' : 'group-hover:text-[#BEC4FF]'}`} />
                   {(!collapsed || isMobile) && (
                     <motion.span
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="text-sm font-medium"
+                      className="text-sm font-bold"
                     >
                       {item.label}
                     </motion.span>
@@ -151,23 +115,22 @@ const Layout: React.FC = () => {
               ))}
             </nav>
 
-            {/* User Section */}
-            <div className="px-3 py-4 border-t border-[#00FF9C]/10 space-y-2">
+            {/* Bottom Actions */}
+            <div className="px-4 py-6 border-t border-white/5 space-y-2">
               {(!collapsed || isMobile) && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="w-full px-3 py-2 text-sm text-[#7C8B93] truncate"
-                >
-                  {username}
-                </motion.div>
+                <div className="px-4 py-3 bg-white/5 rounded-2xl flex items-center gap-3 mb-4">
+                  <div className="w-8 h-8 rounded-lg bg-[#BEC4FF]/20 flex items-center justify-center text-[#BEC4FF] text-[10px] font-black uppercase">
+                    {username?.charAt(0) || 'U'}
+                  </div>
+                  <span className="text-sm font-bold text-white truncate">{username}</span>
+                </div>
               )}
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#7C8B93] hover:text-[#FF3E3E] hover:bg-[#FF3E3E]/10 transition-all duration-200 w-full"
+                className="flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[#7C8B93] hover:text-red-400 hover:bg-red-400/5 transition-all w-full font-bold text-sm"
               >
                 <LogOut className="w-5 h-5 shrink-0" />
-                {(!collapsed || isMobile) && <span className="text-sm font-medium">Logout</span>}
+                {(!collapsed || isMobile) && <span>Sign Out</span>}
               </button>
             </div>
  
@@ -175,25 +138,42 @@ const Layout: React.FC = () => {
             {!isMobile && (
               <button
                 onClick={() => setCollapsed(!collapsed)}
-                className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border border-[#00FF9C]/20 flex items-center justify-center text-[#7C8B93] hover:text-[#00FF9C] transition-all z-50 hover:cyber-glow"
-                style={{ background: '#0D1117' }}
+                className="absolute -right-3 top-24 w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-[#7C8B93] hover:text-[#BEC4FF] transition-all z-[110] bg-[#18181B] shadow-lg"
               >
-                {collapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
+                {collapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
               </button>
             )}
           </motion.aside>
         )}
       </AnimatePresence>
 
+      {/* Mobile Top Bar */}
+      {isMobile && !mobileOpen && (
+        <div className="fixed top-0 left-0 right-0 z-[50] flex items-center justify-between px-6 py-4 bg-[#18181B] border-b border-white/5">
+          <div className="flex items-center gap-3">
+             <div className="w-8 h-8 rounded-lg bg-[#BEC4FF] flex items-center justify-center">
+               <Layers className="w-4 h-4 text-black" />
+             </div>
+             <span className="font-black text-lg tracking-tighter">TaskManager</span>
+          </div>
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="p-2 rounded-xl bg-white/5 text-[#7C8B93]"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+        </div>
+      )}
+
       {/* Main Content */}
       <motion.div
-        animate={{ paddingLeft: isMobile ? 0 : sidebarWidth }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        animate={{ paddingLeft: (isMobile || mobileOpen) ? 0 : sidebarWidth }}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         className="min-h-screen"
       >
-        <main className="min-h-screen min-w-0 overflow-x-hidden">
-          <div className={`mx-auto w-full min-w-0 max-w-7xl p-4 sm:p-6 lg:p-8 ${isMobile ? 'pt-[68px]' : ''}`}>
-            <Outlet />
+        <main className="min-h-screen min-w-0">
+          <div className={`mx-auto w-full max-w-7xl p-6 md:p-12 ${isMobile ? 'pt-24' : ''}`}>
+             <Outlet />
           </div>
         </main>
       </motion.div>
