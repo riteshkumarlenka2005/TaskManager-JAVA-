@@ -342,6 +342,7 @@
     width: 100%;
     gap: 0.5rem;
     flex: 0 0 auto;
+    margin-top: -2.5rem; /* Nudge upward closer to cubes */
   }
 
   .lp-h1 {
