@@ -1,4 +1,4 @@
-const API_URL = 'https://taskmanager-java.onrender.com/api';
+const API_URL = 'https://taskmanager-java-production.up.railway.app/api';
 
 // Check Authentication immediately
 const token = localStorage.getItem('token');
