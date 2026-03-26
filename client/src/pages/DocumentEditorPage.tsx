@@ -2,11 +2,11 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../services/api';
+import { downloadHtml } from '../services/htmlExporter';
 import type { Block, Document as DocType } from '../types';
 import {
   ArrowLeft,
   Save,
-  Download,
   Plus,
   Type,
   Heading1,
@@ -23,12 +23,23 @@ import {
   ChevronDown,
   Loader2,
   Check,
+  Code,
+  Quote,
+  CheckSquare,
+  AlertCircle,
+  FileCode2,
+  FileText,
 } from 'lucide-react';
 import TextBlock from '../components/editor/TextBlock.tsx';
 import ImageBlock from '../components/editor/ImageBlock.tsx';
 import TableBlock from '../components/editor/TableBlock.tsx';
 import MediaBlock from '../components/editor/MediaBlock.tsx';
 import DrawingBlock from '../components/editor/DrawingBlock.tsx';
+import CodeBlock from '../components/editor/CodeBlock.tsx';
+import QuoteBlock from '../components/editor/QuoteBlock.tsx';
+import ChecklistBlock from '../components/editor/ChecklistBlock.tsx';
+import CalloutBlock from '../components/editor/CalloutBlock.tsx';
+import SlashCommandMenu from '../components/editor/SlashCommandMenu.tsx';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -41,6 +52,10 @@ const blockOptions = [
   { type: 'drawing', icon: Paintbrush, label: 'Drawing' },
   { type: 'audio', icon: Music, label: 'Audio' },
   { type: 'video', icon: Video, label: 'Video' },
+  { type: 'code', icon: Code, label: 'Code' },
+  { type: 'quote', icon: Quote, label: 'Quote' },
+  { type: 'checklist', icon: CheckSquare, label: 'Checklist' },
+  { type: 'callout', icon: AlertCircle, label: 'Callout' },
   { type: 'divider', icon: Minus, label: 'Divider' },
 ];
 
@@ -55,8 +70,17 @@ const DocumentEditorPage: React.FC = () => {
   const [saved, setSaved] = useState(false);
   const [showBlockMenu, setShowBlockMenu] = useState<number | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [exportingHtml, setExportingHtml] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  // Drag & drop state
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const [dropIndex, setDropIndex] = useState<number | null>(null);
+
+  // Slash command state
+  const [slashMenuOpen, setSlashMenuOpen] = useState(false);
+  const [slashMenuBlockIndex, setSlashMenuBlockIndex] = useState<number | null>(null);
 
   const fetchDocument = useCallback(async () => {
     try {
@@ -105,6 +129,22 @@ const DocumentEditorPage: React.FC = () => {
     }, 3000);
   }, [saveDocument]);
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyboard = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveDocument();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'E') {
+        e.preventDefault();
+        handleExportHtml();
+      }
+    };
+    window.addEventListener('keydown', handleKeyboard);
+    return () => window.removeEventListener('keydown', handleKeyboard);
+  }, [saveDocument]);
+
   const updateBlock = useCallback(
     (blockId: string, data: Record<string, unknown>) => {
       setBlocks((prev) =>
@@ -115,7 +155,7 @@ const DocumentEditorPage: React.FC = () => {
     [triggerAutoSave]
   );
 
-  const addBlock = (type: string, afterIndex: number, customData?: Record<string, unknown>) => {
+  const getDefaultData = (type: string): Record<string, unknown> => {
     const defaults: Record<string, Record<string, unknown>> = {
       text: { text: '' },
       heading: { text: '', level: 1 },
@@ -142,13 +182,24 @@ const DocumentEditorPage: React.FC = () => {
       drawing: { dataUrl: '', width: 800, height: 400 },
       audio: { url: '', type: 'audio', caption: '' },
       video: { url: '', type: 'video', caption: '' },
+      code: { code: '', language: 'javascript' },
+      quote: { text: '', author: '' },
+      checklist: {
+        items: [
+          { id: crypto.randomUUID(), text: '', checked: false },
+        ],
+      },
+      callout: { type: 'info', text: '' },
       divider: {},
     };
+    return defaults[type] || {};
+  };
 
+  const addBlock = (type: string, afterIndex: number, customData?: Record<string, unknown>) => {
     const newBlock: Block = {
       id: crypto.randomUUID(),
       type: type as Block['type'],
-      data: customData || defaults[type] || {},
+      data: customData || getDefaultData(type),
     };
 
     setBlocks((prev) => {
@@ -177,6 +228,46 @@ const DocumentEditorPage: React.FC = () => {
     triggerAutoSave();
   };
 
+  // Drag & Drop handlers
+  const handleDragStart = (index: number) => {
+    setDragIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDropIndex(index);
+  };
+
+  const handleDragEnd = () => {
+    if (dragIndex !== null && dropIndex !== null && dragIndex !== dropIndex) {
+      setBlocks((prev) => {
+        const next = [...prev];
+        const [dragged] = next.splice(dragIndex, 1);
+        next.splice(dropIndex, 0, dragged);
+        return next;
+      });
+      triggerAutoSave();
+    }
+    setDragIndex(null);
+    setDropIndex(null);
+  };
+
+  // Slash command handler
+  const handleSlashCommand = (blockIndex: number) => {
+    setSlashMenuBlockIndex(blockIndex);
+    setSlashMenuOpen(true);
+  };
+
+  const handleSlashSelect = (type: string, data?: Record<string, unknown>) => {
+    if (slashMenuBlockIndex !== null) {
+      addBlock(type, slashMenuBlockIndex, data);
+    }
+    setSlashMenuOpen(false);
+    setSlashMenuBlockIndex(null);
+  };
+
+  // Export handlers
   const handleExportPDF = async () => {
     if (!contentRef.current) return;
     setExporting(true);
@@ -209,6 +300,15 @@ const DocumentEditorPage: React.FC = () => {
       // error
     } finally {
       setExporting(false);
+    }
+  };
+
+  const handleExportHtml = () => {
+    setExportingHtml(true);
+    try {
+      downloadHtml(title, blocks);
+    } finally {
+      setTimeout(() => setExportingHtml(false), 1000);
     }
   };
 
@@ -269,12 +369,23 @@ const DocumentEditorPage: React.FC = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleExportHtml}
+            disabled={exportingHtml}
+            className="btn-outline"
+            title="Export as self-contained HTML (Ctrl+Shift+E)"
+          >
+            {exportingHtml ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileCode2 className="w-4 h-4" />}
+            HTML
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleExportPDF}
             disabled={exporting}
             className="btn-primary"
           >
-            {exporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
-            Export PDF
+            {exporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
+            PDF
           </motion.button>
         </div>
       </motion.div>
@@ -293,9 +404,21 @@ const DocumentEditorPage: React.FC = () => {
               key={block.id}
               layout
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{
+                opacity: dragIndex === index ? 0.4 : 1,
+                y: 0,
+                scale: dragIndex === index ? 0.98 : 1,
+              }}
               exit={{ opacity: 0, height: 0 }}
-              className="group relative mb-2"
+              draggable
+              onDragStart={() => handleDragStart(index)}
+              onDragOver={(e) => handleDragOver(e, index)}
+              onDragEnd={handleDragEnd}
+              className={`group relative mb-2 ${
+                dropIndex === index && dragIndex !== index
+                  ? 'before:absolute before:left-0 before:right-0 before:-top-1 before:h-0.5 before:bg-[#E0D4FF] before:rounded-full before:shadow-[0_0_8px_rgba(224,212,255,0.4)]'
+                  : ''
+              }`}
             >
               {/* Block Controls */}
               <div className="absolute -left-12 top-1 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col gap-0.5">
@@ -306,7 +429,10 @@ const DocumentEditorPage: React.FC = () => {
                 >
                   <ChevronUp className="w-3.5 h-3.5" />
                 </button>
-                <div className="text-text-secondary cursor-grab">
+                <div
+                  className="text-text-secondary cursor-grab active:cursor-grabbing p-1 hover:bg-white/[0.08] rounded transition-all"
+                  title="Drag to reorder"
+                >
                   <GripVertical className="w-3.5 h-3.5" />
                 </div>
                 <button
@@ -330,10 +456,18 @@ const DocumentEditorPage: React.FC = () => {
 
               {/* Block Content */}
               {block.type === 'text' && (
-                <TextBlock block={block} onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)} />
+                <TextBlock
+                  block={block}
+                  onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)}
+                  onSlashCommand={() => handleSlashCommand(index)}
+                />
               )}
               {block.type === 'heading' && (
-                <TextBlock block={block} onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)} isHeading />
+                <TextBlock
+                  block={block}
+                  onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)}
+                  isHeading
+                />
               )}
               {block.type === 'image' && (
                 <ImageBlock block={block} onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)} />
@@ -347,10 +481,35 @@ const DocumentEditorPage: React.FC = () => {
               {(block.type === 'audio' || block.type === 'video') && (
                 <MediaBlock block={block} onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)} />
               )}
+              {block.type === 'code' && (
+                <CodeBlock block={block} onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)} />
+              )}
+              {block.type === 'quote' && (
+                <QuoteBlock block={block} onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)} />
+              )}
+              {block.type === 'checklist' && (
+                <ChecklistBlock block={block} onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)} />
+              )}
+              {block.type === 'callout' && (
+                <CalloutBlock block={block} onChange={(data: Record<string, unknown>) => updateBlock(block.id, data)} />
+              )}
               {block.type === 'divider' && (
                 <div className="py-4">
                   <hr className="border-white/[0.1]" />
                 </div>
+              )}
+
+              {/* Slash Command Menu */}
+              {slashMenuOpen && slashMenuBlockIndex === index && (
+                <SlashCommandMenu
+                  isOpen={true}
+                  onClose={() => {
+                    setSlashMenuOpen(false);
+                    setSlashMenuBlockIndex(null);
+                  }}
+                  onSelect={handleSlashSelect}
+                  position={{ top: 40, left: 0 }}
+                />
               )}
 
               {/* Add Block Button */}
@@ -369,7 +528,7 @@ const DocumentEditorPage: React.FC = () => {
                       initial={{ opacity: 0, y: -5, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -5, scale: 0.95 }}
-                      className="absolute top-8 z-50 glass-panel p-2 grid grid-cols-3 gap-1 w-72"
+                      className="absolute top-8 z-50 glass-panel p-2 grid grid-cols-3 gap-1 w-80"
                       style={{ background: 'rgba(26, 26, 31, 0.95)' }}
                     >
                       {blockOptions.map((opt) => (
@@ -390,6 +549,14 @@ const DocumentEditorPage: React.FC = () => {
           ))}
         </AnimatePresence>
       </motion.div>
+
+      {/* Keyboard Shortcut Hint */}
+      <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-secondary/40 justify-center">
+        <span>Ctrl+S to save</span>
+        <span>Ctrl+Shift+E to export HTML</span>
+        <span>Type "/" for block commands</span>
+        <span>Drag blocks to reorder</span>
+      </div>
     </div>
   );
 };

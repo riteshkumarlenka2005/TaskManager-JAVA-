@@ -49,7 +49,7 @@ export interface DocumentRequest {
 }
 
 // Block types for the document editor
-export type BlockType = 'text' | 'heading' | 'image' | 'table' | 'drawing' | 'audio' | 'video' | 'divider';
+export type BlockType = 'text' | 'heading' | 'image' | 'table' | 'drawing' | 'audio' | 'video' | 'divider' | 'code' | 'quote' | 'checklist' | 'callout';
 
 export interface Block {
   id: string;
@@ -59,6 +59,7 @@ export interface Block {
 
 export interface TextBlockData {
   text: string;
+  html?: string; // rich text HTML from TipTap
   level?: 1 | 2 | 3; // heading level
 }
 
@@ -72,7 +73,7 @@ export interface TableCell {
   content: string;
   rowSpan?: number;
   colSpan?: number;
-  merged?: boolean; // true if this cell is covered by a spanning cell
+  merged?: boolean;
 }
 
 export interface TableBlockData {
@@ -89,6 +90,33 @@ export interface MediaBlockData {
   url: string;
   type: 'audio' | 'video';
   caption?: string;
+}
+
+export interface CodeBlockData {
+  code: string;
+  language: string;
+}
+
+export interface QuoteBlockData {
+  text: string;
+  author?: string;
+}
+
+export interface ChecklistItem {
+  id: string;
+  text: string;
+  checked: boolean;
+}
+
+export interface ChecklistBlockData {
+  items: ChecklistItem[];
+}
+
+export type CalloutType = 'info' | 'warning' | 'success' | 'error';
+
+export interface CalloutBlockData {
+  type: CalloutType;
+  text: string;
 }
 
 // Drawing tool types

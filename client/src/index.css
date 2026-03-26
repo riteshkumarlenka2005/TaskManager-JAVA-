@@ -329,3 +329,157 @@ select.input-field option {
   background: rgba(205, 234, 192, 0.2);
   color: white;
 }
+
+/* ===== TipTap Rich Text Editor ===== */
+.tiptap-wrapper {
+  position: relative;
+}
+
+.tiptap-editor {
+  outline: none;
+  padding: 4px 8px;
+  margin: 0 -8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.tiptap-editor:focus {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.tiptap-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tiptap-text p {
+  margin-bottom: 0.3em;
+}
+
+.tiptap-text p:last-child {
+  margin-bottom: 0;
+}
+
+.tiptap-heading.tiptap-h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.tiptap-heading.tiptap-h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.tiptap-heading.tiptap-h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* Rich text inline styles */
+.tiptap-editor strong {
+  font-weight: 700;
+}
+
+.tiptap-editor em {
+  font-style: italic;
+}
+
+.tiptap-editor u {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.tiptap-editor s {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.tiptap-editor code {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.88em;
+  color: #E0D4FF;
+}
+
+.tiptap-link {
+  color: #E0D4FF;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.tiptap-link:hover {
+  color: #F5E6A7;
+}
+
+/* Lists */
+.tiptap-editor ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.4rem 0;
+}
+
+.tiptap-editor ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 0.4rem 0;
+}
+
+.tiptap-editor li {
+  margin-bottom: 0.15rem;
+}
+
+.tiptap-editor li p {
+  margin-bottom: 0;
+}
+
+/* Placeholder */
+.tiptap-editor p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  height: 0;
+}
+
+.tiptap-editor.is-editor-empty::before {
+  content: attr(data-placeholder);
+  color: var(--color-text-muted);
+  pointer-events: none;
+  float: left;
+  height: 0;
+}
+
+/* ===== Bubble Menu (Floating Toolbar) ===== */
+.bubble-menu {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  background: rgba(18, 18, 22, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ===== Scrollbar Thin ===== */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
