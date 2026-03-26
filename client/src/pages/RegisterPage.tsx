@@ -49,13 +49,15 @@ const RegisterPage: React.FC = () => {
           <div className="auth-logo-box">
             <Layers className="w-9 h-9" />
           </div>
-          <motion.h2
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
+            className="flex flex-col items-center"
           >
-            Sign Up
-          </motion.h2>
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#BEC4FF] mb-1">TaskManager</span>
+            <h2 className="text-white">Sign Up</h2>
+          </motion.div>
         </Link>
       </motion.header>
 

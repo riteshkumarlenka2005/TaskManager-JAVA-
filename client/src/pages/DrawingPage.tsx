@@ -46,18 +46,35 @@ const DrawingPage: React.FC = () => {
     setHistory((prev) => [...prev.slice(-30), data]);
   };
 
-  const getPos = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const getPos = (e: React.MouseEvent | React.TouchEvent | Touch | MouseEvent) => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
+    
+    let clientX: number;
+    let clientY: number;
+
+    if ('touches' in e) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = (e as MouseEvent).clientX;
+      clientY = (e as MouseEvent).clientY;
+    }
+
     return {
-      x: (e.clientX - rect.left) * (canvas.width / rect.width),
-      y: (e.clientY - rect.top) * (canvas.height / rect.height),
+      x: (clientX - rect.left) * (canvas.width / rect.width),
+      y: (clientY - rect.top) * (canvas.height / rect.height),
     };
   };
 
   const startDraw = useCallback(
-    (e: React.MouseEvent<HTMLCanvasElement>) => {
+    (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+      // Prevent scrolling on touch
+      if ('touches' in e) {
+        if (e.cancelable) e.preventDefault();
+      }
+
       const pos = getPos(e);
       setIsDrawing(true);
       setLastPos(pos);
@@ -78,8 +95,14 @@ const DrawingPage: React.FC = () => {
   );
 
   const draw = useCallback(
-    (e: React.MouseEvent<HTMLCanvasElement>) => {
+    (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
       if (!isDrawing || !lastPos) return;
+
+      // Prevent scrolling on touch
+      if ('touches' in e) {
+        if (e.cancelable) e.preventDefault();
+      }
+
       const ctx = canvasRef.current?.getContext('2d');
       if (!ctx) return;
 
@@ -109,7 +132,7 @@ const DrawingPage: React.FC = () => {
     [isDrawing, lastPos, tool, color, size]
   );
 
-  const endDraw = useCallback(() => {
+  const endDraw = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
     if (!isDrawing) return;
     setIsDrawing(false);
     setLastPos(null);
@@ -291,7 +314,10 @@ const DrawingPage: React.FC = () => {
           onMouseMove={draw}
           onMouseUp={endDraw}
           onMouseLeave={endDraw}
-          className="w-full rounded-xl cursor-crosshair"
+          onTouchStart={startDraw}
+          onTouchMove={draw}
+          onTouchEnd={endDraw}
+          className="w-full rounded-xl cursor-crosshair touch-none"
           style={{ aspectRatio: '12/7' }}
         />
       </motion.div>

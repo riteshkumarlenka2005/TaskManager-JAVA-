@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -60,17 +60,16 @@ const Layout: React.FC = () => {
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
             className="fixed top-0 left-0 h-screen z-[100] flex flex-col bg-[#12121a] border-r border-white/5"
           >
-            {/* Brand */}
-            <div className="flex items-center justify-between px-6 py-8">
+            <Link to="/" className="flex items-center justify-between px-6 py-8 hover:opacity-80 transition-opacity">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#BEC4FF] flex items-center justify-center shadow-lg shadow-[#BEC4FF]/10">
-                  <Layers className="w-5 h-5 text-black" />
+                <div className="w-10 h-10 rounded-xl bg-[rgba(190,196,255,0.1)] border border-[rgba(190,196,255,0.2)] flex items-center justify-center shadow-lg shadow-[rgba(190,196,255,0.1)]">
+                  <Layers className="w-5 h-5 text-[#BEC4FF]" />
                 </div>
                 {(!collapsed || isMobile) && (
                   <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="text-xl font-black tracking-tighter"
+                    className="text-xl font-black tracking-tighter text-white"
                   >
                     TaskManager
                   </motion.span>
@@ -78,13 +77,13 @@ const Layout: React.FC = () => {
               </div>
               {isMobile && (
                 <button
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => { e.preventDefault(); setMobileOpen(false); }}
                   className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-[#7C8B93]"
                 >
                   <X className="w-5 h-5" />
                 </button>
               )}
-            </div>
+            </Link>
 
             {/* Nav Links */}
             <nav className="flex-1 py-4 px-4 space-y-2">
@@ -149,12 +148,12 @@ const Layout: React.FC = () => {
       {/* Mobile Top Bar */}
       {isMobile && !mobileOpen && (
         <div className="fixed top-0 left-0 right-0 z-[50] flex items-center justify-between px-6 py-4 bg-[#12121a] border-b border-white/5">
-          <div className="flex items-center gap-3">
-             <div className="w-8 h-8 rounded-lg bg-[#BEC4FF] flex items-center justify-center">
-               <Layers className="w-4 h-4 text-black" />
+          <Link to="/" className="flex items-center gap-3">
+             <div className="w-8 h-8 rounded-lg bg-[rgba(190,196,255,0.1)] border border-[rgba(190,196,255,0.2)] flex items-center justify-center">
+               <Layers className="w-4 h-4 text-[#BEC4FF]" />
              </div>
-             <span className="font-black text-lg tracking-tighter">TaskManager</span>
-          </div>
+             <span className="font-black text-lg tracking-tighter text-white">TaskManager</span>
+          </Link>
           <button
             onClick={() => setMobileOpen(true)}
             className="p-2 rounded-xl bg-white/5 text-[#7C8B93]"
